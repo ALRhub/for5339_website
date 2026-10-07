@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="484 2 400 400">
+  <!-- The network of the MATURE.AI mark, on white so that it shows on light and dark tabs -->
+  <rect x="484" y="2" width="400" height="400" rx="84" fill="#fff"/>
+  <g stroke="#193a55" stroke-width="22" stroke-linecap="round">
+    <line x1="594" y1="46" x2="594" y2="360"/>
+    <line x1="594" y1="46" x2="776" y2="120"/>
+    <line x1="776" y1="120" x2="776" y2="285"/>
+    <line x1="776" y1="285" x2="594" y2="360"/>
+    <line x1="593" y1="202" x2="776" y2="120"/>
+    <line x1="593" y1="202" x2="776" y2="285"/>
+  </g>
+  <circle cx="594" cy="46" r="31" fill="#193a55"/>
+  <circle cx="594" cy="360" r="31" fill="#193a55"/>
+  <circle cx="593" cy="202" r="41" fill="#008b7d"/>
+  <circle cx="776" cy="120" r="30" fill="#008b7d"/>
+  <circle cx="776" cy="285" r="30" fill="#008b7d"/>
+</svg>

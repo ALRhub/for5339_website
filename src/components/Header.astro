@@ -1,0 +1,275 @@
+---
+import { Image } from 'astro:assets';
+import kitLogo from '../assets/brand/kit-logo-en.svg';
+import dfgLogo from '../assets/brand/dfg-logo.png';
+import Logo from './Logo.astro';
+import { nav, site } from '../config';
+
+const path = Astro.url.pathname;
+const isCurrent = (href: string) => path === href || path.startsWith(href);
+---
+
+<header class="site-header">
+  <div class="wrap bar">
+    <div class="brand">
+      <a class="kit" href="https://www.kit.edu/english/" aria-label="Karlsruhe Institute of Technology">
+        <img src={kitLogo.src} width="88" height="40" alt="" />
+      </a>
+      <a class="dfg" href="https://www.dfg.de/en" aria-label="Deutsche Forschungsgemeinschaft (DFG, German Research Foundation)">
+        <Image src={dfgLogo} height={24} densities={[1, 2]} format="png" alt="" />
+      </a>
+      <a class="unit" href="/" aria-label={`MATURE.AI, ${site.name}, home`}>
+        <Logo />
+      </a>
+    </div>
+
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+      <span class="menu-icon" aria-hidden="true"></span>
+      Menu
+    </button>
+
+    <nav id="site-nav" class="nav" aria-label="Main">
+      <ul>
+        {
+          nav.map((item) => (
+            <li>
+              <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const header = document.querySelector('.site-header');
+  const toggle = header?.querySelector<HTMLButtonElement>('.menu-toggle');
+  toggle?.addEventListener('click', () => {
+    const open = toggle.getAttribute('aria-expanded') !== 'true';
+    toggle.setAttribute('aria-expanded', String(open));
+    header?.classList.toggle('is-open', open);
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && header?.classList.contains('is-open')) {
+      header.classList.remove('is-open');
+      toggle?.setAttribute('aria-expanded', 'false');
+      toggle?.focus();
+    }
+  });
+</script>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: env(safe-area-inset-top, 0px);
+    z-index: 50;
+    /* solid white: the DFG allows its logo only on white or a plain colour */
+    background: #fff;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    min-height: var(--header-h);
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    min-width: 0;
+  }
+
+  .kit img {
+    width: 88px;
+    height: auto;
+  }
+
+  /* The DFG logo, unaltered. Its clear zone, the height of the DFG letters (21px here), is kept on every
+     side: the gaps to the KIT logo and to the divider, and the header height. Phones show it in the footer. */
+  .kit,
+  .dfg {
+    flex-shrink: 0;
+  }
+
+  .dfg {
+    display: none;
+    margin-inline: 0.5rem;
+  }
+
+  .dfg :global(img) {
+    display: block;
+    width: auto;
+    height: 24px;
+  }
+
+  @media (min-width: 45rem) {
+    .dfg {
+      display: block;
+    }
+  }
+
+  .unit {
+    --logo-h: 40px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    padding-left: 0.9rem;
+    border-left: 1px solid var(--line-2);
+    text-decoration: none;
+  }
+
+  .nav ul {
+    display: flex;
+    gap: 0.15rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .nav a {
+    display: block;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.9688rem;
+    font-weight: 500;
+    color: var(--ink-2);
+    text-decoration: none;
+    border-radius: 999px;
+    transition: color 0.15s ease, background-color 0.15s ease;
+  }
+
+  .nav a:hover {
+    color: var(--ink);
+    background: var(--bg-2);
+  }
+
+  .nav a[aria-current='page'] {
+    color: var(--ink);
+    background: var(--bg-2);
+  }
+
+  .menu-toggle {
+    display: none;
+    align-items: center;
+    gap: 0.55rem;
+    min-height: 2.75rem;
+    padding: 0.4rem 0.9rem;
+    border: 1px solid var(--line-2);
+    border-radius: 999px;
+    background: var(--bg);
+    color: var(--ink);
+    font: inherit;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    cursor: pointer;
+  }
+
+  .menu-icon,
+  .menu-icon::before,
+  .menu-icon::after {
+    display: block;
+    width: 15px;
+    height: 1.5px;
+    background: currentColor;
+    border-radius: 1px;
+    transition: transform 0.2s var(--ease), opacity 0.2s;
+  }
+
+  .menu-icon {
+    position: relative;
+  }
+
+  .menu-icon::before,
+  .menu-icon::after {
+    content: '';
+    position: absolute;
+    left: 0;
+  }
+
+  .menu-icon::before {
+    top: -5px;
+  }
+
+  .menu-icon::after {
+    top: 5px;
+  }
+
+  /* below 74rem the logos and the full menu do not fit on one row */
+  @media (max-width: 74rem) {
+    .menu-toggle {
+      display: inline-flex;
+    }
+
+    .nav {
+      display: none;
+      position: absolute;
+      inset: 100% 0 auto 0;
+      background: var(--bg);
+      border-bottom: 1px solid var(--line);
+      box-shadow: 0 16px 32px -24px rgb(0 0 0 / 0.3);
+    }
+
+    .site-header.is-open .nav {
+      display: block;
+    }
+
+    .nav ul {
+      flex-direction: column;
+      gap: 0;
+      padding: 0.5rem var(--gutter) 1rem;
+    }
+
+    .nav a {
+      padding: 0.85rem 0.25rem;
+      border-bottom: 1px solid var(--line);
+      border-radius: 0;
+      font-size: 1.0625rem;
+    }
+
+    .nav li:last-child a {
+      border-bottom: 0;
+    }
+
+    .nav a[aria-current='page'] {
+      background: none;
+      color: var(--link);
+    }
+
+    .site-header.is-open .menu-icon {
+      background: transparent;
+    }
+
+    .site-header.is-open .menu-icon::before {
+      transform: translateY(5px) rotate(45deg);
+    }
+
+    .site-header.is-open .menu-icon::after {
+      transform: translateY(-5px) rotate(-45deg);
+    }
+  }
+
+  @media (max-width: 30rem) {
+    .unit { --logo-h: 30px; }
+  }
+
+  @media (max-width: 26rem) {
+    .bar { gap: 0.5rem; }
+    .brand { gap: 0.5rem; }
+    .kit img { width: 60px; }
+    .unit { padding-left: 0.55rem; --logo-h: 30px; }
+    .menu-toggle { padding-inline: 0.65rem; font-size: 0.875rem; }
+  }
+
+  @media (max-width: 23rem) {
+    .brand { gap: 0.4rem; }
+    .kit img { width: 52px; }
+    .unit { padding-left: 0.4rem; --logo-h: 26px; }
+    .menu-toggle { width: 2.75rem; height: 2.75rem; padding: 0; justify-content: center; gap: 0; font-size: 0; }
+  }
+</style>

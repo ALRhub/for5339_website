@@ -1,0 +1,101 @@
+---
+// Official legal notice of the Karlsruhe Institute of Technology, as used on
+// the previous website of the Research Unit (English version, 2026), with the
+// same sections as the legal notice of alr-kit.de.
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="Legal notice" description="Legal notice of the website of the DFG Research Unit KI-FOR 5339.">
+  <header class="page-head">
+    <div class="wrap">
+      <h1>Legal notice</h1>
+    </div>
+  </header>
+
+  <section class="section section--tight">
+    <div class="wrap prose">
+      <h2>Provider</h2>
+      <p>
+        Provider of services in the sense of Art. 5 of the Digital Services Act and Art. 18, par. 2, State Media Treaty
+        (MStV).
+      </p>
+      <dl class="facts">
+        <dt>Registered office</dt>
+        <dd>
+          Karlsruhe Institute of Technology<br />
+          Kaiserstraße 12<br />
+          76131 Karlsruhe<br />
+          Germany<br />
+          Phone +49 721 608-0<br />
+          Fax +49 721 608-44290<br />
+          Email <a href="mailto:info@kit.edu">info@kit.edu</a>
+        </dd>
+        <dt>Legal form</dt>
+        <dd>Corporation governed by public law</dd>
+        <dt>Authorised representative</dt>
+        <dd>Prof. Dr. Jan S. Hesthaven (President of KIT)</dd>
+        <dt>Turnover tax identification number</dt>
+        <dd>DE266749428</dd>
+      </dl>
+
+      <h2>Copyright</h2>
+      <p>
+        For the internet pages of Karlsruhe Institute of Technology, the copyright and all other rights lie with the
+        Karlsruhe Institute of Technology, Kaiserstraße 12, 76131 Karlsruhe, Germany. Further dissemination, also in
+        parts, for pedagogic, scientific or private purposes is allowed, provided that the source is indicated (unless
+        otherwise expressly stated on the respective page). Use for commercial purposes shall require the approval by
+        the Karlsruhe Institute of Technology. Contact the Executive Office and Strategy Department at
+        <a href="mailto:info@kit.edu">info@kit.edu</a>.
+      </p>
+
+      <h2>Disclaimer</h2>
+      <p>
+        These internet pages serve for information only. Their contents were compiled with due diligence. However,
+        Karlsruhe Institute of Technology shall not assume any liability, neither expressly nor implied, for the type
+        or correctness of the material offered and shall not be liable (including liability for indirect loss or loss
+        of profit) for the material or use of this material. In case contents of websites of the Karlsruhe Institute
+        of Technology violate valid legal regulations, we kindly ask you to inform us immediately. We will then remove
+        the site or the respective contents as quickly as possible.
+      </p>
+
+      <h2>References to external websites</h2>
+      <p>
+        The websites of Karlsruhe Institute of Technology contain links to information offered by servers which are
+        not subject to the control and responsibility of the Karlsruhe Institute of Technology. Karlsruhe Institute of
+        Technology shall not assume any responsibility or guarantee for this information and shall not approve of or
+        support such information in terms of contents.
+      </p>
+
+      <h2>Data protection and IT security</h2>
+      <p>
+        Information on data protection can be found on our <a href="/privacy/">privacy page</a> and in the
+        <a href="https://www.kit.edu/privacypolicy.php">privacy policy of KIT</a>. If you have further questions with
+        respect to our data protection standards, please contact our Data Protection Officer at
+        <a href="mailto:datenschutzbeauftragte@kit.edu">datenschutzbeauftragte@kit.edu</a>. If you wish to learn about
+        the concepts and technical implementation of our IT security, please contact our Information Security Officer
+        at <a href="mailto:informationssicherheitsbeauftragter@kit.edu">informationssicherheitsbeauftragter@kit.edu</a>.
+      </p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .facts {
+    display: grid;
+    gap: 0.35rem 2rem;
+  }
+
+  @media (min-width: 40rem) {
+    .facts {
+      grid-template-columns: max-content 1fr;
+    }
+  }
+
+  .facts dt {
+    color: var(--ink-2);
+  }
+
+  .facts dd {
+    margin: 0 0 0.75rem;
+  }
+</style>

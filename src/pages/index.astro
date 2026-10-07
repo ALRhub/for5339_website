@@ -1,0 +1,350 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Illustration from '../components/Illustration.astro';
+import Challenge from '../components/Challenge.astro';
+import Flow from '../components/Flow.astro';
+import Highlights from '../components/Highlights.astro';
+import NewsList from '../components/NewsList.astro';
+import demonstrator from '../assets/images/demonstrator.jpg';
+import { getNews, getPublications, getSubprojects } from '../lib/data';
+
+const subprojects = await getSubprojects();
+const allPubs = await getPublications();
+const news = (await getNews()).slice(0, 3);
+---
+
+<Base>
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="hero-text">
+        <p class="label">DFG Research Unit KI-FOR 5339</p>
+        <h1>AI for the fast maturation of new manufacturing processes</h1>
+        <p class="lead">
+          Thermoplastic composites promise light parts that can be formed automatically in short cycles and recycled. But a
+          new material or part design can make a known process immature again, and costly trial and error follows. We develop AI that learns from every trial and reuses what it has learned, so that new processes mature
+          with fewer trials.
+        </p>
+        <div class="actions">
+          <a class="button" href="#approach">How it works</a>
+          <a class="button button--ghost" href="/publications/">Publications</a>
+        </div>
+        <p class="who">
+          Karlsruhe Institute of Technology and Fraunhofer IOSB<br />Funded by the Deutsche Forschungsgemeinschaft since 2023
+        </p>
+      </div>
+      <Illustration
+        name="transfer"
+        ratio="1 / 0.92"
+        class="hero-illo"
+        label="Illustration of our aim. A sheet is formed into a first part, then into a new geometry, then into the same geometry in a new material. Each variant starts wrinkled, and each schematic learning curve reaches maturity in fewer trials than the one before."
+        caption="Illustration of our aim. Each new geometry or material starts as an immature process. Knowledge carried over from earlier variants lets each new one mature in fewer trials."
+      />
+    </div>
+  </section>
+
+  <section class="section" id="challenge" aria-labelledby="challenge-title">
+    <div class="wrap">
+      <div class="intro">
+        <h2 id="challenge-title">Why new processes are hard to get right</h2>
+        <p>Four things make new processes slow to mature. Today, experts close the gap with extensive experiments, guided by experience.</p>
+      </div>
+      <Challenge />
+    </div>
+  </section>
+
+  <section class="section section--grey" id="approach" aria-labelledby="approach-title">
+    <div class="wrap">
+      <div class="intro">
+        <h2 id="approach-title">How the subprojects work together</h2>
+        <p>
+          The demonstrator in T1 provides the process and its experiments. T2 simulates it, and M1 decides which sensors
+          observe it. M2 learns fast process models, mainly from T2's simulation data. M3 optimises the process settings, and
+          M4 estimates the process state and controls it. F defines measures of maturity and records the process data in a
+          knowledge graph.
+        </p>
+      </div>
+      <Flow />
+    </div>
+  </section>
+
+  <section class="section" id="contributions" aria-labelledby="contrib-title">
+    <div class="wrap">
+      <div class="intro">
+        <h2 id="contrib-title">What each subproject contributes</h2>
+        <p>Point at a subproject to see its idea in motion, or open it for the details.</p>
+      </div>
+      <ul class="tiles">
+        {
+          subprojects.map((s) => (
+            <li>
+              <a class="tile" href={`/subprojects/${s.data.code.toLowerCase()}/`} data-illo-host>
+                {s.data.illustration ? (
+                  <Illustration name={s.data.illustration.name} mode="hover" ratio="16 / 11" label={s.data.illustration.label} class="tile-illo" />
+                ) : (
+                  <div class="tile-blank" aria-hidden="true">
+                    <span>Workshops</span>
+                    <span>Guest lectures</span>
+                    <span>Internships</span>
+                  </div>
+                )}
+                <p class="tile-code">
+                  <span class="code">{s.data.code}</span> {s.data.verb}
+                </p>
+                <h3>{s.data.tagline}</h3>
+                <p class="tile-text">{s.data.summary}</p>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="section section--grey" id="application" aria-labelledby="app-title">
+    <div class="wrap">
+      <div class="intro">
+        <h2 id="app-title">The example process</h2>
+        <p>
+          The Research Unit studies its methods on non-isothermal stamp forming of thermoplastic tape laminates, an
+          immature process with a high potential for improvement. It runs on a demonstrator in the Karlsruhe Research
+          Factory and in the stamp-forming laboratory of Fraunhofer ICT.
+        </p>
+      </div>
+      <Illustration
+        name="process"
+        ratio="16 / 5.6"
+        ratioSmall="16 / 10.5"
+        class="process-illo"
+        label="Illustration of the demonstrator line. A carriage carries a tape laminate in its gripper frame from pick-up through infrared heating to the press, where the punch forms it into the die while the grippers follow the draw-in, and on to camera inspection. Colour shows the laminate temperature, which drops where it touches the tools."
+        caption="Illustration of the demonstrator line. A carriage moves the laminate in its gripper frame to the infrared oven, the press and optical inspection. In the press, the grippers follow the laminate as it is drawn into the die. Colour shows the laminate temperature."
+      />
+      <div class="app-grid">
+        <figure class="photo">
+          <Image
+            src={demonstrator}
+            alt="The stamp-forming line with gripper frame, infrared oven and press on a linear axis, with an industrial robot in the background."
+            widths={[480, 800, 1337]}
+            sizes="(min-width: 64rem) 36rem, 92vw"
+          />
+          <figcaption>The demonstrator in the Karlsruhe Research Factory.</figcaption>
+        </figure>
+        <div class="facts">
+          <div>
+            <h3>The material</h3>
+            <p>
+              The published forming experiments used unidirectional carbon-fibre tapes in a polyamide 6 matrix, stacked into
+              laminates with different fibre directions (<a href="https://doi.org/10.21741/9781644903599-59">Zeeb et al. 2025</a>).
+            </p>
+          </div>
+          <div>
+            <h3>The process</h3>
+            <p>
+              An infrared oven melts the matrix. The press then forms the hot laminate, which solidifies as it cools in
+              the tool. Wrinkles are the main defect we study.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="pubs-title">
+    <div class="wrap">
+      <div class="intro">
+        <h2 id="pubs-title">Highlighted publications</h2>
+        <p>
+          Ten of our {allPubs.length} publications, chosen to cover every subproject. Members of the Research Unit are shown
+          in dark type.
+        </p>
+      </div>
+      <Highlights />
+      <a class="text-link more" href="/publications/">All publications</a>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="news-title">
+    <div class="wrap">
+      <div class="intro">
+        <h2 id="news-title">News</h2>
+      </div>
+      <NewsList items={news} />
+      <a class="text-link more" href="/news/">All news</a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero {
+    padding-block: clamp(3rem, 2rem + 4vw, 6rem) clamp(3.5rem, 2.5rem + 4vw, 6.5rem);
+  }
+
+  .hero-grid {
+    display: grid;
+    gap: clamp(2rem, 1.5rem + 3vw, 4rem);
+    align-items: center;
+  }
+
+  @media (min-width: 64rem) {
+    .hero-grid {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+    }
+  }
+
+  .hero-text h1 {
+    max-width: 14ch;
+  }
+
+  .hero-text .lead {
+    margin-top: 1.5rem;
+    max-width: 38rem;
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 2.25rem;
+  }
+
+  .who {
+    margin-top: 2.5rem;
+    font-size: 0.9375rem;
+    line-height: 1.55;
+    color: var(--ink-3);
+  }
+
+  .hero :global(.hero-illo .stage) {
+    border-radius: var(--radius);
+    background: var(--bg-2);
+  }
+
+  .tiles {
+    display: grid;
+    gap: 2.75rem 2rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  @media (min-width: 40rem) {
+    .tiles {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 72rem) {
+    .tiles {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  /* each tile spans four rows of the grid and shares them with its row, so the labels, titles and
+     texts start at the same height even when a title wraps */
+  .tiles > li {
+    display: grid;
+    grid-row: span 4;
+    grid-template-rows: subgrid;
+    row-gap: 0.5rem;
+  }
+
+  .tile {
+    display: grid;
+    grid-row: 1 / -1;
+    grid-template-rows: subgrid;
+    row-gap: 0.5rem;
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  .tile :global(.tile-illo .stage),
+  .tile-blank {
+    border-radius: var(--radius);
+    background: var(--bg-2);
+    transition: background-color 0.2s ease;
+  }
+
+  .tile:hover :global(.tile-illo .stage),
+  .tile:focus-visible :global(.tile-illo .stage),
+  .tile:hover .tile-blank {
+    background: #eceef0;
+  }
+
+  .tile-blank {
+    display: grid;
+    align-content: center;
+    justify-items: start;
+    gap: 0.35rem;
+    aspect-ratio: 16 / 11;
+    padding: 1.5rem;
+    font-size: 1.125rem;
+    font-weight: 600;
+    font-stretch: 92%;
+    color: var(--ink-3);
+  }
+
+  .tile-code {
+    margin-top: 0.75rem;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: var(--ink-2);
+  }
+
+  .tile h3 {
+    font-size: 1.1875rem;
+  }
+
+  .tile:hover h3 {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.2em;
+  }
+
+  .tile-text {
+    font-size: 0.9375rem;
+    color: var(--ink-2);
+  }
+
+  #application :global(.process-illo .stage) {
+    border-radius: var(--radius);
+    background: var(--bg);
+  }
+
+  .app-grid {
+    display: grid;
+    gap: 2.5rem 3rem;
+    margin-top: clamp(2.5rem, 2rem + 2vw, 3.5rem);
+  }
+
+  @media (min-width: 60rem) {
+    .app-grid {
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    }
+  }
+
+  .photo :global(img) {
+    width: 100%;
+    border-radius: var(--radius);
+  }
+
+  .photo figcaption {
+    margin-top: 0.6rem;
+    font-size: 0.9375rem;
+    color: var(--ink-3);
+  }
+
+  .facts {
+    display: grid;
+    gap: 1.75rem;
+    align-content: start;
+  }
+
+  .facts h3 {
+    margin-bottom: 0.4rem;
+  }
+
+  .facts p {
+    color: var(--ink-2);
+    max-width: 44ch;
+  }
+</style>

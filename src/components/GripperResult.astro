@@ -1,0 +1,93 @@
+---
+// Result figure from Doehner et al. (2026): simulated forming results for a
+// random gripper layout and for the layout found by Bayesian optimisation.
+// The renders were registered on their target contour (scripts/build-hero-figure.py),
+// so both panels share one frame; grippers are drawn from the original positions.
+import { Image } from 'astro:assets';
+import partRandom from '../assets/images/part-random.png';
+import partOptimised from '../assets/images/part-optimised.png';
+import grippers from '../data/grippers.json';
+
+const panels = [
+  { key: 'random' as const, img: partRandom, title: 'Random gripper layout' },
+  { key: 'optimised' as const, img: partOptimised, title: 'Layout found by Bayesian optimisation' },
+];
+const doi = 'https://doi.org/10.1016/j.compositesa.2026.109851';
+---
+
+<figure class="result">
+  <div class="panels">
+    {
+      panels.map((p) => (
+        <div class="panel">
+          <div class="plate">
+            <Image src={p.img} alt="" widths={[400, 700]} sizes="(min-width: 60rem) 26rem, 45vw" />
+            <svg viewBox="0 0 1000 1000" aria-hidden="true">
+              <defs>
+                <symbol id={`g-${p.key}`} viewBox="-50 -50 100 100">
+                  <rect x="-5.8" y="-45" width="11.6" height="21" rx="2" />
+                  <rect x="-33" y="-26" width="66" height="11" rx="2.5" />
+                  <rect x="-29.8" y="-17" width="14.2" height="54" rx="7.1" />
+                  <rect x="15.6" y="-17" width="14.2" height="54" rx="7.1" />
+                </symbol>
+              </defs>
+              {grippers[p.key].map((g) => (
+                <use href={`#g-${p.key}`} x="-37" y="-37" width="74" height="74" transform={`translate(${g.x * 1000} ${g.y * 1000}) rotate(${g.rot})`} />
+              ))}
+            </svg>
+          </div>
+          <p class="panel-title">{p.title}</p>
+        </div>
+      ))
+    }
+  </div>
+  <figcaption>
+    Simulated stamp forming with eight grippers. Colour shows surface curvature, where wrinkles form. The optimised layout
+    reduces wrinkling along the edges. From <a href={doi}>Doehner et al., Composites Part A, 2026</a>.
+  </figcaption>
+</figure>
+
+<style>
+  .panels {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .plate {
+    position: relative;
+    aspect-ratio: 1;
+    border-radius: var(--radius);
+    background: var(--bg-2);
+    overflow: hidden;
+  }
+
+  .plate :global(img),
+  .plate svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .plate :global(img) {
+    object-fit: contain;
+  }
+
+  .plate svg {
+    fill: var(--ink-2);
+  }
+
+  .panel-title {
+    margin-top: 0.6rem;
+    font-size: 0.9375rem;
+    font-weight: 500;
+  }
+
+  figcaption {
+    margin-top: 1rem;
+    font-size: 0.9375rem;
+    color: var(--ink-3);
+    max-width: 64ch;
+  }
+</style>

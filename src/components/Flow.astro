@@ -1,0 +1,173 @@
+---
+// How the subprojects work together: the process (T1) yields data through
+// simulation (T2) and sensing (M1); M2 learns process models from these data,
+// mainly from T2's simulation campaigns; M3 and M4 use the models to optimise and
+// to control. F spans all steps. Sources: the structure figure of the Research
+// Unit (M1 to M4 on top of T1 and T2, F across the top) and the M2 report of
+// Phase 1 results. On small screens the stages stack vertically.
+import { getSubprojects } from '../lib/data';
+
+const all = await getSubprojects();
+const by = Object.fromEntries(all.map((s) => [s.data.code, s.data]));
+const stages = [
+  { name: 'Process chain', nodes: [{ code: 'T1', role: 'The demonstrator process and its experiments' }] },
+  {
+    name: 'Data acquisition',
+    nodes: [
+      { code: 'T2', role: 'Forming simulations of the demonstrator process' },
+      { code: 'M1', role: 'Which sensors to add, and which to remove' },
+    ],
+  },
+  { name: 'Learned simulation', nodes: [{ code: 'M2', role: 'Fast process models, learned from these data' }] },
+  {
+    name: 'Optimisation and control',
+    nodes: [
+      { code: 'M3', role: 'Process settings, optimised between trials' },
+      { code: 'M4', role: 'State estimation and control during a trial' },
+    ],
+  },
+];
+const f = by.F;
+---
+
+<div class="flow">
+  <div class="across">
+    <p class="stage-name">Across all stages</p>
+    <a class="node" href="/subprojects/f/">
+      <span class="code">F</span>
+      <b>{f.short}</b>
+      <span class="role">Maturity measures and a knowledge graph of the process data</span>
+    </a>
+  </div>
+  <ol class="stages">
+    {
+      stages.map((st) => (
+        <li class="stage">
+          <p class="stage-name">{st.name}</p>
+          <div class="stage-nodes">
+            {st.nodes.map((n) => (
+              <a class="node" href={`/subprojects/${n.code.toLowerCase()}/`}>
+                <span class="code">{n.code}</span>
+                <b>{by[n.code].short}</b>
+                <span class="role">{n.role}</span>
+              </a>
+            ))}
+          </div>
+        </li>
+      ))
+    }
+  </ol>
+</div>
+
+<style>
+  .flow {
+    display: grid;
+    gap: 1.75rem;
+  }
+
+  /* F spans all stages, as in the structure figure of the Research Unit: the same card as the
+     others, across the full width */
+  .across {
+    display: grid;
+    gap: 0.6rem;
+  }
+
+  .stages {
+    display: grid;
+    gap: 2.25rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  @media (min-width: 52rem) {
+    .stages {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 2.75rem;
+    }
+  }
+
+  /* every stage spans three rows of the flow (heading, upper card, lower card) and shares them, so
+     cards at the same height have the same size in every stage; a single card spans both card rows,
+     centred */
+  .stage {
+    position: relative;
+    display: grid;
+    grid-row: span 3;
+    grid-template-rows: subgrid;
+    row-gap: 0.75rem;
+  }
+
+  /* an arrow in the gap before every stage but the first */
+  .stage + .stage::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: -1.75rem;
+    width: 1.25rem;
+    height: 1.25rem;
+    transform: translateX(-50%) rotate(90deg);
+    background: var(--ink-3);
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M2 10h13m-5-5 5 5-5 5' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
+  }
+
+  @media (min-width: 52rem) {
+    .stage + .stage::before {
+      left: -2.1rem;
+      top: calc(50% + 0.9rem);
+      transform: translateY(-50%);
+    }
+  }
+
+  .stage-name {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--ink-3);
+  }
+
+  .stage-nodes {
+    display: grid;
+    grid-row: 2 / 4;
+    grid-template-rows: subgrid;
+    row-gap: 0.75rem;
+  }
+
+  .stage-nodes > .node:only-child {
+    grid-row: 1 / -1;
+    align-self: center;
+  }
+
+  .node {
+    display: grid;
+    gap: 0.15rem;
+    padding: 0.9rem 1rem 1rem;
+    border: 1px solid var(--line-2);
+    border-radius: var(--radius);
+    background: var(--bg);
+    color: var(--ink);
+    text-decoration: none;
+    transition: border-color 0.15s ease;
+  }
+
+  .node:hover,
+  .node:focus-visible {
+    border-color: var(--ink);
+  }
+
+  .node b {
+    font-weight: 600;
+    line-height: 1.3;
+  }
+
+  .node .role {
+    font-size: 0.875rem;
+    line-height: 1.4;
+    color: var(--ink-3);
+  }
+
+  .code {
+    font-weight: 600;
+    color: var(--link);
+  }
+</style>

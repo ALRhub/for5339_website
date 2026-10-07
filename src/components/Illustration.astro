@@ -1,0 +1,126 @@
+---
+// Animated concept illustration drawn on a canvas by src/scripts/illustrations.
+// mode="auto" plays while visible and shows a pause button; mode="hover"
+// shows a still frame and plays while its [data-illo-host] is hovered.
+interface Props {
+  name: 'transfer' | 'process' | 't1' | 't2' | 'm1' | 'm2' | 'm3' | 'm4' | 'f';
+  label: string;
+  mode?: 'auto' | 'hover';
+  ratio?: string;
+  /** Aspect ratio below 40rem, if different. */
+  ratioSmall?: string;
+  caption?: string;
+  class?: string;
+}
+
+const { name, label, mode = 'auto', ratio = '16 / 9', ratioSmall, caption, class: className } = Astro.props;
+---
+
+<figure class:list={['illo', className]} data-illo={name} data-mode={mode}>
+  <div class="stage" style={`--r: ${ratio}; --r-sm: ${ratioSmall ?? ratio}`}>
+    <canvas role="img" aria-label={label}></canvas>
+  </div>
+  {
+    (caption || mode === 'auto') && (
+      <div class="foot">
+        {caption ? <figcaption>{caption}</figcaption> : <span />}
+        {mode === 'auto' && (
+          <button class="illo-toggle" type="button" aria-pressed="true" aria-label="Pause animation" data-state="playing">
+            <span class="icon" aria-hidden="true" />
+          </button>
+        )}
+      </div>
+    )
+  }
+</figure>
+
+<script>
+  import '../scripts/illustrations/transfer';
+  import '../scripts/illustrations/process';
+  import '../scripts/illustrations/t1';
+  import '../scripts/illustrations/t2';
+  import '../scripts/illustrations/m1';
+  import '../scripts/illustrations/m2';
+  import '../scripts/illustrations/m3';
+  import '../scripts/illustrations/m4';
+  import '../scripts/illustrations/f';
+  import { mount } from '../scripts/illustrations/engine';
+
+  mount();
+</script>
+
+<style>
+  .illo {
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .stage {
+    position: relative;
+    width: 100%;
+    aspect-ratio: var(--r);
+  }
+
+  @media (max-width: 40rem) {
+    .stage {
+      aspect-ratio: var(--r-sm);
+    }
+  }
+
+  canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .foot {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .illo-toggle {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    padding: 0;
+    border: 1px solid var(--line-2);
+    border-radius: 999px;
+    background: var(--bg);
+    color: var(--ink-2);
+    cursor: pointer;
+  }
+
+  .illo-toggle:hover {
+    border-color: var(--ink);
+    color: var(--ink);
+  }
+
+  .icon {
+    display: block;
+    width: 10px;
+    height: 12px;
+    border-left: 3px solid currentColor;
+    border-right: 3px solid currentColor;
+  }
+
+  .illo-toggle[data-state='paused'] .icon {
+    width: 0;
+    height: 0;
+    margin-left: 3px;
+    border-top: 6px solid transparent;
+    border-bottom: 6px solid transparent;
+    border-left: 10px solid currentColor;
+    border-right: 0;
+  }
+
+  figcaption {
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    color: var(--ink-3);
+  }
+</style>

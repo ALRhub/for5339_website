@@ -1,0 +1,579 @@
+# Publications of the Research Unit.
+#
+# Sources: publication list of the Phase 1 interim report (May 2026), the
+# bibliography of the renewal proposal (metadata checked against publisher
+# records in August 2026) and the previous website.
+#
+# type:        journal | conference | workshop | preprint | thesis | dataset | chapter
+# status:      published (default) | accepted | preprint
+# equal:       optional; the first n authors contributed equally (marked with an asterisk)
+# subprojects: at least one code; the paper then appears on that subproject's page
+# highlight:   position (1-10) among the ten highlights of the renewal proposal, shown on the home page
+# short:       short venue label for highlight cards, e.g. "ICLR"
+#
+# Add new entries anywhere; the website sorts them by year.
+
+# --- 2026 --------------------------------------------------------------------
+
+- id: doehner2026bo
+  title: Bayesian optimization and guided over-instrumented gripper design for thermoforming of composite materials
+  authors: [Frank Doehner, Johannes Mitsch, Saksham Kiroriwal, Shahenda Youssef, Georg Zeeb, Frank Henning, Luise Kärger, Jürgen Beyerer]
+  venue: "Composites Part A: Applied Science and Manufacturing 207, 109851"
+  year: 2026
+  type: journal
+  subprojects: [M1, M3, T1, T2]
+  doi: 10.1016/j.compositesa.2026.109851
+  short: Composites Part A
+  highlight: 1
+
+- id: mitsch2026rate
+  title: Rate-dependent 3D forming simulation of thermoplastic composite materials using visco-hyperelastic material modeling and 3D hexahedral solid-shell elements
+  authors: [Johannes Mitsch, Bastian Schäfer, Luise Kärger]
+  venue: "Composites Part A: Applied Science and Manufacturing 200, 109306"
+  year: 2026
+  type: journal
+  subprojects: [T2]
+  doi: 10.1016/j.compositesa.2025.109306
+  short: Composites Part A
+  highlight: 2
+
+- id: freymuth2026asmr
+  title: Adaptive Swarm Mesh Refinement using Deep Reinforcement Learning with Local Rewards
+  authors: [Niklas Freymuth, Philipp Dahlinger, Tobias Würth, Simon Reisch, Luise Kärger, Gerhard Neumann]
+  venue: Machine Learning 115
+  year: 2026
+  type: journal
+  subprojects: [M2]
+  doi: 10.1007/s10994-026-07064-4
+
+- id: dahlinger2026context
+  title: Context-aware Learned Mesh-based Simulation via Trajectory-Level Meta-Learning
+  authors: [Philipp Dahlinger, Niklas Freymuth, Tai Hoang, Tobias Würth, Michael Volpp, Luise Kärger, Gerhard Neumann]
+  venue: Transactions on Machine Learning Research
+  year: 2026
+  type: journal
+  subprojects: [M2]
+  url: https://openreview.net/forum?id=j5uACS2Doh
+
+- id: wuerth2026algebraic
+  title: Algebraic Hierarchical Graph Neural Networks for Forming Simulation of Thermoplastic Composite Materials
+  authors: [Tobias Würth, Niklas Freymuth, Johannes Mitsch, Philipp Dahlinger, Tai Hoang, Gerhard Neumann, Luise Kärger]
+  venue: Key Engineering Materials 1050, 31–42
+  year: 2026
+  type: journal
+  subprojects: [M2, T2]
+  doi: 10.4028/p-kaH2TN
+
+- id: mitsch2026validation
+  title: Validation of Thermoforming Simulation Models Prior to Parameterization Using Covariance-Based Input-Output Statistics – Assessing the Role of Thermomechanical Material Modeling
+  authors: [Johannes Mitsch, Tobias Würth, Jan Paul Wank, Luise Kärger]
+  venue: Materials Science Forum 1182, 1–11
+  year: 2026
+  type: journal
+  subprojects: [T2, M2]
+  doi: 10.4028/p-aI6KaL
+
+- id: bott2026planning
+  title: Planning-Based Decision Space Exploration for Digital Twins in Immature Production Processes
+  authors: [Alexander Bott, Suliot Salihi, Alexander Puchta, Jürgen Fleischer]
+  venue: Journal of Machine Engineering 26(2), 117–131
+  year: 2026
+  type: journal
+  subprojects: [T1]
+  doi: 10.36897/jme/222460
+
+- id: hoang2026hamiltonian
+  title: Improving Long-Range Interactions in Graph Neural Simulators via Hamiltonian Dynamics
+  authors: [Tai Hoang, Alessandro Trenta, Alessio Gravina, Niklas Freymuth, Philipp Becker, Davide Bacciu, Gerhard Neumann]
+  venue: International Conference on Learning Representations (ICLR)
+  year: 2026
+  type: conference
+  subprojects: [M2, M4]
+  url: https://openreview.net/forum?id=x66u6TEDUw
+
+- id: walker2026ifac
+  title: Smooth Sampling-Based Model Predictive Control Using Deterministic Samples
+  authors: [Markus Walker, Marcel Reith-Braun, Tai Hoang, Gerhard Neumann, Uwe D. Hanebeck]
+  venue: IFAC World Congress
+  year: 2026
+  type: conference
+  subprojects: [M4, M2]
+  url: https://arxiv.org/abs/2601.03893
+  short: IFAC World Congress
+  highlight: 8
+
+- id: walker2026cem
+  title: Sample-Efficient and Smooth Cross-Entropy Method Model Predictive Control Using Deterministic Samples
+  authors: [Markus Walker, Daniel Frisch, Uwe D. Hanebeck]
+  venue: American Control Conference (ACC)
+  year: 2026
+  type: conference
+  subprojects: [M4]
+  url: https://arxiv.org/abs/2510.05706
+
+- id: walker2026cramer
+  title: Local Modified Cramér–von Mises Distance for Uncertainty Calibration Assessment in Regression
+  authors: [Markus Walker, S. Klaus, Marcel Reith-Braun, Uwe D. Hanebeck]
+  venue: International Conference on Information Fusion (FUSION)
+  year: 2026
+  type: conference
+  subprojects: [M4]
+
+- id: kiroriwal2026jpssbo
+  title: "Joint Parameter and State-Space Bayesian Optimization: Using Process Expertise to Accelerate Manufacturing Optimization"
+  authors: [Saksham Kiroriwal, Julius Pfrommer, Jürgen Beyerer]
+  venue: CIRP Conference on Manufacturing Systems (CIRP CMS)
+  year: 2026
+  type: conference
+  subprojects: [M3]
+  url: https://arxiv.org/abs/2602.17679
+
+- id: li2026case
+  title: LLM-Based Pre-Press Decision Support for an Industrial Composite-Forming Workflow
+  authors: [Yuyang Li, Alexander Bott, Jürgen Fleischer, Tobias Käfer]
+  venue: IEEE International Conference on Automation Science and Engineering (CASE)
+  year: 2026
+  type: conference
+  subprojects: [F, T1]
+  status: accepted
+  short: IEEE CASE
+  highlight: 10
+
+- id: doehner2026sensor
+  title: Adaptive Sequential Sensor Placement for Robust and Efficient Online Fault Diagnosis
+  authors: [Frank Doehner, Zahra Nasrollah, Julius Pfrommer, Tobias Würth, Jürgen Beyerer]
+  venue: CONTROLO 2026
+  year: 2026
+  type: conference
+  subprojects: [M1]
+  status: accepted
+
+- id: bott2026gripper
+  title: Development and validation of a modular and over-instrumented gripper frame for the handling and thermoforming of UD fiber-reinforced thermoplastic tape laminates
+  authors: [Alexander Bott, Georg Zeeb, Alexander Puchta, Frank Henning, Jürgen Fleischer]
+  venue: Annals of Scientific Society for Assembly, Handling and Industrial Robotics 2025
+  year: 2026
+  type: chapter
+  subprojects: [T1]
+  status: accepted
+
+- id: kubelka2026vpd
+  title: "Virtual Process Dossier: A Process-Aware Data Catalogue"
+  authors: [Lukas Kubelka, Alexander Bott, Frank Doehner, Saksham Kiroriwal, Georg Zeeb, J. Butte, Julius Pfrommer, Jürgen Beyerer, Tobias Käfer]
+  venue: arXiv preprint 2607.27840
+  year: 2026
+  type: preprint
+  subprojects: [F]
+  status: preprint
+  doi: 10.48550/arXiv.2607.27840
+
+- id: dahlinger2026peach
+  title: Point Cloud Sequence Encoding for Material-conditioned Graph Network Simulators
+  authors: [Philipp Dahlinger, Balázs Gyenes, Niklas Freymuth, Luca Geminiani, Tobias Würth, Johannes Mitsch, Nadja Klein, Luise Kärger, Gerhard Neumann]
+  venue: Advances in Neural Information Processing Systems (NeurIPS) 39
+  year: 2026
+  type: conference
+  subprojects: [M2, T2]
+  status: accepted
+  doi: 10.48550/arXiv.2605.20978
+
+- id: gravina2026storm
+  title: Long-Range Spatio-Temporal Graph Propagation Through Oscillations
+  authors: [Alessio Gravina, Alessandro Trenta, Tai Hoang, Andrea Ceni, Gerhard Neumann, Davide Bacciu]
+  equal: 3
+  venue: Advances in Neural Information Processing Systems (NeurIPS) 39
+  year: 2026
+  type: conference
+  subprojects: [M2]
+  status: accepted
+
+# --- 2025 --------------------------------------------------------------------
+
+- id: wuerth2025robin
+  title: Diffusion-Based Hierarchical Graph Neural Networks for Simulating Nonlinear Solid Mechanics
+  authors: [Tobias Würth, Niklas Freymuth, Gerhard Neumann, Luise Kärger]
+  venue: Advances in Neural Information Processing Systems (NeurIPS) 38
+  year: 2025
+  type: conference
+  subprojects: [M2]
+  doi: 10.52202/085713-4336
+  award: Spotlight
+  short: NeurIPS
+  highlight: 4
+
+- id: freymuth2025amber
+  title: "AMBER: Adaptive Mesh Generation by Iterative Mesh Resolution Prediction"
+  authors: [Niklas Freymuth, Tobias Würth, Nicolas Schreiber, Balázs Gyenes, Andreas Boltres, Johannes Mitsch, Aleksandar Taranovic, Tai Hoang, Philipp Dahlinger, Philipp Becker, Luise Kärger, Gerhard Neumann]
+  venue: Advances in Neural Information Processing Systems (NeurIPS) 38
+  year: 2025
+  type: conference
+  subprojects: [M2]
+  doi: 10.52202/085713-0803
+  short: NeurIPS
+  highlight: 5
+
+- id: dahlinger2025mango
+  title: MaNGO – Adaptable Graph Network Simulators via Meta-Learning
+  authors: [Philipp Dahlinger, Tai Hoang, Denis Blessing, Niklas Freymuth, Gerhard Neumann]
+  venue: Advances in Neural Information Processing Systems (NeurIPS) 38
+  year: 2025
+  type: conference
+  subprojects: [M2]
+  doi: 10.52202/085713-1988
+  short: NeurIPS
+  highlight: 6
+
+- id: hoang2025hepi
+  title: Geometry-aware RL for Manipulation of Varying Shapes and Deformable Objects
+  authors: [Tai Hoang, Huy Le, Philipp Becker, Ngo Anh Vien, Gerhard Neumann]
+  venue: International Conference on Learning Representations (ICLR)
+  year: 2025
+  type: conference
+  subprojects: [M2, M4]
+  url: https://openreview.net/forum?id=7BLXhmWvwF
+  award: Oral
+  short: ICLR
+  highlight: 7
+
+- id: schaefer2025solidshell
+  title: 3D solid-shell element for macroscopic composite forming simulation enabling thickness prediction
+  authors: [Bastian Schäfer, Johannes Mitsch, Luise Kärger]
+  venue: "Composites Part A: Applied Science and Manufacturing 199, 109162"
+  year: 2025
+  type: journal
+  subprojects: [T2]
+  doi: 10.1016/j.compositesa.2025.109162
+
+- id: zeeb2025gripper
+  title: Influence of gripper positions on the formation of wrinkles during the thermoforming process of thermoplastic UD-tape laminates
+  authors: [Georg Zeeb, Johannes Mitsch, Michael Wilhelm, Luise Kärger, Frank Henning]
+  venue: Materials Research Proceedings 54 (ESAFORM 2025), 544–553
+  year: 2025
+  type: conference
+  subprojects: [T1, T2]
+  doi: 10.21741/9781644903599-59
+
+- id: mitsch2025significance
+  title: Significance of the Material Parameters within a Three-Dimensional Solid-Shell Element for Thermoforming Simulation
+  authors: [Johannes Mitsch, Bastian Schäfer, Luise Kärger]
+  venue: Materials Research Proceedings 54 (ESAFORM 2025)
+  year: 2025
+  type: conference
+  subprojects: [T2]
+  doi: 10.21741/9781644903599-40
+
+- id: mitsch2025data
+  title: Process simulation data for thermoforming of continuous fiber-reinforced composite materials
+  authors: [Johannes Mitsch, Luise Kärger]
+  venue: Zenodo
+  year: 2025
+  type: dataset
+  subprojects: [T2]
+  doi: 10.5281/zenodo.17977470
+
+- id: bott2025ppr
+  title: "Towards a Generalised Information Modell: A Bayesian Network Approach for PPR-Representation"
+  authors: [Alexander Bott, Jan Baumgärtner, Nicolaus Klein, Alexander Puchta, Jürgen Fleischer]
+  venue: Sustainable Manufacturing Innovations (ICSM 2024), Springer
+  year: 2025
+  type: chapter
+  subprojects: [T1]
+  doi: 10.1007/978-3-031-84744-8_14
+
+- id: kiroriwal2025pogpn
+  title: Bayesian Optimization using Partially Observable Gaussian Process Network
+  authors: [Saksham Kiroriwal, Julius Pfrommer, Jürgen Beyerer]
+  venue: NeurIPS Workshop on Machine Learning and Operations Research (MLxOR)
+  year: 2025
+  type: workshop
+  subprojects: [M3]
+  url: https://openreview.net/forum?id=4yOonIO4QD
+
+- id: hanebeck2025newton
+  title: Newton-Flow Particle Filters based on Generalized Cramér Distance
+  authors: [Uwe D. Hanebeck]
+  venue: arXiv preprint 2509.00182
+  year: 2025
+  type: preprint
+  subprojects: [M4]
+  status: preprint
+  url: https://arxiv.org/abs/2509.00182
+
+- id: walker2025kernels
+  title: Local Calibration Testing in Supervised Machine Learning Models Using Input Space Kernels
+  authors: [Markus Walker, Marcel Reith-Braun, Uwe D. Hanebeck]
+  venue: International Conference on Information Fusion (FUSION)
+  year: 2025
+  type: conference
+  subprojects: [M4]
+  doi: 10.23919/FUSION65864.2025.11123977
+
+- id: amirkhanian2025kbnn
+  title: "Bridging Bayesian Inference and Neural Network Training: Equivalence of KBNN and Statistical Linearization"
+  authors: [Hayk Amirkhanian, Markus Walker, Uwe D. Hanebeck, Marco F. Huber]
+  venue: International Conference on Information Fusion (FUSION)
+  year: 2025
+  type: conference
+  subprojects: [M4]
+  doi: 10.23919/FUSION65864.2025.11124135
+
+- id: walker2025anees
+  title: Weaknesses of the ANEES and New Calibration Measures for Multivariate Predictions
+  authors: [Markus Walker, Marcel Reith-Braun, Uwe D. Hanebeck]
+  venue: IEEE International Conference on Multisensor Fusion and Integration for Intelligent Systems (MFI)
+  year: 2025
+  type: conference
+  subprojects: [M4]
+  doi: 10.1109/MFI67357.2025.11259249
+
+- id: youssef2025ctnn
+  title: Causal Temporal Neural Networks Using the Conditional Average Treatment Effect
+  authors: [Shahenda Youssef, Julius Pfrommer, Jürgen Beyerer]
+  venue: IEEE Conference on Artificial Intelligence (CAI), 49–54
+  year: 2025
+  type: conference
+  subprojects: [M1]
+  doi: 10.1109/CAI64502.2025.00015
+
+- id: rehak2025diss
+  title: Daten-effiziente Aufklärung von kausalen Zusammenhängen in technischen Systemen durch Aktive Aufklärung und die Verwendung von Vorwissen
+  authors: [Josephine Rehak]
+  venue: Doctoral thesis, Karlsruhe Institute of Technology
+  year: 2025
+  type: thesis
+  subprojects: [M1]
+  doi: 10.5445/IR/1000178419
+
+- id: li2025rag
+  title: Evaluating the Performance of RAG Methods for Conversational AI in the Airport Domain
+  authors: [Yuyang Li, Philip J. M. Kerbusch, Raimon H. R. Pruim, Tobias Käfer]
+  venue: Annual Conference of the Nations of the Americas Chapter of the ACL (NAACL), Industry Track, 794–808
+  year: 2025
+  type: conference
+  subprojects: [F]
+  doi: 10.18653/v1/2025.naacl-industry.61
+
+- id: wardenga2025text2sparql
+  title: Leveraging Data Shapes in Large Language Model Contexts for Question Answering on Public and Private Knowledge Graphs
+  authors: [Jan G. Wardenga, Tobias Käfer]
+  venue: Text2SPARQL Challenge at the Extended Semantic Web Conference (ESWC), CEUR-WS
+  year: 2025
+  type: workshop
+  subprojects: [F]
+  url: https://ceur-ws.org/Vol-4094/paper1.pdf
+
+- id: braun2025solid
+  title: Towards Using the Solid Protocol for Data Transport in International Data Spaces (IDS)
+  authors: [Christoph Braun, Yanxiu Wuwang, Zhi Wang, Xuyang Hou, Tobias Käfer]
+  venue: International Workshop on Semantics in Dataspaces at ESWC, CEUR-WS 4007
+  year: 2025
+  type: workshop
+  subprojects: [F]
+  url: https://ceur-ws.org/Vol-4007/09short.pdf
+
+- id: arabizadeh2025maturity
+  title: How to Quantify the Maturity of Production Processes
+  authors: [Negar Arabizadeh, Julius Pfrommer, Jürgen Beyerer]
+  venue: Machine Learning for Cyber-Physical Systems (ML4CPS), 79–89
+  year: 2025
+  type: conference
+  subprojects: [F]
+  doi: 10.24405/20028
+
+- id: plambeck2025workshop
+  title: "Workshop Report: Learning Approaches for Hybrid Dynamical Systems"
+  authors: [Swantje Plambeck, Nemanja Hranisavljevic, Maximilian Schmidt, Kaja Balzereit, Aaron Bracht, Magnus Redeker, Negar Arabizadeh, Alexander Diedrich, Jens Eickmeier, Oliver Niggemann, et al.]
+  venue: Machine Learning for Cyber-Physical Systems (ML4CPS), 91
+  year: 2025
+  type: workshop
+  subprojects: [F]
+  url: https://openhsu.ub.hsu-hh.de/handle/10.24405/20029
+
+# --- 2024 --------------------------------------------------------------------
+
+- id: wuerth2024pimgn
+  title: "Physics-informed MeshGraphNets (PI-MGNs): Neural finite element solvers for non-stationary and nonlinear simulations on arbitrary meshes"
+  authors: [Tobias Würth, Niklas Freymuth, Clemens Zimmerling, Gerhard Neumann, Luise Kärger]
+  venue: Computer Methods in Applied Mechanics and Engineering 429, 117102
+  year: 2024
+  type: journal
+  subprojects: [T2, M2]
+  doi: 10.1016/j.cma.2024.117102
+  short: CMAME
+  highlight: 3
+
+- id: mitsch2024interp
+  title: Interpolation methods for orthotropic fourth-order fiber orientation tensors in context of virtual composites manufacturing
+  authors: [Johannes Mitsch, Constantin Krauß, Luise Kärger]
+  venue: Computer Methods in Applied Mechanics and Engineering 430, 117215
+  year: 2024
+  type: journal
+  subprojects: [T2]
+  doi: 10.1016/j.cma.2024.117215
+
+- id: harth2024tgdk
+  title: Towards Representing Processes and Reasoning with Process Descriptions on the Web
+  authors: [Andreas Harth, Tobias Käfer, Anisa Rula, Jean-Paul Calbimonte, Eduard Kamburjan, Martin Giese]
+  venue: Transactions on Graph Data and Knowledge 2(1), 1–32
+  year: 2024
+  type: journal
+  subprojects: [F]
+  doi: 10.4230/TGDK.2.1.1
+
+- id: mitsch2024viscoelastic
+  title: Considering the viscoelastic material behavior in a solid-shell element for thermoforming simulation
+  authors: [Johannes Mitsch, Bastian Schäfer, Jan Paul Wank, Luise Kärger]
+  venue: Material Forming (ESAFORM 2024), Materials Research Forum, 457–466
+  year: 2024
+  type: conference
+  subprojects: [T2]
+  doi: 10.5445/IR/1000170492
+
+- id: kiroriwal2024jpss
+  title: Joint parameter and state-space modelling of manufacturing processes using Gaussian processes
+  authors: [Saksham Kiroriwal, Julius Pfrommer, Hendrik Mende, Robert H. Schmitt, Jürgen Beyerer]
+  venue: IEEE International Conference on Industrial Informatics (INDIN)
+  year: 2024
+  type: conference
+  subprojects: [M3]
+  doi: 10.1109/INDIN58382.2024.10774428
+  award: Best Student Paper Award, AI for Industry track
+  short: IEEE INDIN
+  highlight: 9
+
+- id: walker2024perceptrons
+  title: Trustworthy Bayesian Perceptrons
+  authors: [Markus Walker, Hayk Amirkhanian, Marco F. Huber, Uwe D. Hanebeck]
+  venue: International Conference on Information Fusion (FUSION)
+  year: 2024
+  type: conference
+  subprojects: [M4]
+  doi: 10.23919/FUSION59988.2024.10706490
+
+- id: walker2024balltrees
+  title: Multi-Scale Uncertainty Calibration Testing for Bayesian Neural Networks Using Ball Trees
+  authors: [Markus Walker, Uwe D. Hanebeck]
+  venue: IEEE International Conference on Multisensor Fusion and Integration for Intelligent Systems (MFI)
+  year: 2024
+  type: conference
+  subprojects: [M4]
+  doi: 10.1109/MFI62651.2024.10705766
+
+- id: walker2024voronoi
+  title: Voronoi Trust Regions for Local Calibration Testing in Supervised Machine Learning Models
+  authors: [Markus Walker, Philipp S. Bien, Uwe D. Hanebeck]
+  venue: "Symposium Sensor Data Fusion: Trends, Solutions, Applications (SDF)"
+  year: 2024
+  type: conference
+  subprojects: [M4]
+  doi: 10.1109/SDF63218.2024.10773946
+
+- id: rehak2024rootcause
+  title: Root Cause Analysis Using Anomaly Detection and Temporal Informed Causal Graphs
+  authors: [Josephine Rehak, Shahenda Youssef, Jürgen Beyerer]
+  venue: Machine Learning for Cyber-Physical Systems (ML4CPS)
+  year: 2024
+  type: conference
+  subprojects: [M1]
+  doi: 10.24405/15308
+
+- id: rehak2024metrics
+  title: Metrics for the Evaluation of Learned Causal Graphs Based on Ground Truth
+  authors: [Josephine Rehak, Alexander Falkenstein, Frank Doehner, Jürgen Beyerer]
+  venue: Machine Learning for Cyber-Physical Systems (ML4CPS)
+  year: 2024
+  type: conference
+  subprojects: [M1]
+  doi: 10.24405/15305
+
+- id: youssef2024regression
+  title: Regression via Causally Informed Neural Networks
+  authors: [Shahenda Youssef, Frank Doehner, Jürgen Beyerer]
+  venue: Machine Learning for Cyber-Physical Systems (ML4CPS)
+  year: 2024
+  type: conference
+  subprojects: [M1]
+  doi: 10.24405/15315
+
+# --- 2023 --------------------------------------------------------------------
+
+- id: freymuth2023asmr
+  title: Swarm Reinforcement Learning for Adaptive Mesh Refinement
+  authors: [Niklas Freymuth, Philipp Dahlinger, Tobias Würth, Simon Reisch, Luise Kärger, Gerhard Neumann]
+  venue: Advances in Neural Information Processing Systems (NeurIPS) 36
+  year: 2023
+  type: conference
+  subprojects: [M2, T2]
+  doi: 10.52202/075280-3206
+
+- id: linkerhaegner2023ggns
+  title: Grounding Graph Network Simulators using Physical Sensor Observations
+  authors: [Jonas Linkerhägner, Niklas Freymuth, Paul Maria Scheikl, Franziska Mathis-Ullrich, Gerhard Neumann]
+  venue: International Conference on Learning Representations (ICLR)
+  year: 2023
+  type: conference
+  subprojects: [M2]
+  url: https://openreview.net/forum?id=jsZsEd8VEY
+
+- id: dahlinger2023latent
+  title: Latent Task-Specific Graph Network Simulators
+  authors: [Philipp Dahlinger, Niklas Freymuth, Michael Volpp, Tai Hoang, Gerhard Neumann]
+  venue: NeurIPS Workshop on AI for Science
+  year: 2023
+  type: workshop
+  subprojects: [M2]
+  doi: 10.48550/arXiv.2311.05256
+
+- id: wuerth2023pinn
+  title: Physics-informed neural networks for data-free surrogate modelling and engineering optimization – An example from composite manufacturing
+  authors: [Tobias Würth, Constantin Krauß, Clemens Zimmerling, Luise Kärger]
+  venue: Materials & Design 231, 112034
+  year: 2023
+  type: journal
+  subprojects: [T2]
+  doi: 10.1016/j.matdes.2023.112034
+
+- id: wuerth2023nafems
+  title: Zeiteffiziente und datenfreie Bauteil- und Prozesssimulation mithilfe von Physics-Informed Neural Networks
+  authors: [Tobias Würth, Anabel Prietze, Clemens Zimmerling, Constantin Krauß, Luise Kärger]
+  venue: NAFEMS Magazin 68(4), 39
+  year: 2023
+  type: journal
+  subprojects: [T2]
+  doi: 10.5445/IR/1000170599
+
+- id: hanebeck2023flows
+  title: Progressive Bayesian Particle Flows Based on Optimal Transport Map Sequences
+  authors: [Uwe D. Hanebeck]
+  venue: International Conference on Information Fusion (FUSION)
+  year: 2023
+  type: conference
+  subprojects: [M4]
+  doi: 10.23919/FUSION52260.2023.10224077
+
+- id: mende2023glass
+  title: Multi-target regression and cross-validation for non-isothermal glass molding experiments with small sample sizes
+  authors: [Hendrik Mende, Saksham Kiroriwal, Julius Pfrommer, Robert H. Schmitt, Jürgen Beyerer]
+  venue: SPIE Optifab
+  year: 2023
+  type: conference
+  subprojects: [M3]
+  doi: 10.1117/12.2685230
+
+- id: rehak2023counterfactual
+  title: Counterfactual Root Cause Analysis via Anomaly Detection and Causal Graphs
+  authors: [Josephine Rehak, Anouk Sommer, Maximilian Becker, Julius Pfrommer, Jürgen Beyerer]
+  venue: IEEE International Conference on Industrial Informatics (INDIN)
+  year: 2023
+  type: conference
+  subprojects: [M1]
+  doi: 10.1109/INDIN51400.2023.10218245
+
+- id: rehak2023pcmci
+  title: Causal Structure Learning Using PCMCI+ and Path Constraints from Wavelet-Based Soft Interventions
+  authors: [Josephine Rehak, Alexander Falkenstein, Jürgen Beyerer]
+  venue: Machine Learning for Cyber-Physical Systems (ML4CPS), Springer
+  year: 2023
+  type: conference
+  subprojects: [M1]
+  doi: 10.1007/978-3-031-47062-2_1

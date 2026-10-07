@@ -1,0 +1,390 @@
+---
+// Four challenges, illustrated with the same laminate, light and fields as the animated figures.
+
+// --- exploded laminate: four plies with different fibre angles ---------------
+const S = 104;
+const C30 = Math.cos(Math.PI / 6);
+const iso = (x: number, y: number, z: number): [number, number] => [150 + (x - y) * C30 * S, 26 + (x + y) * 0.5 * S + z];
+const pt = (p: [number, number]) => `${p[0].toFixed(1)},${p[1].toFixed(1)}`;
+
+function hatch(deg: number, z: number, step = 0.085) {
+  const a = (deg * Math.PI) / 180;
+  const n = [-Math.sin(a), Math.cos(a)];
+  const segs: string[] = [];
+  const corners = [[0, 0], [1, 0], [1, 1], [0, 1]];
+  const ds = corners.map(([x, y]) => n[0] * x + n[1] * y);
+  for (let c = Math.min(...ds) + step / 2; c < Math.max(...ds); c += step) {
+    const hits: [number, number][] = [];
+    for (let i = 0; i < 4; i++) {
+      const [x0, y0] = corners[i];
+      const [x1, y1] = corners[(i + 1) % 4];
+      const d0 = n[0] * x0 + n[1] * y0 - c;
+      const d1 = n[0] * x1 + n[1] * y1 - c;
+      if (d0 === d1 || d0 * d1 > 0) continue;
+      const q = d0 / (d0 - d1);
+      hits.push([x0 + (x1 - x0) * q, y0 + (y1 - y0) * q]);
+    }
+    if (hits.length >= 2) segs.push(`M${pt(iso(hits[0][0], hits[0][1], z))}L${pt(iso(hits[1][0], hits[1][1], z))}`);
+  }
+  return segs.join('');
+}
+
+const plies = [0, 90, 45, -45].map((deg, i) => {
+  const z = i * 32;
+  return {
+    deg,
+    outline: [iso(0, 0, z), iso(1, 0, z), iso(1, 1, z), iso(0, 1, z)].map(pt).join(' '),
+    hatch: hatch(deg, z),
+    edge: [iso(0, 1, z), iso(1, 1, z), iso(1, 0, z), iso(1, 0, z + 3), iso(1, 1, z + 3), iso(0, 1, z + 3)].map(pt).join(' '),
+    tag: iso(1, 0, z),
+  };
+});
+
+// --- every change sends quality back to the start: the same climb, again --------
+const MATURE_Y = 70;
+const BASE_Y = 204;
+const climb = (n: number) => BASE_Y - ((BASE_Y - MATURE_Y) * (1 - Math.exp(-3 * n))) / (1 - Math.exp(-3));
+const segments = [28, 118, 208].map((x0) => {
+  const w = 82;
+  const line = `M${Array.from({ length: 25 }, (_, k) => `${(x0 + (k / 24) * w).toFixed(1)},${climb(k / 24).toFixed(1)}`).join(' L')}`;
+  return {
+    line,
+    area: `${line} L${x0 + w} ${BASE_Y} L${x0} ${BASE_Y} Z`,
+    // the same number of trials in every climb
+    dots: Array.from({ length: 7 }, (_, k) => [x0 + ((k + 1) / 7) * w, climb((k + 1) / 7)]),
+  };
+});
+const changes = [
+  { x: 114, name: 'New material' },
+  { x: 204, name: 'New geometry' },
+];
+
+// --- settings landscape --------------------------------------------------------
+const trials: [number, number][] = [
+  [58, 170], [92, 64], [140, 182], [176, 120], [110, 110], [250, 168], [276, 58], [202, 190], [64, 98], [160, 52], [214, 132], [290, 118],
+];
+---
+
+<div class="challenges">
+  <article>
+    <svg viewBox="0 0 320 240" aria-hidden="true">
+      <defs>
+        <linearGradient id="challenge-laminate" x1="0" y1="0" x2="0.8" y2="1">
+          <stop offset="0" stop-color="#6b7278" /><stop offset="0.45" stop-color="#3f454a" /><stop offset="1" stop-color="#2e3236" />
+        </linearGradient>
+      </defs>
+      {
+        [...plies].reverse().map((p) => (
+          <g>
+            <polygon points={p.edge} fill="#23272b" />
+            <polygon points={p.outline} class="ply" />
+            <path d={p.hatch} class={p.deg === 0 ? 'fibre fibre--top' : 'fibre'} />
+            <text x={p.tag[0] + 12} y={p.tag[1] + 5} class="tag">
+              {p.deg === -45 ? '−45°' : `${p.deg}°`}
+            </text>
+          </g>
+        ))
+      }
+    </svg>
+    <h3>Demanding materials</h3>
+    <p>
+      Fibre-reinforced thermoplastics are stiff along the fibres and soft across them. Stacked in layers, they deform in
+      ways that depend on temperature and speed.
+    </p>
+  </article>
+
+  <article>
+    <svg viewBox="0 0 320 240" aria-hidden="true">
+      <defs>
+        <radialGradient id="challenge-landscape">
+          <stop offset="0" stop-color="#aebdb9" stop-opacity="0.6" /><stop offset="0.55" stop-color="#dce5e3" stop-opacity="0.8" /><stop offset="1" stop-color="#f5f6f7" stop-opacity="0" />
+        </radialGradient>
+        <radialGradient id="challenge-good-region">
+          <stop offset="0" stop-color="#009682" stop-opacity="0.5" /><stop offset="0.38" stop-color="#b9e3da" stop-opacity="0.8" /><stop offset="1" stop-color="#f5f6f7" stop-opacity="0" />
+        </radialGradient>
+      </defs>
+      <ellipse cx="118" cy="132" rx="103" ry="59" transform="rotate(-20 118 132)" fill="url(#challenge-landscape)" />
+      <ellipse cx="232" cy="78" rx="61" ry="38" transform="rotate(34 232 78)" fill="url(#challenge-good-region)" />
+      <path d="M26 18 V206 H304" class="axis" />
+      <g class="contours">
+        <ellipse cx="118" cy="132" rx="100" ry="56" transform="rotate(-20 118 132)" />
+        <ellipse cx="118" cy="132" rx="68" ry="36" transform="rotate(-20 118 132)" />
+        <ellipse cx="118" cy="132" rx="36" ry="18" transform="rotate(-20 118 132)" />
+        <ellipse cx="232" cy="78" rx="50" ry="29" transform="rotate(34 232 78)" />
+        <ellipse cx="232" cy="78" rx="29" ry="16" transform="rotate(34 232 78)" />
+      </g>
+      <ellipse cx="232" cy="78" rx="12" ry="7" transform="rotate(34 232 78)" class="best-zone" />
+      {trials.map(([x, y]) => <circle cx={x} cy={y} r="4" class="trial" />)}
+      <circle cx="232" cy="78" r="5.5" class="best" />
+      <text x="304" y="226" text-anchor="end" class="tag">Setting 1</text>
+      <text x="12" y="24" class="tag" transform="rotate(-90 12 24)" text-anchor="end">Setting 2</text>
+    </svg>
+    <h3>Many coupled settings</h3>
+    <p>
+      Temperatures, speeds, forces and gripper positions interact, and tuning the conventional settings alone does not
+      prevent wrinkles.
+    </p>
+  </article>
+
+  <article>
+    <svg viewBox="0 0 320 240" aria-hidden="true">
+      <defs>
+        <linearGradient id="challenge-steel" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#ffffff" /><stop offset="0.25" stop-color="#e6e9ec" /><stop offset="1" stop-color="#cfd5da" />
+        </linearGradient>
+        <linearGradient id="challenge-heat" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#f2c14e" /><stop offset="1" stop-color="#e4572e" />
+        </linearGradient>
+        <linearGradient id="challenge-defect" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#f4b183" /><stop offset="0.6" stop-color="#e4572e" /><stop offset="1" stop-color="#b3361a" />
+        </linearGradient>
+      </defs>
+      <path d="M176 104 h10 l8 18 h20 l8 -18 h10 v4 h-7 l-8 18 h-26 l-8 -18 h-7 Z" class="formed-strip" />
+      <path d="M252 104 h10 l8 18 h20 l8 -18 h10 v4 h-7 l-8 18 h-26 l-8 -18 h-7 Z" class="formed-strip" />
+      <path d="M24 168 H300" class="axis" />
+      {
+        [
+          [44, 'Heat'],
+          [124, 'Transfer'],
+          [204, 'Form'],
+          [280, 'Inspect'],
+        ].map(([x, name]) => (
+          <g>
+            <circle cx={x} cy="168" r="5" class={name === 'Inspect' ? 'stop stop--last' : 'stop'} />
+            <text x={x} y="196" text-anchor="middle" class="tag">
+              {name}
+            </text>
+          </g>
+        ))
+      }
+      <path d="M30 118 q7 -8 14 0 t14 0 M30 104 q7 -8 14 0 t14 0" class="heat" />
+      <path d="M104 118 h40 m-8 -6 l8 6 -8 6" class="glyph" />
+      <path d="M176 104 h10 l8 18 h20 l8 -18 h10" class="glyph" />
+      <path d="M252 104 h10 l8 18 h20 l8 -18 h10" class="glyph" />
+      <path d="M256 101 l3 -5 3 5 3 -5 3 5 M298 101 l3 -5 3 5 3 -5 3 5" class="wrinkle" />
+      <path d="M44 72 H262" class="span" />
+      <path d="M44 66 v12 M262 66 v12" class="span" />
+      <text x="153" y="60" text-anchor="middle" class="note">no quality signal yet</text>
+    </svg>
+    <h3>Costly, late feedback</h3>
+    <p>
+      Defects such as wrinkles show up only after forming. Every trial costs machine time and material, and some parts
+      must be destroyed to test them.
+    </p>
+  </article>
+
+  <article>
+    <svg viewBox="0 0 320 240" aria-hidden="true">
+      <defs>
+        <linearGradient id="challenge-learning" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#aebdb9" stop-opacity="0.4" /><stop offset="1" stop-color="#e9ecef" stop-opacity="0" />
+        </linearGradient>
+      </defs>
+      <path d={`M24 26 V${BASE_Y} H304`} class="axis" />
+      <path d={`M24 ${MATURE_Y} H304`} class="span" />
+      <text x="304" y={MATURE_Y - 8} text-anchor="end" class="tag">mature</text>
+      {
+        segments.map((s) => (
+          <g>
+            <path d={s.area} fill="url(#challenge-learning)" />
+            <path d={s.line} class="repeat" />
+            {s.dots.map(([x, y]) => (
+              <circle cx={x} cy={y} r="2.6" class="dot" />
+            ))}
+          </g>
+        ))
+      }
+      {
+        changes.map((c) => (
+          <g>
+            <path d={`M${c.x} ${MATURE_Y} V${BASE_Y - 5}`} class="drop" />
+            <path d={`M${c.x - 4.5} ${BASE_Y - 12} L${c.x} ${BASE_Y - 4} L${c.x + 4.5} ${BASE_Y - 12}`} class="drop-head" />
+            <text x={c.x} y="42" text-anchor="middle" class="change">
+              {c.name}
+            </text>
+          </g>
+        ))
+      }
+      <text x="304" y="226" text-anchor="end" class="tag">Trials</text>
+      <text x="12" y="26" class="tag" transform="rotate(-90 12 26)" text-anchor="end">Quality</text>
+    </svg>
+    <h3>Every change starts over</h3>
+    <p>
+      A new material or geometry usually means repeating the experiments. What was learned on one variant rarely
+      carries over to the next.
+    </p>
+  </article>
+</div>
+
+<style>
+  .challenges {
+    display: grid;
+    gap: 3rem 2.5rem;
+  }
+
+  @media (min-width: 44rem) {
+    .challenges {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 72rem) {
+    .challenges {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  svg {
+    width: 100%;
+    max-width: 22rem;
+    height: auto;
+    margin-bottom: 1.5rem;
+    font-family: var(--font);
+    overflow: visible;
+  }
+
+  h3 {
+    margin-bottom: 0.5rem;
+  }
+
+  p {
+    color: var(--ink-2);
+    max-width: 36ch;
+  }
+
+  .ply {
+    fill: url(#challenge-laminate);
+    stroke: #23272b;
+    stroke-width: 1.2;
+    stroke-linejoin: round;
+  }
+
+  .fibre {
+    fill: none;
+    stroke: #aebdb9;
+    opacity: 0.65;
+    stroke-width: 0.9;
+  }
+
+  .fibre--top {
+    stroke: #dce5e3;
+  }
+
+  .formed-strip {
+    fill: url(#challenge-steel);
+    stroke: #8a939b;
+    stroke-width: 0.7;
+  }
+
+  .variant {
+    fill: url(#challenge-part);
+    stroke: #83978f;
+    stroke-width: 1.1;
+  }
+
+  .tag {
+    font-size: 13px;
+    fill: var(--ink-2);
+  }
+
+  .axis {
+    fill: none;
+    stroke: var(--line-2);
+    stroke-width: 1.5;
+  }
+
+  .contours ellipse {
+    fill: none;
+    stroke: #c3c9ce;
+    stroke-width: 1.1;
+  }
+
+  .best-zone {
+    fill: var(--accent-soft);
+    stroke: var(--accent);
+    stroke-width: 1.2;
+  }
+
+  .trial {
+    fill: var(--bg);
+    stroke: var(--ink-3);
+    stroke-width: 1.4;
+  }
+
+  .best {
+    fill: var(--accent);
+  }
+
+  .stop {
+    fill: var(--bg);
+    stroke: var(--ink-2);
+    stroke-width: 1.5;
+  }
+
+  .stop--last {
+    fill: var(--alert);
+    stroke: var(--alert);
+  }
+
+  .glyph,
+  .heat {
+    fill: none;
+    stroke: var(--ink-2);
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .heat {
+    stroke: url(#challenge-heat);
+    stroke-width: 2;
+  }
+
+  .wrinkle {
+    fill: none;
+    stroke: url(#challenge-defect);
+    stroke-width: 2.1;
+    stroke-linejoin: round;
+  }
+
+  .span {
+    fill: none;
+    stroke: var(--ink-3);
+    stroke-width: 1;
+    stroke-dasharray: 3 4;
+  }
+
+  .note {
+    font-size: 13px;
+    fill: var(--ink-2);
+  }
+
+  .repeat {
+    fill: none;
+    stroke: var(--ink-2);
+    stroke-width: 1.6;
+  }
+
+  .dot {
+    fill: var(--ink-2);
+  }
+
+  .drop,
+  .drop-head {
+    fill: none;
+    stroke: #b3361a;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .drop {
+    stroke-dasharray: 4 4;
+  }
+
+  .change {
+    font-size: 12px;
+    font-weight: 600;
+    fill: #b3361a;
+  }
+</style>

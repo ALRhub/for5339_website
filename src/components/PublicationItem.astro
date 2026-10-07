@@ -1,0 +1,113 @@
+---
+import { inOrder, isMember, publicationHref, type Publication } from '../lib/data';
+
+interface Props {
+  pub: Publication;
+  members: Set<string>;
+  showCodes?: boolean;
+}
+
+const { pub, members, showCodes = true } = Astro.props;
+const p = pub.data;
+const href = publicationHref(p);
+const venueHasYear = new RegExp(`\\b${p.year}\\b`).test(p.venue);
+---
+
+<li
+  class="pub"
+  data-year={p.year}
+  data-type={p.type}
+  data-sp={p.subprojects.join(' ')}
+  data-highlight={p.highlight ? 'true' : undefined}
+  data-search={`${p.title} ${p.authors.join(' ')} ${p.venue}`.toLowerCase()}
+>
+  <p class="title">{href ? <a href={href}>{p.title}</a> : p.title}</p>
+  <p class="authors">
+    {
+      p.authors.map((a, i) => (
+        <Fragment>
+          {isMember(a, members) ? <span class="member">{a}</span> : a}
+          {p.equal && i < p.equal ? '*' : ''}
+          {i < p.authors.length - 1 ? ', ' : ''}
+        </Fragment>
+      ))
+    }
+  </p>
+  <p class="meta">
+    <span class="venue">{p.venue}{venueHasYear ? '' : `, ${p.year}`}</span>
+    {p.status === 'accepted' && <span class="note">accepted</span>}
+    {p.equal && <span class="note">* equal contribution</span>}
+    {p.award && <span class="award">{p.award}</span>}
+    {
+      showCodes && (
+        <span class="codes">
+          {inOrder(p.subprojects).map((c) => (
+            <a class="code" href={`/subprojects/${c.toLowerCase()}/`} title={`Subproject ${c}`}>
+              {c}
+            </a>
+          ))}
+        </span>
+      )
+    }
+  </p>
+</li>
+
+<style>
+  .pub {
+    display: grid;
+    gap: 0.3rem;
+    padding-block: 1.25rem;
+    border-top: 1px solid var(--line);
+  }
+
+  .title {
+    font-size: 1.0625rem;
+    font-weight: 600;
+    line-height: 1.35;
+    letter-spacing: -0.005em;
+    text-wrap: pretty;
+  }
+
+  .title a {
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  .title a:hover {
+    color: var(--link);
+    text-decoration: underline;
+  }
+
+  .authors {
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    color: var(--ink-3);
+  }
+
+  .member {
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.25rem 1rem;
+    font-size: 0.9375rem;
+    color: var(--ink-2);
+  }
+
+  .venue {
+    font-style: italic;
+  }
+
+  .note {
+    color: var(--ink-3);
+  }
+
+  .award {
+    font-weight: 500;
+    color: var(--link);
+  }
+</style>

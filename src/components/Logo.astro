@@ -1,0 +1,60 @@
+---
+// The MATURE.AI logo of KI-FOR 5339 for small sizes: the mark and the wordmark come unchanged
+// from the original artwork (public/mature-ai-logo.png), and "KI-FOR 5339" is set as text so
+// that it stays legible where the artwork's small line would not be. The parent sets the mark's
+// height with --logo-h; `size` is the largest height used, for the image resolution.
+import { Image } from 'astro:assets';
+import mark from '../assets/brand/mature-ai-mark.png';
+import wordmark from '../assets/brand/mature-ai-wordmark.png';
+
+interface Props {
+  size?: number;
+}
+
+const { size = 52 } = Astro.props;
+---
+
+<span class="logo">
+  <Image class="mark" src={mark} height={size} densities={[1, 2]} alt="" />
+  <span class="words">
+    <Image class="word" src={wordmark} height={Math.round(size * 0.42)} densities={[1, 2]} alt="MATURE.AI" />
+    <span class="sub">KI-FOR 5339</span>
+  </span>
+</span>
+
+<style>
+  /* proportions of the original lockup: a gap of 0.28 mark heights, the wordmark 0.42 high */
+  .logo {
+    --h: var(--logo-h, 40px);
+    display: inline-flex;
+    align-items: center;
+    gap: calc(var(--h) * 0.28);
+  }
+
+  .mark {
+    flex: none;
+    display: block;
+    width: auto;
+    height: var(--h);
+  }
+
+  .words {
+    display: grid;
+    gap: calc(var(--h) * 0.1);
+  }
+
+  .word {
+    display: block;
+    width: auto;
+    height: calc(var(--h) * 0.42);
+  }
+
+  .sub {
+    font-size: max(10px, calc(var(--h) * 0.26));
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: 0.24em;
+    color: #193a55;
+    white-space: nowrap;
+  }
+</style>

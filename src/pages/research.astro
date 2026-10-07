@@ -1,0 +1,330 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import { inOrder } from '../lib/data';
+import Illustration from '../components/Illustration.astro';
+import Challenge from '../components/Challenge.astro';
+import Flow from '../components/Flow.astro';
+import demonstrator from '../assets/images/demonstrator.jpg';
+
+const stations = [
+  { name: 'Pick up', text: 'A sledge on a linear axis picks up the laminate in a gripper frame. The grippers measure force, position and angle.' },
+  { name: 'Heat', text: 'An infrared oven melts the thermoplastic matrix.' },
+  { name: 'Form', text: 'A press with two heatable tools forms the hot laminate, which solidifies as it cools.' },
+  { name: 'Inspect', text: 'A robot takes images and 3D scans of the part. The data are stored, and their metadata are catalogued in the Virtual Process Dossier.' },
+];
+
+const results = [
+  { codes: ['T1', 'T2'], text: 'Material characterisation parameterised the physics-based forming simulations, and temperature measurements from forming experiments were used to validate them. The simulations then supplied data for learning and for testing gripper configurations that were never built.' },
+  { codes: ['M2', 'T2'], text: 'A learned simulator predicts stamp forming of thermoplastic laminates for unseen process settings in seconds instead of hours.' },
+  { codes: ['M1', 'M3', 'T1', 'T2'], text: 'Bayesian optimisation used the validated simulation to find gripper layouts that reduce wrinkling.' },
+  { codes: ['M4', 'M2'], text: 'M4 developed particle-flow filters, calibrated sensor models, sampling-based model predictive control and, with M2, geometry-aware reinforcement learning for distributed actuators. Each was validated on simulation benchmarks.' },
+  { codes: ['F'], text: 'The Virtual Process Dossier, a knowledge-graph data catalogue, records the demonstrator\'s experiments, simulations and their provenance and can be queried via SPARQL.' },
+];
+---
+
+<Base title="Research" description="Why new manufacturing processes mature slowly, how KI-FOR 5339 aims to speed this up with AI, and what the first funding phase has achieved.">
+  <header class="page-head">
+    <div class="wrap">
+      <h1>Research</h1>
+      <p class="lead">
+        Every trial on a new manufacturing process is expensive. We develop AI methods that learn more from each trial, and
+        a methodology that takes a process from immature to mature with fewer of them.
+      </p>
+    </div>
+  </header>
+
+  <section class="section section--tight" aria-labelledby="why-title">
+    <div class="wrap">
+      <div class="split">
+        <h2 id="why-title">The problem</h2>
+        <div class="prose">
+          <p>
+            A new process first runs in the lab, then ramps up to industrial scale. Only then does it deliver the required
+            quality, output and cost. This takes long when new materials are involved, when the process has many settings,
+            and when no good model of it exists.
+          </p>
+          <p>
+            Maturing such a process means choosing its structure, its settings, its control and its sensors. Experts do this
+            by experiment, guided by experience. Each experiment ties up equipment, uses material and may require destructive
+            testing of the part.
+          </p>
+          <p class="claim">
+            We expect AI to speed up maturation and to find better solutions. Few, expensive and noisy samples also demand new
+            methods in AI itself.
+          </p>
+        </div>
+      </div>
+      <div class="challenge">
+        <Challenge />
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--grey" id="approach" aria-labelledby="approach-title">
+    <div class="wrap">
+      <div class="split">
+        <h2 id="approach-title">Our approach</h2>
+        <div class="two">
+          <div>
+            <h3>Methods that need few samples</h3>
+            <p>
+              We combine data-driven learning, optimisation and reinforcement learning with physical knowledge and engineering
+              models, and we plan each experiment so that it teaches us as much as possible.
+            </p>
+          </div>
+          <div>
+            <h3>A methodology for maturation</h3>
+            <p>
+              Temporary over-instrumentation, a modular process and step-by-step improvement turn an immature process into a
+              mature one, with tools that scale to large teams.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="flow-wrap">
+        <Flow />
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="demonstrator" aria-labelledby="demo-title">
+    <div class="wrap">
+      <div class="split">
+        <h2 id="demo-title">The demonstrator</h2>
+        <p class="prose">
+          The participating institutes built the example process in the Karlsruhe Research Factory: non-isothermal stamp
+          forming of thermoplastic composite sheets, an immature process with a high potential for improvement. The
+          stamp-forming laboratory of Fraunhofer ICT is used for further experiments.
+        </p>
+      </div>
+      <div class="illo-wrap">
+        <Illustration
+          name="process"
+          ratio="16 / 5.6"
+          ratioSmall="16 / 10.5"
+          label="Illustration of the demonstrator line. A carriage carries a tape laminate in its gripper frame from pick-up through infrared heating to the press, where the punch forms it into the die while the grippers follow the draw-in, and on to camera inspection. Colour shows the laminate temperature, which drops where it touches the tools."
+          caption="Illustration. In the press, the grippers follow the laminate as it is drawn into the die. Colour shows the laminate temperature."
+        />
+      </div>
+      <ol class="stations">
+        {
+          stations.map((s) => (
+            <li>
+              <h3>{s.name}</h3>
+              <p>{s.text}</p>
+            </li>
+          ))
+        }
+      </ol>
+      <div class="demo-grid">
+        <figure>
+          <Image
+            src={demonstrator}
+            alt="The stamp-forming line with gripper frame, infrared oven and press on a linear axis, with an industrial robot in the background."
+            widths={[480, 800, 1337]}
+            sizes="(min-width: 64rem) 40rem, 92vw"
+          />
+          <figcaption>Gripper frame (left), infrared oven (centre) and press (right) on the linear axis.</figcaption>
+        </figure>
+        <div class="prose">
+          <h3>Why it is hard</h3>
+          <p>
+            The tapes are strongly anisotropic. They deform with large strains, depend on temperature and forming speed, slide
+            against each other, and shrink as they solidify. The press forms the parts only partly, which is enough to study
+            quality precursors, in particular wrinkle formation.
+          </p>
+          <h3>The material</h3>
+          <p>
+            In the published forming experiments on industrial-scale equipment, the laminates were unidirectional
+            carbon-fibre tapes in a polyamide 6 matrix, for example twelve plies in a (0/90/45/−45/0/90)s sequence. Such tapes promise light parts that can be formed automatically in short
+            cycle times and recycled (<a href="https://doi.org/10.21741/9781644903599-59">Zeeb et al. 2025</a>).
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--grey" id="results" aria-labelledby="results-title">
+    <div class="wrap split">
+      <h2 id="results-title">Results so far</h2>
+      <div>
+        <p class="prose">
+          In the first funding phase we developed the core components of the methodology and validated each of them on its own:
+          in forming experiments, forming simulations, benchmarks and external process datasets.
+        </p>
+        <ul class="results">
+          {
+            results.map((r) => (
+              <li>
+                <p>{r.text}</p>
+                <p class="codes">
+                  {inOrder(r.codes).map((c) => (
+                    <a class="code" href={`/subprojects/${c.toLowerCase()}/`}>
+                      {c}
+                    </a>
+                  ))}
+                </p>
+              </li>
+            ))
+          }
+        </ul>
+        <a class="text-link more" href="/publications/">All publications</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="data" aria-labelledby="data-title">
+    <div class="wrap split">
+      <h2 id="data-title">Research data</h2>
+      <div class="prose">
+        <p>
+          Process data are expensive to produce, so we keep them findable and reusable, following the FAIR principles. The
+          Virtual Process Dossier describes machines, materials, settings, processes and parts with shared vocabularies and
+          records who produced which data, when and how.
+        </p>
+        <p>
+          We publish data where we can, for example the
+          <a href="https://doi.org/10.5281/zenodo.17977470">process simulation data for thermoforming</a> on Zenodo. Large
+          simulation campaigns and model training run on the HoreKa supercomputer at KIT.
+        </p>
+      </div>
+    </div>
+  </section>
+
+</Base>
+
+<style>
+  .split {
+    display: grid;
+    gap: 1.25rem 3rem;
+  }
+
+  @media (min-width: 60rem) {
+    .split {
+      grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+    }
+  }
+
+  .claim {
+    font-size: var(--step-1);
+    line-height: 1.5;
+    color: var(--ink);
+  }
+
+  .challenge {
+    margin-top: clamp(3rem, 2.5rem + 2vw, 4.5rem);
+  }
+
+  .two {
+    display: grid;
+    gap: 2rem 2.5rem;
+  }
+
+  @media (min-width: 44rem) {
+    .two {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  .two h3 {
+    margin-bottom: 0.5rem;
+  }
+
+  .two p {
+    color: var(--ink-2);
+  }
+
+  .flow-wrap {
+    margin-top: clamp(2.5rem, 2rem + 2vw, 3.5rem);
+  }
+
+  .illo-wrap {
+    margin-top: 2rem;
+  }
+
+  .illo-wrap :global(.stage) {
+    border-radius: var(--radius);
+    background: var(--bg-2);
+  }
+
+  .stations {
+    display: grid;
+    gap: 1.5rem 2rem;
+    margin: 2.5rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  @media (min-width: 44rem) {
+    .stations {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .stations {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  .stations li {
+    padding-top: 1rem;
+    border-top: 1px solid var(--ink);
+  }
+
+  .stations h3 {
+    margin-bottom: 0.4rem;
+  }
+
+  .stations p {
+    font-size: 0.9375rem;
+    color: var(--ink-2);
+  }
+
+  .demo-grid {
+    display: grid;
+    gap: 2rem 3rem;
+    margin-top: clamp(3rem, 2.5rem + 2vw, 4rem);
+    align-items: start;
+  }
+
+  @media (min-width: 60rem) {
+    .demo-grid {
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    }
+  }
+
+  .demo-grid :global(img) {
+    width: 100%;
+    border-radius: var(--radius);
+  }
+
+  .demo-grid figcaption {
+    margin-top: 0.6rem;
+    font-size: 0.9375rem;
+    color: var(--ink-3);
+  }
+
+  .demo-grid .prose p {
+    color: var(--ink-2);
+  }
+
+  .results {
+    margin: 1.5rem 0 0;
+    padding: 0;
+    list-style: none;
+    max-width: var(--measure);
+  }
+
+  .results li {
+    display: grid;
+    gap: 0.35rem;
+    padding-block: 1.1rem;
+    border-top: 1px solid var(--line-2);
+  }
+
+  .results li:last-child {
+    border-bottom: 1px solid var(--line-2);
+  }
+</style>

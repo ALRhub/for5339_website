@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://www.for5339.kit.edu/sitemap-index.xml

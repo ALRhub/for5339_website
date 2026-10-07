@@ -1,0 +1,47 @@
+---
+import Base from '../../layouts/Base.astro';
+import NewsList from '../../components/NewsList.astro';
+import { getNews } from '../../lib/data';
+
+const news = await getNews();
+const years = [...new Set(news.map((n) => n.data.date.getUTCFullYear()))];
+---
+
+<Base title="News" description="Events, guest lectures, awards and publications of the DFG Research Unit KI-FOR 5339.">
+  <header class="page-head">
+    <div class="wrap">
+      <h1>News</h1>
+      <p class="lead">Workshops, guest lectures, awards and papers from the Research Unit.</p>
+      <p class="feed"><a href="/news/rss.xml">Subscribe with RSS</a></p>
+    </div>
+  </header>
+
+  <section class="section section--tight">
+    <div class="wrap">
+      {
+        years.map((y) => (
+          <section class="year" aria-labelledby={`y${y}`}>
+            <h2 id={`y${y}`}>{y}</h2>
+            <NewsList items={news.filter((n) => n.data.date.getUTCFullYear() === y)} />
+          </section>
+        ))
+      }
+    </div>
+  </section>
+</Base>
+
+<style>
+  .feed {
+    margin-top: 1rem;
+    font-weight: 500;
+  }
+
+  .year + .year {
+    margin-top: 3rem;
+  }
+
+  .year h2 {
+    margin-bottom: 0.75rem;
+    font-size: var(--step-3);
+  }
+</style>

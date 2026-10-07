@@ -1,0 +1,293 @@
+---
+import Base from '../layouts/Base.astro';
+import PublicationItem from '../components/PublicationItem.astro';
+import { SUBPROJECT_CODES } from '../content.config';
+import { getMemberKeys, getPublications, TYPE_LABEL } from '../lib/data';
+
+const pubs = await getPublications();
+const members = await getMemberKeys();
+const years = [...new Set(pubs.map((p) => p.data.year))].sort((a, b) => b - a);
+const codes = SUBPROJECT_CODES.filter((c) => pubs.some((p) => p.data.subprojects.includes(c)));
+const types = Object.keys(TYPE_LABEL).filter((t) => pubs.some((p) => p.data.type === t));
+---
+
+<Base
+  title="Publications"
+  description="Publications of the DFG Research Unit KI-FOR 5339 in machine learning, control, knowledge representation and composites manufacturing."
+>
+  <header class="page-head">
+    <div class="wrap">
+      <h1>Publications</h1>
+      <p class="lead">
+        {pubs.length} publications from the first funding phase, from journal articles on composite forming to
+        machine learning conference papers. Names of Research Unit members are set in bold.
+      </p>
+    </div>
+  </header>
+
+  <section class="section section--tight">
+    <div class="wrap">
+      <form class="filters" hidden aria-label="Filter publications">
+        <fieldset class="sp-filter">
+          <legend>Subproject</legend>
+          <div class="seg">
+            <label><input type="radio" name="sp" value="" checked /><span>All</span></label>
+            {
+              codes.map((c) => (
+                <label>
+                  <input type="radio" name="sp" value={c} />
+                  <span>{c}</span>
+                </label>
+              ))
+            }
+          </div>
+        </fieldset>
+        <div class="row">
+          <label class="field">
+            <span>Type</span>
+            <select name="type">
+              <option value="">All types</option>
+              {types.map((t) => <option value={t}>{TYPE_LABEL[t]}</option>)}
+            </select>
+          </label>
+          <label class="field grow">
+            <span>Search</span>
+            <input type="search" name="q" placeholder="Title, author or venue" autocomplete="off" />
+          </label>
+          <label class="check">
+            <input type="checkbox" name="highlight" />
+            <span>Highlights only</span>
+          </label>
+        </div>
+        <p class="count" aria-live="polite"></p>
+      </form>
+
+      {
+        years.map((y) => {
+          const list = pubs.filter((p) => p.data.year === y);
+          return (
+            <section class="year" data-year-group={y} aria-labelledby={`y${y}`}>
+              <h2 id={`y${y}`}>
+                {y} <span class="n">{list.length}</span>
+              </h2>
+              <ul class="pub-list">
+                {list.map((p) => <PublicationItem pub={p} members={members} />)}
+              </ul>
+            </section>
+          );
+        })
+      }
+      <p class="empty" hidden>No publication matches these filters.</p>
+    </div>
+  </section>
+</Base>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('form.filters');
+  if (form) {
+    form.hidden = false;
+    const items = Array.from(document.querySelectorAll<HTMLElement>('.pub'));
+    const groups = Array.from(document.querySelectorAll<HTMLElement>('[data-year-group]'));
+    const count = form.querySelector<HTMLElement>('.count')!;
+    const empty = document.querySelector<HTMLElement>('.empty')!;
+
+    // Deep links such as /publications/?sp=M2
+    const params = new URLSearchParams(location.search);
+    const initialSp = params.get('sp');
+    if (initialSp) {
+      const radio = form.querySelector<HTMLInputElement>(`input[name="sp"][value="${CSS.escape(initialSp.toUpperCase())}"]`);
+      if (radio) radio.checked = true;
+    }
+
+    const apply = () => {
+      const data = new FormData(form);
+      const sp = String(data.get('sp') ?? '');
+      const type = String(data.get('type') ?? '');
+      const q = String(data.get('q') ?? '').trim().toLowerCase();
+      const highlight = data.get('highlight') === 'on';
+      let shown = 0;
+      for (const el of items) {
+        const ok =
+          (!sp || (el.dataset.sp ?? '').split(' ').includes(sp)) &&
+          (!type || el.dataset.type === type) &&
+          (!highlight || el.dataset.highlight === 'true') &&
+          (!q || (el.dataset.search ?? '').includes(q));
+        el.hidden = !ok;
+        if (ok) shown++;
+      }
+      for (const g of groups) {
+        const visible = g.querySelectorAll('.pub:not([hidden])').length;
+        g.hidden = visible === 0;
+        const n = g.querySelector<HTMLElement>('.n');
+        if (n) n.textContent = String(visible);
+      }
+      const filtered = sp || type || q || highlight;
+      count.textContent = filtered ? `${shown} of ${items.length} publications` : `${items.length} publications`;
+      empty.hidden = shown !== 0;
+
+      const url = new URL(location.href);
+      if (sp) url.searchParams.set('sp', sp);
+      else url.searchParams.delete('sp');
+      history.replaceState(null, '', url);
+    };
+
+    form.addEventListener('input', apply);
+    form.addEventListener('submit', (e) => e.preventDefault());
+    apply();
+  }
+</script>
+
+<style>
+  .filters {
+    display: grid;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding: 1.25rem;
+    border-radius: 8px;
+    background: var(--bg-2);
+  }
+
+  fieldset {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    min-width: 0;
+  }
+
+  legend,
+  .field > span {
+    display: block;
+    margin-bottom: 0.4rem;
+    font-size: 0.875rem;
+    color: var(--ink-2);
+  }
+
+  .seg {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+  }
+
+  .seg label {
+    position: relative;
+  }
+
+  .seg input {
+    position: absolute;
+    opacity: 0;
+    inset: 0;
+    margin: 0;
+    cursor: pointer;
+  }
+
+  .seg span {
+    display: inline-block;
+    min-width: 2.75rem;
+    min-height: 2.5rem;
+    padding: 0.45rem 0.8rem;
+    border: 1px solid var(--line-2);
+    border-radius: var(--radius);
+    background: var(--bg);
+    text-align: center;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    color: var(--ink-2);
+  }
+
+  .seg input:checked + span {
+    background: var(--link);
+    border-color: var(--link);
+    color: #fff;
+  }
+
+  .seg input:focus-visible + span {
+    outline: 3px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  .seg label:hover span {
+    border-color: var(--link);
+  }
+
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: end;
+    gap: 1rem 1.25rem;
+  }
+
+  .field select,
+  .field input {
+    min-height: 2.75rem;
+    padding: 0.45rem 0.7rem;
+    border: 1px solid var(--line-2);
+    border-radius: var(--radius);
+    background: var(--bg);
+    color: var(--ink);
+    font: inherit;
+    font-size: 1rem;
+  }
+
+  .field.grow {
+    flex: 1 1 16rem;
+  }
+
+  .field.grow input {
+    width: 100%;
+  }
+
+  .check {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 2.75rem;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+
+  .check input {
+    width: 1.15rem;
+    height: 1.15rem;
+    accent-color: var(--link);
+  }
+
+  .count {
+    font-size: 0.9375rem;
+    color: var(--ink-2);
+  }
+
+  .year {
+    margin-top: 2.5rem;
+  }
+
+  .year:first-of-type {
+    margin-top: 0;
+  }
+
+  .year h2 {
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    margin-bottom: 0.5rem;
+    font-size: var(--step-3);
+  }
+
+  .n {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--ink-3);
+  }
+
+  .pub-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .empty {
+    padding: 2rem 0;
+    color: var(--ink-2);
+  }
+</style>

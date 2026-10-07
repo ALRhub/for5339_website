@@ -1,0 +1,127 @@
+---
+// A small map of how the subprojects work together, as in the Flow diagram:
+// T1, then T2 and M1, then M2, then M3 and M4. F is the bar across the top and
+// C, which coordinates all of them, is the frame. The subprojects in `codes`
+// are filled.
+interface Props {
+  codes: string[];
+  size?: number;
+  labels?: boolean;
+  class?: string;
+}
+
+const { codes, size = 38, labels = false, class: className } = Astro.props;
+const k = labels ? 4.4 : 1;
+const W = Math.round(50 * k);
+// the labelled version is taller, so the labels under M1 and M4 stay inside the frame
+const H = Math.round((labels ? 37.5 : 34) * k);
+const at: Record<string, [number, number]> = { T1: [8, 21], T2: [19, 15], M1: [19, 27], M2: [31, 21], M3: [42, 15], M4: [42, 27] };
+const edges = [['T1', 'T2'], ['T1', 'M1'], ['T2', 'M2'], ['M1', 'M2'], ['M2', 'M3'], ['M2', 'M4']];
+const above = new Set(['T2', 'M3']);
+const r = labels ? 3.2 : 3.6;
+const on = new Set(codes);
+const title = codes.length ? `Works in ${codes.join(', ')}` : '';
+---
+
+<svg
+  class:list={['flowmark', className]}
+  viewBox={`0 0 ${W} ${H}`}
+  width={labels ? W : size}
+  height={labels ? H : (size * H) / W}
+  role={labels ? undefined : 'img'}
+  aria-label={labels ? undefined : title}
+  aria-hidden={labels ? 'true' : undefined}
+>
+  <rect class:list={['frame', { 'is-on': on.has('C') }]} x={0.75 * k} y={0.75 * k} width={W - 1.5 * k} height={H - 1.5 * k} rx={5 * k} data-code="C" vector-effect="non-scaling-stroke" />
+  <rect class:list={['bar', { 'is-on': on.has('F') }]} x={5 * k} y={3.5 * k} width={40 * k} height={3.6 * k} rx={1.8 * k} data-code="F" />
+  {
+    labels && (
+      <text x={25 * k} y={5.3 * k + 4} text-anchor="middle" class="lbl lbl--bar" data-code="F">
+        F
+      </text>
+    )
+  }
+  {edges.map(([a, b]) => <line class="edge" x1={at[a][0] * k} y1={at[a][1] * k} x2={at[b][0] * k} y2={at[b][1] * k} vector-effect="non-scaling-stroke" />)}
+  {
+    Object.entries(at).map(([code, [x, y]]) => (
+      <circle class:list={['node', { 'is-on': on.has(code) }]} cx={x * k} cy={y * k} r={r * k} data-code={code} vector-effect="non-scaling-stroke" />
+    ))
+  }
+  {
+    labels &&
+      Object.entries(at).map(([code, [x, y]]) => (
+        <text x={x * k} y={above.has(code) ? (y - r - 1.6) * k : (y + r + 3.4) * k} text-anchor="middle" class="lbl" data-code={code}>
+          {code}
+        </text>
+      ))
+  }
+  {
+    labels && (
+      <text x={3 * k} y={H - 2.4 * k} text-anchor="start" class="lbl lbl--frame" data-code="C">
+        C
+      </text>
+    )
+  }
+</svg>
+
+<style>
+  .flowmark {
+    flex: none;
+    overflow: visible;
+    font-family: var(--font);
+  }
+
+  .frame {
+    fill: none;
+    stroke: var(--line-2);
+    stroke-width: 1px;
+  }
+
+  .frame.is-on {
+    stroke: var(--accent);
+    stroke-width: 2px;
+  }
+
+  .bar {
+    fill: #e3e7ea;
+  }
+
+  .bar.is-on {
+    fill: var(--accent);
+  }
+
+  .edge {
+    stroke: var(--line-2);
+    stroke-width: 1px;
+  }
+
+  .node {
+    fill: var(--bg);
+    stroke: #b3b9bf;
+    stroke-width: 1.2px;
+  }
+
+  .node.is-on {
+    fill: var(--accent);
+    stroke: var(--accent);
+  }
+
+  .lbl {
+    font-size: 11px;
+    font-weight: 600;
+    fill: var(--ink-2);
+  }
+
+  .bar.is-on + .lbl--bar {
+    fill: #fff;
+  }
+
+  /* the label sits on the bar; let clicks reach the bar underneath */
+  .lbl--bar {
+    pointer-events: none;
+  }
+
+  .lbl--frame {
+    fill: var(--ink-3);
+  }
+</style>

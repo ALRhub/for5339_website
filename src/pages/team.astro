@@ -1,0 +1,511 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import Base from '../layouts/Base.astro';
+import FlowMark from '../components/FlowMark.astro';
+import kickoff from '../assets/images/kickoff-2023.jpg';
+import { byName, bySubprojects, getPeople, getSubprojects, inOrder, numberWord, type Person } from '../lib/data';
+
+const people = await getPeople();
+const subprojects = await getSubprojects();
+
+// Portraits are picked up by file name: src/assets/people/<id>.jpg
+const files = import.meta.glob<{ default: ImageMetadata }>('../assets/people/*.{jpg,jpeg,png}', { eager: true });
+const photos = new Map(Object.entries(files).map(([path, mod]) => [path.split('/').pop()!.replace(/\.\w+$/, ''), mod.default]));
+
+// Principal investigators in subproject order (T1 to C, as in the menu): each at the subproject they
+// lead, or, if they lead none, at their first subproject after its lead.
+const piPlace = (id: string) => {
+  const lead = subprojects.findIndex((s) => s.data.pis[0] === id);
+  if (lead >= 0) return [lead, 0];
+  const first = subprojects.findIndex((s) => s.data.pis.includes(id));
+  return [first < 0 ? subprojects.length : first, first < 0 ? 0 : subprojects[first].data.pis.indexOf(id)];
+};
+const pis = people
+  .filter((p) => p.data.group === 'pi')
+  .sort((a, b) => {
+    const [sa, pa] = piPlace(a.id), [sb, pb] = piPlace(b.id);
+    return sa - sb || pa - pb || byName(a, b);
+  });
+// Where each principal investigator stands in each subproject's list (frontmatter `pis`), e.g. "T2:0 M2:1";
+// the filter shows the PIs of a subproject in that order.
+const piRank = (id: string) =>
+  subprojects
+    .map((s) => [s.data.code, s.data.pis.indexOf(id)] as const)
+    .filter(([, i]) => i >= 0)
+    .map(([code, i]) => `${code}:${i}`)
+    .join(' ');
+// Researchers and former members in the same subproject order.
+const researchers = people.filter((p) => p.data.group === 'researcher').sort(bySubprojects);
+const alumni = people.filter((p) => p.data.group === 'alumni').sort(bySubprojects);
+
+const groups = [
+  { id: 'pis', title: 'Principal investigators', list: pis },
+  { id: 'researchers', title: 'Researchers', list: researchers },
+  { id: 'alumni', title: 'Former members', list: alumni },
+].filter((g) => g.list.length > 0);
+
+const initials = (name: string) =>
+  name
+    .split(' ')
+    .filter((w) => /^[A-ZÄÖÜ]/.test(w))
+    .map((w) => w[0])
+    .filter((_, i, a) => i === 0 || i === a.length - 1)
+    .join('');
+const fullName = (p: Person) => (p.data.title ? `${p.data.title} ${p.data.name}` : p.data.name);
+---
+
+<Base title="Team" description="Principal investigators and researchers of the DFG Research Unit KI-FOR 5339, by subproject.">
+  <header class="page-head">
+    <div class="wrap head">
+      <div>
+        <h1>Team</h1>
+        <p class="lead">
+          {numberWord(pis.length, true)} principal investigators and {numberWord(researchers.length)} researchers from KIT and
+          Fraunhofer IOSB. Choose a subproject to see who works on it.
+        </p>
+      </div>
+      <figure class="legend" aria-hidden="true">
+        <FlowMark codes={[]} labels />
+        <figcaption>
+          <b class="legend-title">Everyone</b>
+          The small map on each card shows where a person works in the Research Unit.
+        </figcaption>
+      </figure>
+    </div>
+  </header>
+
+  <div class="menu-bar">
+    <div class="wrap">
+      <div class="menu" role="group" aria-label="Show people by subproject" hidden>
+        <button type="button" data-sp="" aria-pressed="true">Everyone</button>
+        {
+          subprojects.map((s) => (
+            <button type="button" data-sp={s.data.code} aria-pressed="false">
+              <b>{s.data.code}</b> {s.data.verb}
+            </button>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+
+  <section class="section section--tight">
+    <div class="wrap">
+      {
+        subprojects.map((s) => (
+          <div class="sp-info" data-sp={s.data.code} hidden>
+            <p>
+              <span class="code">{s.data.code}</span> <b>{s.data.title}</b>
+            </p>
+            <p class="muted">
+              {s.data.summary} <a href={`/subprojects/${s.data.code.toLowerCase()}/`}>Open the subproject</a>
+            </p>
+          </div>
+        ))
+      }
+      <p class="status visually-hidden" aria-live="polite"></p>
+
+      {
+        groups.map((g) => (
+          <section class="group" aria-labelledby={`h-${g.id}`}>
+            <h2 id={`h-${g.id}`}>{g.title}</h2>
+            <ul class="people">
+              {g.list.map((p) => {
+                const photo = photos.get(p.id);
+                const pi = p.data.group === 'pi';
+                const second = pi ? (p.data.role ?? 'Principal investigator') : p.data.focus;
+                const third = pi ? p.data.affiliation : p.data.note;
+                return (
+                  <li class:list={['person', { 'person--text': !pi }]} data-sp={p.data.subprojects.join(' ')} data-rank={pi ? piRank(p.id) : undefined}>
+                    {pi && (
+                      <div class="portrait">
+                        {photo ? (
+                          <Image src={photo} alt="" widths={[160, 230]} sizes="9rem" />
+                        ) : (
+                          <span class="initials" aria-hidden="true">
+                            {initials(p.data.name)}
+                          </span>
+                        )}
+                      </div>
+                    )}
+                    <div class="info">
+                      <p class="name">{p.data.url ? <a href={p.data.url}>{fullName(p)}</a> : fullName(p)}</p>
+                      {second && <p class="second">{second}</p>}
+                      {third && <p class="third">{third}</p>}
+                      <p class="where">
+                        <FlowMark codes={p.data.subprojects} />
+                        <span class="where-codes">{inOrder(p.data.subprojects).join(', ')}</span>
+                      </p>
+                    </div>
+                  </li>
+                );
+              })}
+            </ul>
+          </section>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="section section--grey section--tight" aria-labelledby="together-title">
+    <div class="wrap together">
+      <figure>
+        <Image
+          src={kickoff}
+          alt="Group photo of the members of the Research Unit standing on a staircase."
+          widths={[360, 560, 800]}
+          sizes="(min-width: 52rem) 20rem, 80vw"
+        />
+      </figure>
+      <div>
+        <h2 id="together-title">Together</h2>
+        <p class="muted">
+          The Research Unit at its kick-off meeting in 2023. Since then, a fall workshop has brought doctoral researchers
+          and principal investigators from all subprojects together every year.
+        </p>
+        <p><a class="text-link" href="/contact/">Contact</a></p>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<script>
+  const menu = document.querySelector<HTMLElement>('.menu');
+  if (menu) {
+    menu.hidden = false;
+    const buttons = Array.from(menu.querySelectorAll<HTMLButtonElement>('button[data-sp]'));
+    const cards = Array.from(document.querySelectorAll<HTMLElement>('.person'));
+    const groups = Array.from(document.querySelectorAll<HTMLElement>('.group'));
+    const infos = Array.from(document.querySelectorAll<HTMLElement>('.sp-info'));
+    const status = document.querySelector<HTMLElement>('.status');
+    // the large map in the header mirrors the selection, and its parts can be clicked
+    const map = document.querySelector<SVGSVGElement>('.legend svg');
+    const mapTitle = document.querySelector<HTMLElement>('.legend-title');
+    // principal investigators of a subproject appear in that subproject's order; "Everyone" keeps the page order
+    const piList = document.querySelector<HTMLElement>('#h-pis')?.parentElement?.querySelector<HTMLElement>('.people');
+    const piCards = piList ? Array.from(piList.querySelectorAll<HTMLElement>(':scope > .person')) : [];
+    const rank = (c: HTMLElement, sp: string) => {
+      const entry = (c.dataset.rank ?? '').split(' ').find((r) => r.startsWith(`${sp}:`));
+      return entry ? Number(entry.slice(sp.length + 1)) : piCards.length + piCards.indexOf(c);
+    };
+    let current = '';
+
+    // scroll the menu sideways (not the page) so the selected button is in view on narrow screens
+    const reveal = (b?: HTMLButtonElement) => {
+      if (!b) return;
+      const r = b.getBoundingClientRect();
+      const m = menu.getBoundingClientRect();
+      if (r.left < m.left || r.right > m.right) menu.scrollLeft += r.left - m.left - (m.width - r.width) / 2;
+    };
+
+    const apply = (sp: string, push = true) => {
+      current = sp;
+      if (piList) {
+        const order = sp ? [...piCards].sort((a, b) => rank(a, sp) - rank(b, sp)) : piCards;
+        order.forEach((c) => piList.appendChild(c));
+      }
+      cards.forEach((c) => (c.hidden = Boolean(sp) && !(c.dataset.sp ?? '').split(' ').includes(sp)));
+      groups.forEach((g) => (g.hidden = !g.querySelector('.person:not([hidden])')));
+      infos.forEach((i) => (i.hidden = i.dataset.sp !== sp));
+      buttons.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.sp === sp)));
+      map?.querySelectorAll<SVGElement>('[data-code]:not(text)').forEach((el) => el.classList.toggle('is-on', el.dataset.code === sp));
+      const button = buttons.find((b) => b.dataset.sp === sp);
+      if (mapTitle) mapTitle.textContent = button?.textContent?.trim() ?? 'Everyone';
+      reveal(button);
+      const shown = cards.filter((c) => !c.hidden).length;
+      if (status) status.textContent = sp ? `${shown} people in ${sp}` : `${shown} people`;
+      if (push) {
+        const url = new URL(location.href);
+        if (sp) url.searchParams.set('sp', sp);
+        else url.searchParams.delete('sp');
+        history.replaceState(null, '', url);
+      }
+    };
+
+    buttons.forEach((b) => b.addEventListener('click', () => apply(b.dataset.sp ?? '')));
+    map?.addEventListener('click', (e) => {
+      const code = (e.target as Element).closest('[data-code]')?.getAttribute('data-code');
+      if (code) apply(code === current ? '' : code);
+    });
+    const initial = (new URLSearchParams(location.search).get('sp') ?? '').toUpperCase();
+    apply(buttons.some((b) => b.dataset.sp === initial) ? initial : '', false);
+  }
+</script>
+
+<style>
+  .head {
+    display: grid;
+    gap: 2rem 4rem;
+    align-items: end;
+  }
+
+  @media (min-width: 56rem) {
+    .head {
+      grid-template-columns: minmax(0, 1fr) auto;
+    }
+  }
+
+  .legend {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    max-width: 22rem;
+  }
+
+  .legend figcaption {
+    font-size: 0.875rem;
+    color: var(--ink-3);
+  }
+
+  .legend-title {
+    display: block;
+    margin-bottom: 0.2rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .legend :global([data-code]) {
+    cursor: pointer;
+  }
+
+  .legend :global(.node),
+  .legend :global(.bar),
+  .legend :global(.frame) {
+    transition: fill 0.2s ease, stroke 0.2s ease;
+  }
+
+  .legend :global(.node:hover) {
+    stroke: var(--ink-2);
+  }
+
+  .menu-bar {
+    position: sticky;
+    top: var(--header-h);
+    z-index: 20;
+    background: rgb(255 255 255 / 0.94);
+    backdrop-filter: blur(8px);
+    border-block: 1px solid var(--line);
+  }
+
+  .menu {
+    display: flex;
+    gap: 0.4rem;
+    padding-block: 0.75rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .menu::-webkit-scrollbar {
+    display: none;
+  }
+
+  .menu button {
+    flex: none;
+    min-height: 2.5rem;
+    padding: 0.4rem 0.95rem;
+    border: 1px solid var(--line-2);
+    border-radius: 999px;
+    background: var(--bg);
+    color: var(--ink-2);
+    font: inherit;
+    font-size: 0.9375rem;
+    white-space: nowrap;
+    cursor: pointer;
+  }
+
+  .menu button b {
+    font-weight: 600;
+    color: var(--link);
+  }
+
+  .menu button:hover {
+    border-color: var(--ink);
+    color: var(--ink);
+  }
+
+  .menu button[aria-pressed='true'] {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: #fff;
+  }
+
+  .menu button[aria-pressed='true'] b {
+    color: #fff;
+  }
+
+  .sp-info {
+    max-width: 50rem;
+    margin-bottom: 2.5rem;
+    padding: 1.25rem 1.5rem;
+    border-radius: var(--radius);
+    background: var(--bg-2);
+  }
+
+  .sp-info b {
+    font-weight: 600;
+  }
+
+  .sp-info .muted {
+    margin-top: 0.35rem;
+  }
+
+  .group + .group {
+    margin-top: clamp(3rem, 2.5rem + 2vw, 4.5rem);
+  }
+
+  .group h2 {
+    margin-bottom: 1.5rem;
+    font-size: var(--step-2);
+  }
+
+  .people {
+    display: grid;
+    gap: 2.5rem 2rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    grid-template-columns: repeat(auto-fill, minmax(13.5rem, 1fr));
+  }
+
+  /* cards in a row share its height; the info fills the card so that the subproject row sits at
+     the bottom and lines up across the row */
+  .person {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    gap: 0.9rem;
+  }
+
+  /* only the principal investigators have portraits; the other cards are text, set off by a rule */
+  .person--text {
+    grid-template-rows: 1fr;
+    padding-top: 0.9rem;
+    border-top: 1px solid var(--line);
+  }
+
+  .portrait {
+    width: 9rem;
+    aspect-ratio: 4 / 5;
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: var(--bg-2);
+  }
+
+  .portrait :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .initials {
+    display: grid;
+    place-items: center;
+    width: 100%;
+    height: 100%;
+    font-size: 2rem;
+    font-weight: 500;
+    font-stretch: 90%;
+    color: var(--ink-3);
+    letter-spacing: 0.02em;
+  }
+
+  .info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .name {
+    font-weight: 600;
+    line-height: 1.3;
+  }
+
+  .name a {
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  .name a:hover {
+    text-decoration: underline;
+  }
+
+  .second {
+    font-size: 0.9375rem;
+    line-height: 1.4;
+    color: var(--ink-2);
+  }
+
+  .third {
+    font-size: 0.875rem;
+    line-height: 1.4;
+    color: var(--ink-3);
+  }
+
+  .where {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: auto;
+    padding-top: 0.35rem;
+  }
+
+  .where-codes {
+    font-size: 0.875rem;
+    font-weight: 600;
+    font-stretch: 92%;
+    color: var(--link);
+  }
+
+  @media (max-width: 36rem) {
+    .people {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 1.5rem;
+    }
+
+    .person {
+      grid-template-columns: 5.5rem minmax(0, 1fr);
+      grid-template-rows: auto;
+      gap: 1rem;
+      align-items: start;
+    }
+
+    .person--text {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .portrait {
+      width: 5.5rem;
+    }
+
+    .initials {
+      font-size: 1.4rem;
+    }
+  }
+
+  .together {
+    display: grid;
+    gap: 2rem 3rem;
+    align-items: center;
+  }
+
+  @media (min-width: 52rem) {
+    .together {
+      grid-template-columns: 20rem minmax(0, 1fr);
+    }
+  }
+
+  .together :global(img) {
+    width: 100%;
+    border-radius: var(--radius);
+  }
+
+  .together h2 {
+    font-size: var(--step-2);
+    margin-bottom: 0.75rem;
+  }
+
+  .together p + p {
+    margin-top: 1rem;
+  }
+</style>

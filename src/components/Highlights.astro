@@ -1,0 +1,123 @@
+---
+// The ten highlighted publications of the renewal proposal, as cards that
+// lead with venue and award. Every subproject is represented among them.
+import { getHighlights, getMemberKeys, inOrder, isMember, publicationHref, venueLabel } from '../lib/data';
+
+const items = await getHighlights();
+const members = await getMemberKeys();
+---
+
+<ol class="highlights">
+  {
+    items.map((pub) => {
+      const p = pub.data;
+      const href = publicationHref(p);
+      return (
+        <li class="paper">
+          <p class="venue">
+            <span class="v">{venueLabel(p)}</span>
+            {p.award && <span class="award">{p.award}</span>}
+            {p.status === 'accepted' && <span class="note">accepted</span>}
+          </p>
+          <h3 class="title">{href ? <a href={href}>{p.title}</a> : p.title}</h3>
+          <p class="authors">
+            {p.authors.map((a, i) => (
+              <Fragment>
+                {isMember(a, members) ? <span class="member">{a}</span> : a}
+                {i < p.authors.length - 1 ? ', ' : ''}
+              </Fragment>
+            ))}
+          </p>
+          <p class="codes">
+            {inOrder(p.subprojects).map((c) => (
+              <a class="code" href={`/subprojects/${c.toLowerCase()}/`} title={`Subproject ${c}`}>
+                {c}
+              </a>
+            ))}
+          </p>
+        </li>
+      );
+    })
+  }
+</ol>
+
+<style>
+  .highlights {
+    display: grid;
+    gap: 2.25rem 3rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  @media (min-width: 52rem) {
+    .highlights {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  /* each card spans four rows of the list and shares them with the card beside it, so venue,
+     title, authors and subproject tags line up across a row */
+  .paper {
+    display: grid;
+    grid-row: span 4;
+    grid-template-rows: subgrid;
+    row-gap: 0.45rem;
+    align-content: start;
+    padding-top: 1rem;
+    border-top: 1px solid var(--ink);
+  }
+
+  .codes {
+    align-self: end;
+  }
+
+  .venue {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.2rem 0.75rem;
+    font-size: 0.9375rem;
+  }
+
+  .v {
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .award {
+    font-weight: 500;
+    color: var(--link);
+  }
+
+  .note {
+    color: var(--ink-3);
+  }
+
+  .title {
+    font-size: 1.125rem;
+    line-height: 1.35;
+    text-wrap: pretty;
+  }
+
+  .title a {
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  .title a:hover {
+    color: var(--link);
+    text-decoration: underline;
+  }
+
+  .authors {
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    color: var(--ink-3);
+  }
+
+  .member {
+    color: var(--ink);
+    font-weight: 500;
+  }
+</style>

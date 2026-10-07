@@ -1,0 +1,112 @@
+---
+import { formatDate, isoDate, type NewsItem } from '../lib/data';
+
+interface Props {
+  items: NewsItem[];
+  headingLevel?: 'h2' | 'h3';
+}
+
+const { items, headingLevel = 'h3' } = Astro.props;
+const Heading = headingLevel;
+
+const KIND: Record<string, string> = {
+  event: 'Event',
+  talk: 'Guest lecture',
+  award: 'Award',
+  publication: 'Publication',
+  press: 'Press',
+  milestone: 'Milestone',
+};
+---
+
+<ol class="news">
+  {
+    items.map((n) => {
+      const hasBody = Boolean(n.body && n.body.trim().length > 0);
+      return (
+        <li class="item">
+          <p class="when">
+            <time datetime={isoDate(n.data.date, n.data.precision)}>{formatDate(n.data.date, n.data.precision)}</time>
+            <span class="kind">{KIND[n.data.kind]}</span>
+          </p>
+          <div>
+            <Heading class="title">{hasBody ? <a href={`/news/${n.id}/`}>{n.data.title}</a> : n.data.title}</Heading>
+            <p class="summary">{n.data.summary}</p>
+            {n.data.link && (
+              <p class="link">
+                <a href={n.data.link.href}>{n.data.link.label}</a>
+              </p>
+            )}
+          </div>
+        </li>
+      );
+    })
+  }
+</ol>
+
+<style>
+  .news {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .item {
+    display: grid;
+    gap: 0.35rem 2.5rem;
+    padding-block: 1.4rem;
+    border-top: 1px solid var(--line);
+  }
+
+  @media (min-width: 44rem) {
+    .item {
+      grid-template-columns: 10rem minmax(0, 1fr);
+    }
+  }
+
+  .when {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.1rem 0.75rem;
+    font-size: 0.9375rem;
+    font-variant-numeric: tabular-nums;
+    color: var(--ink);
+  }
+
+  @media (min-width: 44rem) {
+    .when {
+      flex-direction: column;
+      padding-top: 0.1rem;
+    }
+  }
+
+  .kind {
+    color: var(--ink-3);
+  }
+
+  .title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    line-height: 1.35;
+  }
+
+  .title a {
+    color: var(--ink);
+  }
+
+  .title a:hover {
+    color: var(--link);
+  }
+
+  .summary {
+    margin-top: 0.35rem;
+    max-width: 64ch;
+    color: var(--ink-2);
+  }
+
+  .link {
+    margin-top: 0.5rem;
+    font-size: 0.9375rem;
+    font-weight: 500;
+  }
+</style>

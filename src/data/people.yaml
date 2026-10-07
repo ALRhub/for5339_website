@@ -1,0 +1,203 @@
+# People of the Research Unit (current state, first funding phase).
+#
+# group:        pi | researcher | alumni
+# role:         optional coordinating role, printed next to the name
+# subprojects:  codes from src/content/subprojects (F, T1, T2, M1, M2, M3, M4, C)
+# focus:        one line on the person's research (optional)
+# url:          personal or institute page (optional)
+# email:        optional; shown on the contact page only for the contacts listed there
+# photo:        put a portrait at src/assets/people/<id>.jpg (4:5); it is picked up automatically
+#
+# Sources: the Phase 1 proposals (2021), the applicants of each subproject in GEPRIS
+# (DFG project 459291153 and its subprojects) and the team list of the interim report
+# (May 2026).
+
+# --- Principal investigators ------------------------------------------------
+
+- id: beyerer
+  name: Jürgen Beyerer
+  title: Prof. Dr.-Ing. habil.
+  affiliation: Vision and Fusion Laboratory (IES), KIT, and Fraunhofer IOSB
+  url: https://ies.iar.kit.edu/1473_1497.php
+  email: juergen.beyerer@iosb.fraunhofer.de
+  group: pi
+  role: Spokesperson
+  subprojects: [F, M1, C]
+
+- id: neumann
+  name: Gerhard Neumann
+  title: Prof. Dr.
+  affiliation: Autonomous Learning Robots (ALR), KIT
+  url: https://alr-kit.de/
+  email: gerhard.neumann@kit.edu
+  group: pi
+  role: Deputy spokesperson and Bridge Professor
+  subprojects: [M2, M3, M4]
+
+- id: fleischer
+  name: Jürgen Fleischer
+  title: Prof. Dr.-Ing.
+  affiliation: wbk Institute of Production Science, KIT
+  url: https://www.wbk.kit.edu/21_211.php
+  group: pi
+  subprojects: [T1, T2]
+
+- id: hanebeck
+  name: Uwe D. Hanebeck
+  title: Prof. Dr.-Ing. habil.
+  affiliation: Intelligent Sensor-Actuator-Systems Laboratory (ISAS), KIT
+  url: https://isas.iar.kit.edu/de/Mitarbeiter_Hanebeck.php
+  group: pi
+  subprojects: [M2, M3, M4]
+
+- id: henning
+  name: Frank Henning
+  title: Prof. Dr.-Ing.
+  affiliation: Institute of Vehicle System Technology (FAST), KIT, and Fraunhofer ICT
+  url: https://www.fast.kit.edu/lbt/5192_1240.php
+  group: pi
+  subprojects: [T1, T2, M1]
+
+- id: kaefer
+  name: Tobias Käfer
+  title: Dr.-Ing.
+  affiliation: Institute of Applied Informatics and Formal Description Methods (AIFB), KIT
+  url: https://aifb.kit.edu/web/Tobias_K%C3%A4fer
+  group: pi
+  subprojects: [F]
+
+- id: kaerger
+  name: Luise Kärger
+  title: Prof. Dr.-Ing.
+  affiliation: Institute of Vehicle System Technology (FAST), KIT
+  url: https://www.fast.kit.edu/lbt/5192_3870.php
+  group: pi
+  subprojects: [T2, M2]
+
+- id: pfrommer
+  name: Julius Pfrommer
+  title: Dr.-Ing.
+  affiliation: Fraunhofer IOSB
+  url: https://www.karlsruher-forschungsfabrik.de/de/kontakt.html
+  group: pi
+  subprojects: [F, M2, M3]
+
+# --- Doctoral and postdoctoral researchers ----------------------------------
+
+- id: bott
+  name: Alexander Bott
+  focus: Digital twins and information models for modular production
+  group: researcher
+  subprojects: [T1]
+
+- id: dahlinger
+  name: Philipp Dahlinger
+  focus: Graph network simulators and meta-learning
+  group: researcher
+  subprojects: [M2]
+
+- id: decker
+  name: Hannah Decker
+  focus: Warpage in stamp forming of thermoplastic laminates
+  group: researcher
+  subprojects: [T1, M1]
+
+- id: doehner
+  name: Frank Döhner
+  focus: Sensor placement and fault diagnosis
+  group: researcher
+  subprojects: [M1]
+
+- id: hoang
+  name: Tai Hoang
+  focus: Reinforcement learning and physical modelling with graphs
+  group: researcher
+  subprojects: [M2, M4]
+
+- id: kiroriwal
+  name: Saksham Kiroriwal
+  focus: Bayesian optimisation of multi-stage processes
+  group: researcher
+  subprojects: [M3]
+
+- id: kubelka
+  name: Lukas Kubelka
+  focus: Knowledge graphs for process data
+  group: researcher
+  subprojects: [F]
+
+- id: li
+  name: Yuyang Li
+  focus: Language models and knowledge graphs for decision support
+  group: researcher
+  subprojects: [F]
+
+- id: luo
+  name: Xiaozhu Luo
+  group: researcher
+  subprojects: [M4]
+
+- id: mehner
+  name: Malte Mehner
+  group: researcher
+  subprojects: [T1]
+
+- id: mitsch
+  name: Johannes Mitsch
+  focus: Forming simulation of thermoplastic composites
+  group: researcher
+  subprojects: [T2]
+
+- id: nasrollah
+  name: Zahra Nasrollah
+  focus: Probabilistic quality control
+  group: researcher
+  subprojects: [M1, F]
+
+- id: walker
+  name: Markus Walker
+  focus: Uncertainty calibration and predictive control
+  group: researcher
+  subprojects: [M4]
+
+- id: wuerth
+  name: Tobias Würth
+  focus: Physics-informed and graph neural networks for simulation
+  group: researcher
+  subprojects: [T2, M2]
+
+- id: youssef
+  name: Shahenda Youssef
+  focus: Causal machine learning for manufacturing
+  group: researcher
+  subprojects: [M1]
+
+- id: zeeb
+  name: Georg Zeeb
+  focus: Instrumented stamp forming and gripper design
+  group: researcher
+  subprojects: [T1, M1]
+
+# --- Former members ------------------------------------------------------------
+
+- id: rehak
+  name: Josephine Rehak
+  title: Dr.
+  focus: Causal discovery and root-cause analysis
+  note: Doctorate completed at KIT during the first funding phase
+  group: alumni
+  subprojects: [M1]
+
+- id: arabizadeh
+  name: Negar Arabizadeh
+  focus: Maturity of production processes
+  group: alumni
+  subprojects: [F]
+
+- id: freymuth
+  name: Niklas Freymuth
+  title: Dr.
+  focus: Adaptive meshes and graph network simulators
+  note: Doctorate completed during the first funding phase
+  group: alumni
+  subprojects: [M2]

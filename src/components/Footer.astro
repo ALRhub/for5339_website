@@ -1,0 +1,158 @@
+---
+import { Image } from 'astro:assets';
+import dfgLogo from '../assets/brand/dfg-logo-funded-by-en.png';
+import Logo from './Logo.astro';
+import { funding, nav, partners, site } from '../config';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="wrap grid">
+    <div class="about">
+      <p class="name"><Logo /></p>
+      <p class="title">{site.title}</p>
+      <p class="funding">
+        Funded by the {funding.funder}, project number <a href={funding.gepris}>{funding.projectNumber}</a>.
+      </p>
+      <!-- The official "Funded by" logo, unaltered; the padding keeps the clear zone the DFG requires -->
+      <a class="dfg" href="https://www.dfg.de/en" aria-label="Deutsche Forschungsgemeinschaft (DFG, German Research Foundation)">
+        <Image src={dfgLogo} width={216} densities={[1, 2]} format="png" alt="" />
+      </a>
+    </div>
+
+    <nav aria-label="Footer">
+      <p class="col-title">Website</p>
+      <ul>
+        <li><a href="/">Home</a></li>
+        {nav.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+      </ul>
+    </nav>
+
+    <div>
+      <p class="col-title">Partners</p>
+      <ul>
+        {partners.map((p) => <li><a href={p.href}>{p.name}</a></li>)}
+        <li><a href="https://www.dfg.de/en">Deutsche Forschungsgemeinschaft</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="legal">
+      <p>&copy; {year} Karlsruhe Institute of Technology</p>
+      <ul>
+        <li><a href="/legal-notice/">Legal notice</a></li>
+        <li><a href="/privacy/">Privacy</a></li>
+        <li><a href="https://www.kit.edu/redirect.php?page=barriere&amp;lang=ENG">Accessibility</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    margin-top: 0;
+    padding-top: clamp(3rem, 2rem + 3vw, 4.5rem);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    background: var(--bg-2);
+    border-top: 1px solid var(--line);
+    font-size: 0.9375rem;
+  }
+
+  .site-footer a {
+    color: var(--ink-2);
+    text-decoration: none;
+  }
+
+  .site-footer a:hover {
+    color: var(--ink);
+    text-decoration: underline;
+  }
+
+  .grid {
+    display: grid;
+    gap: 2.5rem;
+  }
+
+  @media (min-width: 48rem) {
+    .grid {
+      grid-template-columns: minmax(0, 6fr) minmax(0, 2fr) minmax(0, 3fr);
+    }
+  }
+
+  .name {
+    --logo-h: 52px;
+    display: flex;
+    align-items: center;
+  }
+
+  .title {
+    margin-top: 0.8rem;
+    max-width: 40ch;
+    color: var(--ink-2);
+  }
+
+  .funding {
+    margin-top: 1.25rem;
+    max-width: 46ch;
+    color: var(--ink-3);
+  }
+
+  .funding a {
+    text-decoration: underline;
+  }
+
+  .dfg {
+    display: inline-block;
+    margin-top: 1.25rem;
+    padding: 0.875rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: #fff;
+  }
+
+  .dfg :global(img) {
+    display: block;
+    width: 216px;
+    height: auto;
+  }
+
+  .col-title {
+    margin-bottom: 0.7rem;
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  li + li {
+    margin-top: 0.4rem;
+  }
+
+  .legal {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.75rem 2rem;
+    margin-top: clamp(2.5rem, 2rem + 2vw, 3.5rem);
+    padding-block: 1.25rem 1.5rem;
+    border-top: 1px solid var(--line);
+    color: var(--ink-3);
+    font-size: 0.875rem;
+  }
+
+  .legal ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.5rem;
+  }
+
+  .legal li + li {
+    margin-top: 0;
+  }
+</style>

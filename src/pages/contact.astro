@@ -1,0 +1,139 @@
+---
+import Base from '../layouts/Base.astro';
+import { getPeople } from '../lib/data';
+import { funding } from '../config';
+
+const people = await getPeople();
+const byId = Object.fromEntries(people.map((p) => [p.id, p.data]));
+
+// Postal addresses of the coordinating chairs, as given on the chairs' own
+// websites (alr-kit.de; ies.iar.kit.edu/1473_1497.php, checked 29 September 2026).
+const contacts = [
+  {
+    id: 'beyerer',
+    lines: ['Vision and Fusion Laboratory (IES)', 'Institute for Anthropomatics and Robotics (IAR)', 'Karlsruhe Institute of Technology', 'Vincenz-Prießnitz-Straße 3', '76131 Karlsruhe, Germany'],
+  },
+  {
+    id: 'neumann',
+    lines: ['Autonomous Learning Robots (ALR)', 'Karlsruhe Institute of Technology', 'InformatiKOM 1', 'Adenauerring 12', '76131 Karlsruhe, Germany'],
+  },
+];
+---
+
+<Base title="Contact" description="How to contact the DFG Research Unit KI-FOR 5339.">
+  <header class="page-head">
+    <div class="wrap">
+      <h1>Contact</h1>
+      <p class="lead">
+        For questions about the Research Unit as a whole, please contact the spokesperson or the deputy spokesperson.
+        For questions about a subproject, its page names the principal investigators.
+      </p>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="wrap cards">
+      {
+        contacts.map(({ id, lines }) => {
+          const p = byId[id];
+          return (
+            <div class="contact">
+              <p class="role">{p.role}</p>
+              <h2>{p.title} {p.name}</h2>
+              <address>
+                {lines.map((l) => (
+                  <span>{l}</span>
+                ))}
+              </address>
+              {p.email && (
+                <p class="email">
+                  <a href={`mailto:${p.email}`}>{p.email}</a>
+                </p>
+              )}
+              {p.url && (
+                <p class="page">
+                  <a href={p.url}>Personal page</a>
+                </p>
+              )}
+            </div>
+          );
+        })
+      }
+    </div>
+  </section>
+
+  <section class="section section--grey section--tight">
+    <div class="wrap prose">
+      <h2>Funding</h2>
+      <p>
+        KI-FOR 5339 is funded by the {funding.funder} within its strategic funding initiative on artificial
+        intelligence, project number <a href={funding.gepris}>{funding.projectNumber}</a>.
+      </p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .cards {
+    display: grid;
+    gap: 2.5rem 4rem;
+  }
+
+  @media (min-width: 48rem) {
+    .cards {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  /* each card spans five rows and shares them with the card beside it, so names, addresses and
+     links line up even when a name or an address is longer */
+  .contact {
+    display: grid;
+    grid-row: span 5;
+    grid-template-rows: subgrid;
+    row-gap: 0;
+    align-content: start;
+    padding-left: 1.25rem;
+    border-left: 3px solid var(--accent);
+  }
+
+  .email {
+    grid-row: 4;
+  }
+
+  .page {
+    grid-row: 5;
+  }
+
+  .role {
+    font-size: 0.9375rem;
+    color: var(--ink-2);
+  }
+
+  .contact h2 {
+    margin-top: 0.2rem;
+    font-size: var(--step-2);
+  }
+
+  address {
+    display: grid;
+    align-content: start;
+    margin-top: 1rem;
+    font-style: normal;
+    line-height: 1.55;
+  }
+
+  .email {
+    margin-top: 1rem;
+    font-weight: 600;
+  }
+
+  .page {
+    margin-top: 0.4rem;
+  }
+
+  .prose h2 {
+    margin-top: 0;
+    font-size: var(--step-2);
+  }
+</style>

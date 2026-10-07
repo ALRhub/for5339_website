@@ -1,0 +1,142 @@
+---
+import Base from '../../layouts/Base.astro';
+import Illustration from '../../components/Illustration.astro';
+import Flow from '../../components/Flow.astro';
+import { getPeople, getSubprojects } from '../../lib/data';
+
+const subprojects = await getSubprojects();
+const people = await getPeople();
+const byId = Object.fromEntries(people.map((p) => [p.id, p.data]));
+---
+
+<Base title="Subprojects" description="The seven scientific subprojects and the coordination project of the DFG Research Unit KI-FOR 5339.">
+  <header class="page-head">
+    <div class="wrap">
+      <h1>Subprojects</h1>
+      <p class="lead">
+        Seven scientific subprojects along one process chain, from experiments and simulation to learned models,
+        optimisation and control, and one project that coordinates them.
+      </p>
+    </div>
+  </header>
+
+  <section class="section section--grey section--tight">
+    <div class="wrap">
+      <Flow />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <ol class="rows">
+        {
+          subprojects.map((s) => (
+            <li>
+              <a class="row" href={`/subprojects/${s.data.code.toLowerCase()}/`} data-illo-host>
+                <div class="text">
+                  <p class="head">
+                    <span class="code">{s.data.code}</span>
+                    <span class="verb">{s.data.verb}</span>
+                  </p>
+                  <h2>{s.data.title}</h2>
+                  <p class="summary">{s.data.summary}</p>
+                  <p class="pis">{s.data.pis.map((id) => byId[id]?.name).join(', ')}</p>
+                </div>
+                {s.data.illustration && (
+                  <Illustration name={s.data.illustration.name} mode="hover" ratio="16 / 10" label={s.data.illustration.label} class="thumb" />
+                )}
+              </a>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .rows {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .rows > li {
+    border-top: 1px solid var(--line);
+  }
+
+  .rows > li:last-child {
+    border-bottom: 1px solid var(--line);
+  }
+
+  .row {
+    display: grid;
+    gap: 1.5rem 3rem;
+    padding-block: 2rem;
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  @media (min-width: 52rem) {
+    .row {
+      grid-template-columns: minmax(0, 1fr) 20rem;
+      align-items: center;
+    }
+  }
+
+  .head {
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .head .code {
+    font-size: 1.5rem;
+  }
+
+  .verb {
+    font-size: 1.0625rem;
+    font-weight: 500;
+    color: var(--ink-2);
+  }
+
+  h2 {
+    max-width: 30ch;
+    font-size: var(--step-2);
+  }
+
+  .row:hover h2 {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.18em;
+  }
+
+  .summary {
+    margin-top: 0.6rem;
+    max-width: 58ch;
+    color: var(--ink-2);
+  }
+
+  .pis {
+    margin-top: 0.75rem;
+    font-size: 0.9375rem;
+    color: var(--ink-3);
+  }
+
+  .row :global(.thumb .stage) {
+    border-radius: var(--radius);
+    background: var(--bg-2);
+    transition: background-color 0.2s ease;
+  }
+
+  .row:hover :global(.thumb .stage) {
+    background: #eceef0;
+  }
+
+  @media (max-width: 52rem) {
+    .row :global(.thumb) {
+      max-width: 24rem;
+    }
+  }
+</style>
