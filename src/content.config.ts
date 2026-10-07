@@ -48,7 +48,7 @@ const subprojects = defineCollection({
         })
         .optional(),
       // Work packages of the first funding phase, with codes, titles, results and cited
-      // papers as in the interim report (May 2026); `papers` are ids from publications.yaml.
+      // papers; `papers` are ids from publications.yaml.
       workPackages: z
         .array(
           z.object({
@@ -56,7 +56,7 @@ const subprojects = defineCollection({
             title: z.string(),
             text: z.string(),
             papers: z.array(z.string()).default([]),
-            // A figure from the interim report or from the paper itself, with its source.
+            // An optional figure from the team's own work, with its source.
             figure: z.object({ src: image(), alt: z.string(), caption: z.string(), credit: z.string() }).optional(),
           }),
         )
@@ -102,7 +102,7 @@ const publications = defineCollection({
     // The first `equal` authors contributed equally; they are marked with an asterisk.
     equal: z.number().int().min(2).optional(),
     award: z.string().optional(),
-    // Position among the ten highlights of the renewal proposal (home page and filter).
+    // Position among the ten highlights (home page and filter).
     highlight: z.number().int().min(1).optional(),
     // Short venue label for highlight cards, e.g. "ICLR".
     short: z.string().optional(),

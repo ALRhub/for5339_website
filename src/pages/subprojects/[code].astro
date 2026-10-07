@@ -45,7 +45,7 @@ const papers = (ids: string[]) =>
     if (!p) throw new Error(`Subproject ${s.code}: unknown publication id "${id}"`);
     return p;
   });
-// Work packages as in the interim report; each figure also gets a large version for the viewer.
+// Work packages; each figure also gets a large version for the viewer.
 const workPackages = await Promise.all(
   s.workPackages.map(async (w) => ({
     ...w,

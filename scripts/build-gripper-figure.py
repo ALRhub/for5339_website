@@ -10,7 +10,10 @@ website can draw the grippers as vector glyphs on top.
 
 Usage (from the website directory):
 
-    python scripts/build-gripper-figure.py [path/to/gripper_frame]
+    python scripts/build-gripper-figure.py path/to/source-figures
+
+The folder must hold the two source figures as PDF (random_grippers_v2.pdf and
+optimal_grippers.pdf).
 
 Requires `pdfimages` (poppler), `mutool` (MuPDF) and Python packages numpy,
 Pillow and SciPy. Writes src/assets/images/part-{random,optimised}.png and
@@ -29,7 +32,9 @@ from PIL import Image, ImageFilter
 from scipy import ndimage as ndi
 
 ROOT = Path(__file__).resolve().parent.parent
-SRC_DIR = Path(sys.argv[1]) if len(sys.argv) > 1 else ROOT.parent / 'c_repo/c-proposal/figures/gripper_frame'
+if len(sys.argv) < 2:
+    sys.exit(__doc__)
+SRC_DIR = Path(sys.argv[1])
 PDFS = {'random': 'random_grippers_v2.pdf', 'optimised': 'optimal_grippers.pdf'}
 OUT = 1200  # output size in pixels (square)
 PAD = 0.13  # margin around the sheets for the gripper glyphs, relative to the sheet size

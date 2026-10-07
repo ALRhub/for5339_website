@@ -7,10 +7,6 @@
 # url:          personal or institute page (optional)
 # email:        optional; shown on the contact page only for the contacts listed there
 # photo:        put a portrait at src/assets/people/<id>.jpg (4:5); it is picked up automatically
-#
-# Sources: the Phase 1 proposals (2021), the applicants of each subproject in GEPRIS
-# (DFG project 459291153 and its subprojects) and the team list of the interim report
-# (May 2026).
 
 # --- Principal investigators ------------------------------------------------
 

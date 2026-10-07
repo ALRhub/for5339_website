@@ -2,9 +2,9 @@
 // How the subprojects work together: the process (T1) yields data through
 // simulation (T2) and sensing (M1); M2 learns process models from these data,
 // mainly from T2's simulation campaigns; M3 and M4 use the models to optimise and
-// to control. F spans all steps. Sources: the structure figure of the Research
-// Unit (M1 to M4 on top of T1 and T2, F across the top) and the M2 report of
-// Phase 1 results. On small screens the stages stack vertically.
+// to control. F spans all steps, as in the structure of the Research Unit (M1 to
+// M4 on top of T1 and T2, F across the top). On small screens the stages stack
+// vertically.
 import { getSubprojects } from '../lib/data';
 
 const all = await getSubprojects();
