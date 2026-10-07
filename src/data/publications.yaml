@@ -136,6 +136,15 @@
   status: accepted
   doi: 10.48550/arXiv.2609.31107
 
+- id: kiroriwal2026boing
+  title: "BOING: Optimizing Bayesian Optimization with Information Geometry"
+  authors: [Saksham Kiroriwal, Julius Pfrommer, Jürgen Beyerer]
+  venue: Under review
+  year: 2026
+  type: preprint
+  subprojects: [M3]
+  status: preprint
+
 - id: kiroriwal2026jpssbo
   title: "Joint Parameter and State-Space Bayesian Optimization: Using Process Expertise to Accelerate Manufacturing Optimization"
   authors: [Saksham Kiroriwal, Julius Pfrommer, Jürgen Beyerer]
