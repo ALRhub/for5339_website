@@ -1,14 +1,10 @@
 # Publications of the Research Unit.
 #
-# Sources: publication list of the Phase 1 interim report (May 2026), the
-# bibliography of the renewal proposal (metadata checked against publisher
-# records in August 2026) and the previous website.
-#
 # type:        journal | conference | workshop | preprint | thesis | dataset | chapter
 # status:      published (default) | accepted | preprint
 # equal:       optional; the first n authors contributed equally (marked with an asterisk)
 # subprojects: at least one code; the paper then appears on that subproject's page
-# highlight:   position (1-10) among the ten highlights of the renewal proposal, shown on the home page
+# highlight:   position (1-10) among the ten highlights shown on the home page
 # short:       short venue label for highlight cards, e.g. "ICLR"
 #
 # Add new entries anywhere; the website sorts them by year.
@@ -109,15 +105,26 @@
   year: 2026
   type: conference
   subprojects: [M4]
-  url: https://arxiv.org/abs/2510.05706
+  url: https://ieeexplore.ieee.org/abstract/document/11615400
 
 - id: walker2026cramer
   title: Local Modified Cramér–von Mises Distance for Uncertainty Calibration Assessment in Regression
-  authors: [Markus Walker, S. Klaus, Marcel Reith-Braun, Uwe D. Hanebeck]
+  authors: [Markus Walker, Simon Klaus, Marcel Reith-Braun, Uwe D. Hanebeck]
+  equal: 2
   venue: International Conference on Information Fusion (FUSION)
   year: 2026
   type: conference
   subprojects: [M4]
+  url: https://isas.iar.kit.edu/pdf/FUSION26_Walker.pdf
+
+- id: luo2026homotopy
+  title: Gaussian Homotopy Optimization with Predictor–Corrector Path Tracking and Deterministic Sampling
+  authors: [Xiaozhu Luo, Markus Walker, Uwe D. Hanebeck]
+  venue: IEEE International Conference on Multisensor Fusion and Integration for Intelligent Systems (MFI)
+  year: 2026
+  type: conference
+  subprojects: [M4]
+  url: https://isas.iar.kit.edu/pdf/MFI26_Luo.pdf
 
 - id: kiroriwal2026jpssbo
   title: "Joint Parameter and State-Space Bayesian Optimization: Using Process Expertise to Accelerate Manufacturing Optimization"
@@ -325,6 +332,7 @@
   type: conference
   subprojects: [M4]
   doi: 10.1109/MFI67357.2025.11259249
+  award: Best Student Paper Award
 
 - id: youssef2025ctnn
   title: Causal Temporal Neural Networks Using the Conditional Average Treatment Effect
@@ -467,6 +475,7 @@
   type: conference
   subprojects: [M4]
   doi: 10.1109/SDF63218.2024.10773946
+  award: Best Paper Award, 2nd place
 
 - id: rehak2024rootcause
   title: Root Cause Analysis Using Anomaly Detection and Temporal Informed Causal Graphs
