@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.for5339.kit.edu/sitemap-index.xml
+Sitemap: https://mature-ai.de/sitemap-index.xml

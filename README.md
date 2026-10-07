@@ -6,6 +6,10 @@
 > The website shows the current state of the Research Unit only. Add people, results and news only once they are
 > public.
 
+> [!CAUTION]
+> All commits to `main` are immediately deployed to the live website at https://mature-ai.de. If you want to change
+> something, please create a pull request first.
+
 ## 📁 Directory Structure
 * **Content**: news and subproject pages live in `src/content/`, people and publications in `src/data/`.
 * **Images**: portraits go in `src/assets/people/`, figures in `src/assets/figures/`, photos in `src/assets/images/`.
@@ -13,11 +17,10 @@
 
 ## Workflow
 If you want to change something, create a branch and open a pull request.
-Before you push, run `npm run build` to check that the website still builds.
+The CI pipeline automatically checks whether the website still builds.
 The build checks all content and stops with a message that names the file if a field is missing or a code is wrong.
-
-The live website does not update by itself: after merging, someone builds the site and copies `dist/` to the web
-server.
+If you are sure your change is good, you can merge the pull request on your own.
+**All pushes to `main` are deployed to the live website via GitHub Pages, so be careful with pushing to `main`.**
 
 ## How do I add...
 ### ...news?
