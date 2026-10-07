@@ -126,6 +126,16 @@
   subprojects: [M4]
   url: https://isas.iar.kit.edu/pdf/MFI26_Luo.pdf
 
+- id: kiroriwal2026fisher
+  title: "Bayesian Optimization with Fisher Information Geometry: Gradient Bounds and Trust-Region Methods"
+  authors: [Saksham Kiroriwal, Julius Pfrommer, Jürgen Beyerer]
+  venue: Advances in Neural Information Processing Systems (NeurIPS) 39
+  year: 2026
+  type: conference
+  subprojects: [M3]
+  status: accepted
+  doi: 10.48550/arXiv.2609.31107
+
 - id: kiroriwal2026jpssbo
   title: "Joint Parameter and State-Space Bayesian Optimization: Using Process Expertise to Accelerate Manufacturing Optimization"
   authors: [Saksham Kiroriwal, Julius Pfrommer, Jürgen Beyerer]
