@@ -2,7 +2,7 @@
 title: Guest lecture by Lars Bittrich
 date: 2025-03-18
 kind: talk
-summary: Dr. Lars Bittrich (Leibniz-Institut für Polymerforschung Dresden) presented “Using Machine Learning to Increase Production Accuracy in Tailored Fiber Placement”.
+summary: Dr. Lars Bittrich (Leibniz Institute of Polymer Research Dresden, IPF) presented “Using Machine Learning to Increase Production Accuracy in Tailored Fiber Placement”.
 ---
 
 ## Abstract

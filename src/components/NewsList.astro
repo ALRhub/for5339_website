@@ -22,7 +22,8 @@ const KIND: Record<string, string> = {
 <ol class="news">
   {
     items.map((n) => {
-      const hasBody = Boolean(n.body && n.body.trim().length > 0);
+      // Items with a body or papers get their own page; the list shows the summary only.
+      const hasPage = Boolean(n.body && n.body.trim().length > 0) || n.data.papers.length > 0;
       return (
         <li class="item">
           <p class="when">
@@ -30,7 +31,7 @@ const KIND: Record<string, string> = {
             <span class="kind">{KIND[n.data.kind]}</span>
           </p>
           <div>
-            <Heading class="title">{hasBody ? <a href={`/news/${n.id}/`}>{n.data.title}</a> : n.data.title}</Heading>
+            <Heading class="title">{hasPage ? <a href={`/news/${n.id}/`}>{n.data.title}</a> : n.data.title}</Heading>
             <p class="summary">{n.data.summary}</p>
             {n.data.link && (
               <p class="link">

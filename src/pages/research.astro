@@ -8,18 +8,18 @@ import Flow from '../components/Flow.astro';
 import demonstrator from '../assets/images/demonstrator.jpg';
 
 const stations = [
-  { name: 'Pick up', text: 'A sledge on a linear axis picks up the laminate in a gripper frame. The grippers measure force, position and angle.' },
+  { name: 'Pick up', text: 'A carriage on a linear axis picks up the laminate in a gripper frame. The grippers measure force, position and angle.' },
   { name: 'Heat', text: 'An infrared oven melts the thermoplastic matrix.' },
   { name: 'Form', text: 'A press with two heatable tools forms the hot laminate, which solidifies as it cools.' },
   { name: 'Inspect', text: 'A robot takes images and 3D scans of the part. The data are stored, and their metadata are catalogued in the Virtual Process Dossier.' },
 ];
 
 const results = [
-  { codes: ['T1', 'T2'], text: 'Material characterisation parameterised the physics-based forming simulations, and temperature measurements from forming experiments were used to validate them. The simulations then supplied data for learning and for testing gripper configurations that were never built.' },
+  { codes: ['T1', 'T2'], text: 'Material characterisation provided the parameters for the physics-based forming simulations, and temperature measurements from forming experiments validated them. The simulations then supplied data for learning and for testing gripper configurations that were never built.' },
   { codes: ['M2', 'T2'], text: 'A learned simulator predicts stamp forming of thermoplastic laminates for unseen process settings in seconds instead of hours.' },
   { codes: ['M1', 'M3', 'T1', 'T2'], text: 'Bayesian optimisation used the validated simulation to find gripper layouts that reduce wrinkling.' },
-  { codes: ['M4', 'M2'], text: 'M4 developed particle-flow filters, calibrated sensor models, sampling-based model predictive control and, with M2, geometry-aware reinforcement learning for distributed actuators. Each was validated on simulation benchmarks.' },
-  { codes: ['F'], text: 'The Virtual Process Dossier, a knowledge-graph data catalogue, records the demonstrator\'s experiments, simulations and their provenance and can be queried via SPARQL.' },
+  { codes: ['M4'], text: 'M4 developed particle-flow filters, calibrated sensor models, sampling-based model predictive control and geometry-aware reinforcement learning for distributed actuators, each validated on simulation benchmarks.' },
+  { codes: ['F'], text: 'The Virtual Process Dossier is a knowledge-graph data catalogue. It records the demonstrator\'s experiments and simulations together with their provenance and can be queried with SPARQL.' },
 ];
 ---
 
@@ -28,8 +28,8 @@ const results = [
     <div class="wrap">
       <h1>Research</h1>
       <p class="lead">
-        Every trial on a new manufacturing process is expensive. We develop AI methods that learn more from each trial, and
-        a methodology that takes a process from immature to mature with fewer of them.
+        Every trial on a new manufacturing process is expensive. We develop AI methods that learn more from each trial and
+        a methodology that brings a process to maturity with fewer trials.
       </p>
     </div>
   </header>
@@ -40,18 +40,18 @@ const results = [
         <h2 id="why-title">The problem</h2>
         <div class="prose">
           <p>
-            A new process first runs in the lab, then ramps up to industrial scale. Only then does it deliver the required
-            quality, output and cost. This takes long when new materials are involved, when the process has many settings,
-            and when no good model of it exists.
+            A new process first runs in the lab and reaches the required quality, output and cost only after it has been
+            scaled up to industrial production. The ramp-up takes a long time when new materials are involved, when the
+            process has many settings, or when no good model of it exists.
           </p>
           <p>
-            Maturing such a process means choosing its structure, its settings, its control and its sensors. Experts do this
-            by experiment, guided by experience. Each experiment ties up equipment, uses material and may require destructive
-            testing of the part.
+            Maturing such a process means deciding on its structure, settings, control and sensors. Experts work these out
+            in experiments guided by their experience. Each experiment ties up equipment, consumes material and may require
+            destroying the part to test it.
           </p>
           <p class="claim">
-            We expect AI to speed up maturation and to find better solutions. Few, expensive and noisy samples also demand new
-            methods in AI itself.
+            We expect AI to speed up maturation and to find better solutions. Learning from a few expensive, noisy samples
+            also calls for new methods in AI itself.
           </p>
         </div>
       </div>
@@ -76,8 +76,8 @@ const results = [
           <div>
             <h3>A methodology for maturation</h3>
             <p>
-              Temporary over-instrumentation, a modular process and step-by-step improvement turn an immature process into a
-              mature one, with tools that scale to large teams.
+              The methodology turns an immature process into a mature one through temporary over-instrumentation, a modular
+              process and step-by-step improvement. Its tools scale to large teams.
             </p>
           </div>
         </div>
@@ -93,9 +93,9 @@ const results = [
       <div class="split">
         <h2 id="demo-title">The demonstrator</h2>
         <p class="prose">
-          The participating institutes built the example process in the Karlsruhe Research Factory: non-isothermal stamp
-          forming of thermoplastic composite sheets, an immature process with a high potential for improvement. The
-          stamp-forming laboratory of Fraunhofer ICT is used for further experiments.
+          The example process is non-isothermal stamp forming of thermoplastic composite sheets, an immature process with a
+          high potential for improvement. The participating institutes built a demonstrator for it in the Karlsruhe Research
+          Factory, and further experiments take place in the stamp-forming laboratory of Fraunhofer ICT.
         </p>
       </div>
       <div class="illo-wrap">
@@ -103,7 +103,7 @@ const results = [
           name="process"
           ratio="16 / 5.6"
           ratioSmall="16 / 10.5"
-          label="Illustration of the demonstrator line. A carriage carries a tape laminate in its gripper frame from pick-up through infrared heating to the press, where the punch forms it into the die while the grippers follow the draw-in, and on to camera inspection. Colour shows the laminate temperature, which drops where it touches the tools."
+          label="Illustration of the demonstrator line. A carriage takes a tape laminate in its gripper frame from pick-up through infrared heating to the press and on to camera inspection. In the press, the punch forms the laminate into the die while the grippers follow the draw-in. Colour shows the laminate temperature, which drops where the laminate touches the tools."
           caption="Illustration. In the press, the grippers follow the laminate as it is drawn into the die. Colour shows the laminate temperature."
         />
       </div>
@@ -130,15 +130,15 @@ const results = [
         <div class="prose">
           <h3>Why it is hard</h3>
           <p>
-            The tapes are strongly anisotropic. They deform with large strains, depend on temperature and forming speed, slide
-            against each other, and shrink as they solidify. The press forms the parts only partly, which is enough to study
-            quality precursors, in particular wrinkle formation.
+            The tapes are strongly anisotropic. They undergo large strains, their behaviour depends on temperature and
+            forming speed, and the plies slide against each other and shrink as they solidify. The press forms the parts
+            only partially, which is enough to study the precursors of defects, in particular wrinkle formation.
           </p>
           <h3>The material</h3>
           <p>
-            In the published forming experiments on industrial-scale equipment, the laminates were unidirectional
-            carbon-fibre tapes in a polyamide 6 matrix, for example twelve plies in a (0/90/45/−45/0/90)s sequence. Such tapes promise light parts that can be formed automatically in short
-            cycle times and recycled (<a href="https://doi.org/10.21741/9781644903599-59">Zeeb et al. 2025</a>).
+            The published forming experiments on industrial-scale equipment used laminates of unidirectional carbon-fibre
+            tapes in a polyamide 6 matrix, for example twelve plies in a (0/90/45/−45/0/90)s sequence. Such tapes promise
+            light parts that can be formed automatically in short cycle times and recycled (<a href="https://doi.org/10.21741/9781644903599-59">Zeeb et al. 2025</a>).
           </p>
         </div>
       </div>
@@ -150,8 +150,8 @@ const results = [
       <h2 id="results-title">Results so far</h2>
       <div>
         <p class="prose">
-          In the first funding phase we developed the core components of the methodology and validated each of them on its own:
-          in forming experiments, forming simulations, benchmarks and external process datasets.
+          In the first funding phase, we developed the core components of the methodology and validated each of them
+          separately, in forming experiments, forming simulations, benchmarks and external process datasets.
         </p>
         <ul class="results">
           {

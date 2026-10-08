@@ -16,7 +16,7 @@ illustration:
 workPackages:
   - code: "F.1"
     title: "Formal process maturity measure"
-    text: "Elucidability, Forcability and Supervisability translate observability, controllability and quality tolerance into probabilistic maturity measures. Forcability was made computable as a stochastic reach-avoid problem, solved with approximate dynamic programming and estimated by Monte Carlo simulation on an electric arc furnace example. Supervisability and Elucidability exist so far in simplified form."
+    text: "Elucidability, Forcability and Supervisability translate observability, controllability and quality tolerance into probabilistic maturity measures. Forcability was made computable as a stochastic reach-avoid problem, solved with approximate dynamic programming and estimated by Monte Carlo simulation on an electric arc furnace example. So far, Supervisability and Elucidability exist only in simplified form."
     papers: [arabizadeh2025maturity]
     figure:
       src: "../../assets/figures/f-1-maturity-measures.png"
@@ -25,7 +25,7 @@ workPackages:
       credit: "KI-FOR 5339"
   - code: "F.2"
     title: "Virtual Process Dossier (VPD)"
-    text: "The VPD is a process-aware data catalogue that adds a knowledge-graph layer above the raw data and captures prospective and retrospective workflow provenance, with a schema that reuses DCAT, PROV, SOSA/SSN, QUDT and WiLD. A provenance-capturing framework and a web interface were implemented, and the example process was modelled in the VPD. The publication is under review."
+    text: "The VPD is a process-aware data catalogue that adds a knowledge-graph layer above the raw data and captures prospective and retrospective workflow provenance. Its schema reuses DCAT, PROV, SOSA/SSN, QUDT and WiLD. A provenance-capturing framework and a web interface were implemented, and the example process was modelled in the VPD. The publication is under review."
     papers: [kubelka2026vpd, harth2024tgdk]
     figure:
       src: "../../assets/figures/f-2-vpd.png"
@@ -34,7 +34,7 @@ workPackages:
       credit: "KI-FOR 5339"
   - code: "F.3"
     title: "Hybrid semantic-qualitative-numerical question answering"
-    text: "RDFdL integrates RDF with differential dynamic logic, verifies transitions with KeYmaera X and returns the verified results as queryable RDF. Graph-based retrieval-augmented generation was evaluated on airport data, a shape-based SPARQL generator placed among the top three in several sub-challenges of the Text2SPARQL challenge at ESWC 2025, and a bounded LLM decision layer improved a fixed baseline in 200 simulated scenarios of a composite-forming workflow (CASE 2026)."
+    text: "RDFdL integrates RDF with differential dynamic logic, verifies transitions with KeYmaera X and returns the verified results as queryable RDF. Graph-based retrieval-augmented generation was evaluated on airport data. A shape-based SPARQL generator placed among the top three in several sub-challenges of the Text2SPARQL challenge at ESWC 2025. In 200 simulated scenarios of a composite-forming workflow, a bounded LLM decision layer improved on a fixed baseline (CASE 2026)."
     papers: [li2025rag, wardenga2025text2sparql, li2026case]
     figure:
       src: "../../assets/figures/f-3-rdfdl.png"

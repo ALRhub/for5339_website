@@ -1,7 +1,8 @@
 ---
 import { render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
-import { formatDate, getNews, isoDate } from '../../lib/data';
+import PublicationItem from '../../components/PublicationItem.astro';
+import { formatDate, getMemberKeys, getNews, isoDate, newsPapers } from '../../lib/data';
 
 export async function getStaticPaths() {
   const news = await getNews();
@@ -11,6 +12,8 @@ export async function getStaticPaths() {
 const { entry } = Astro.props;
 const n = entry.data;
 const { Content } = await render(entry);
+const papers = await newsPapers(entry);
+const members = await getMemberKeys();
 ---
 
 <Base title={n.title} description={n.summary}>
@@ -25,6 +28,15 @@ const { Content } = await render(entry);
     </header>
     <div class="section section--tight">
       <div class="wrap prose">
+        {
+          papers.length > 0 && (
+            <ul class="papers">
+              {papers.map((p) => (
+                <PublicationItem pub={p} members={members} />
+              ))}
+            </ul>
+          )
+        }
         <Content />
         {
           n.link && (
@@ -48,6 +60,12 @@ const { Content } = await render(entry);
   .date {
     margin-top: 0.75rem;
     color: var(--ink-2);
+  }
+
+  .papers {
+    margin: 0;
+    padding: 0;
+    list-style: none;
   }
 
   .back {

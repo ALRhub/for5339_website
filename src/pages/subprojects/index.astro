@@ -2,6 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import Illustration from '../../components/Illustration.astro';
 import Flow from '../../components/Flow.astro';
+import SubprojectNav from '../../components/SubprojectNav.astro';
 import { getPeople, getSubprojects } from '../../lib/data';
 
 const subprojects = await getSubprojects();
@@ -10,6 +11,8 @@ const byId = Object.fromEntries(people.map((p) => [p.id, p.data]));
 ---
 
 <Base title="Subprojects" description="The seven scientific subprojects and the coordination project of the DFG Research Unit KI-FOR 5339.">
+  <SubprojectNav />
+
   <header class="page-head">
     <div class="wrap">
       <h1>Subprojects</h1>

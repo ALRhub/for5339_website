@@ -1,8 +1,9 @@
 ---
-title: Best Student Paper Award at IEEE INDIN 2024
+title: Best Student Paper Award at the IEEE International Conference on Industrial Informatics (INDIN) 2024
 date: 2024-08-17
 precision: month
 kind: award
-summary: The paper by Saksham Kiroriwal and co-authors on joint parameter and state-space modelling of manufacturing processes with Gaussian processes received the Best Student Paper Award in the AI for Industry track of IEEE INDIN 2024.
+summary: The paper “Joint parameter and state-space modelling of manufacturing processes using Gaussian processes” from subproject M3 received the Best Student Paper Award in the artificial intelligence for industry track.
 subprojects: [M3]
+papers: [kiroriwal2024jpss]
 ---

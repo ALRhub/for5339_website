@@ -6,7 +6,7 @@ export const site = {
   title: 'AI-based Methodology for the Fast Maturation of Immature Manufacturing Processes',
   shortTitle: 'Fast Maturation of Manufacturing Processes',
   description:
-    'DFG Research Unit KI-FOR 5339 at the Karlsruhe Institute of Technology and Fraunhofer IOSB. We combine experiments, simulation, learning, optimisation and control, aiming to mature new manufacturing processes with fewer physical trials.',
+    'DFG Research Unit KI-FOR 5339 at the Karlsruhe Institute of Technology and Fraunhofer IOSB. We combine experiments, simulation, learning, optimisation and control to mature new manufacturing processes with fewer physical trials.',
   lang: 'en-GB',
 };
 

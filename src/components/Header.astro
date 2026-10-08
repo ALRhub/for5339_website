@@ -4,9 +4,13 @@ import kitLogo from '../assets/brand/kit-logo-en.svg';
 import dfgLogo from '../assets/brand/dfg-logo.png';
 import Logo from './Logo.astro';
 import { nav, site } from '../config';
+import { getSubprojects } from '../lib/data';
 
 const path = Astro.url.pathname;
 const isCurrent = (href: string) => path === href || path.startsWith(href);
+// "Subprojects" opens a list of all subprojects (on hover or focus on wide screens, inline in the phone menu).
+const subprojects = await getSubprojects();
+const subHref = (code: string) => `/subprojects/${code.toLowerCase()}/`;
 ---
 
 <header class="site-header">
@@ -31,13 +35,38 @@ const isCurrent = (href: string) => path === href || path.startsWith(href);
     <nav id="site-nav" class="nav" aria-label="Main">
       <ul>
         {
-          nav.map((item) => (
-            <li>
-              <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>
-                {item.label}
-              </a>
-            </li>
-          ))
+          nav.map((item) =>
+            item.href === '/subprojects/' ? (
+              <li class="has-sub">
+                <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>
+                  {item.label}
+                  <span class="chevron" aria-hidden="true" />
+                </a>
+                <div class="sub-panel">
+                  <ul class="sub-list" aria-label="Subprojects">
+                    {subprojects.map((s) => (
+                      <li>
+                        <a href={subHref(s.data.code)} aria-current={path.startsWith(subHref(s.data.code)) ? 'page' : undefined}>
+                          <span class="sub-code">{s.data.code}</span>
+                          <span class="sub-text">
+                            <span class="sub-name">{s.data.short}</span>
+                            <span class="sub-tag">{s.data.tagline}</span>
+                          </span>
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                  <a class="sub-all" href="/subprojects/">How the subprojects work together</a>
+                </div>
+              </li>
+            ) : (
+              <li>
+                <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>
+                  {item.label}
+                </a>
+              </li>
+            ),
+          )
         }
       </ul>
     </nav>
@@ -52,8 +81,21 @@ const isCurrent = (href: string) => path === href || path.startsWith(href);
     toggle.setAttribute('aria-expanded', String(open));
     header?.classList.toggle('is-open', open);
   });
+  // the subproject list opens on hover or focus; Escape closes it until the pointer or focus leaves
+  const sub = header?.querySelector<HTMLElement>('.has-sub');
+  const reset = () => sub?.classList.remove('is-dismissed');
+  sub?.addEventListener('mouseleave', reset);
+  sub?.addEventListener('focusout', (e) => {
+    if (!sub.contains(e.relatedTarget as Node | null)) reset();
+  });
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && header?.classList.contains('is-open')) {
+    if (e.key !== 'Escape') return;
+    if (sub && (sub.matches(':hover') || sub.contains(document.activeElement)) && !header?.classList.contains('is-open')) {
+      sub.classList.add('is-dismissed');
+      sub.querySelector<HTMLElement>(':scope > a')?.focus();
+      return;
+    }
+    if (header?.classList.contains('is-open')) {
       header.classList.remove('is-open');
       toggle?.setAttribute('aria-expanded', 'false');
       toggle?.focus();
@@ -154,6 +196,123 @@ const isCurrent = (href: string) => path === href || path.startsWith(href);
     background: var(--bg-2);
   }
 
+  /* ---- subproject list under "Subprojects" */
+  .has-sub {
+    position: relative;
+  }
+
+  .chevron {
+    display: inline-block;
+    width: 0.4rem;
+    height: 0.4rem;
+    margin-left: 0.45rem;
+    border-right: 1.5px solid currentColor;
+    border-bottom: 1.5px solid currentColor;
+    transform: translateY(-0.2rem) rotate(45deg);
+    transition: transform 0.2s var(--ease);
+  }
+
+  .has-sub:is(:hover, :focus-within):not(.is-dismissed) .chevron {
+    transform: translateY(0.05rem) rotate(225deg);
+  }
+
+  .sub-panel {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    width: min(36rem, 92vw);
+    padding: 1rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: #fff;
+    box-shadow: 0 20px 40px -24px rgb(0 0 0 / 0.35);
+    opacity: 0;
+    visibility: hidden;
+    transform: translate(-50%, 0.4rem);
+    transition: opacity 0.15s ease, transform 0.15s var(--ease), visibility 0.15s;
+  }
+
+  /* bridges the gap between the menu item and the panel, so the pointer can travel into it */
+  .sub-panel::before {
+    content: '';
+    position: absolute;
+    inset: -0.75rem 0 100% 0;
+  }
+
+  .has-sub:is(:hover, :focus-within):not(.is-dismissed) .sub-panel {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, 0.6rem);
+  }
+
+  .nav .sub-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.25rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .nav .sub-list a {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 0.6rem 0.7rem;
+    border-radius: calc(var(--radius) - 2px);
+    font-size: 0.9375rem;
+  }
+
+  .nav .sub-list a:hover,
+  .nav .sub-list a[aria-current='page'] {
+    background: var(--bg-2);
+  }
+
+  .sub-code {
+    flex: none;
+    min-width: 1.9rem;
+    font-weight: 700;
+    color: var(--link);
+  }
+
+  .sub-text {
+    display: grid;
+    gap: 0.1rem;
+  }
+
+  .sub-name {
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .sub-tag {
+    font-size: 0.8125rem;
+    font-weight: 400;
+    color: var(--ink-3);
+  }
+
+  .nav .sub-all {
+    display: block;
+    margin-top: 0.75rem;
+    padding: 0.75rem 0.7rem 0.15rem;
+    border-top: 1px solid var(--line);
+    border-radius: 0;
+    font-size: 0.875rem;
+    color: var(--link);
+  }
+
+  .nav .sub-all:hover {
+    background: none;
+    text-decoration: underline;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sub-panel,
+    .chevron {
+      transition: none;
+    }
+  }
+
   .menu-toggle {
     display: none;
     align-items: center;
@@ -234,6 +393,51 @@ const isCurrent = (href: string) => path === href || path.startsWith(href);
 
     .nav li:last-child a {
       border-bottom: 0;
+    }
+
+    /* in the phone menu the subprojects are listed inline under "Subprojects" */
+    .chevron {
+      display: none;
+    }
+
+    .sub-panel,
+    .has-sub:is(:hover, :focus-within):not(.is-dismissed) .sub-panel {
+      position: static;
+      width: auto;
+      padding: 0.25rem 0 0.75rem;
+      border: 0;
+      border-bottom: 1px solid var(--line);
+      border-radius: 0;
+      box-shadow: none;
+      opacity: 1;
+      visibility: visible;
+      transform: none;
+      transition: none;
+    }
+
+    .sub-panel::before {
+      display: none;
+    }
+
+    .has-sub > a {
+      border-bottom: 0;
+    }
+
+    .nav .sub-list {
+      flex-direction: unset;
+      padding: 0;
+      gap: 0 1rem;
+    }
+
+    .nav .sub-list a {
+      padding: 0.45rem 0.25rem;
+      border: 0;
+      font-size: 0.9375rem;
+    }
+
+    .sub-tag,
+    .nav .sub-all {
+      display: none;
     }
 
     .nav a[aria-current='page'] {

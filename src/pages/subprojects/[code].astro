@@ -6,6 +6,7 @@ import Illustration from '../../components/Illustration.astro';
 import GripperResult from '../../components/GripperResult.astro';
 import PublicationItem from '../../components/PublicationItem.astro';
 import NewsList from '../../components/NewsList.astro';
+import SubprojectNav from '../../components/SubprojectNav.astro';
 import { byName, getMemberKeys, getNews, getPeople, getPublications, getSubprojects, publicationHref, venueShort } from '../../lib/data';
 
 export async function getStaticPaths() {
@@ -32,6 +33,8 @@ const person = (id: string) => {
   return p;
 };
 const pis = s.pis.map(person);
+// Principal investigators of other subprojects who also work in this one, listed with their role.
+const alsoPis = people.filter((p) => p.data.group === 'pi' && p.data.subprojects.includes(s.code) && !s.pis.includes(p.id)).sort(byName);
 const researchers = people.filter((p) => p.data.group === 'researcher' && p.data.subprojects.includes(s.code)).sort(byName);
 const alumni = people.filter((p) => p.data.group === 'alumni' && p.data.subprojects.includes(s.code)).sort(byName);
 const allPubs = await getPublications();
@@ -60,9 +63,10 @@ const name = (p: (typeof people)[number]) => (p.data.title ? `${p.data.title} ${
 ---
 
 <Base title={`${s.code} ${s.short}`} description={s.summary}>
+  <SubprojectNav current={s.code} />
+
   <header class="page-head">
     <div class="wrap">
-      <p class="crumbs"><a href="/subprojects/">Subprojects</a></p>
       <p class="label"><span class="big-code">{s.code}</span> {s.verb}</p>
       <h1>{s.title}</h1>
       <p class="lead">{s.summary}</p>
@@ -136,6 +140,16 @@ const name = (p: (typeof people)[number]) => (p.data.title ? `${p.data.title} ${
                 <li>
                   <h3>{c.title}</h3>
                   <p>{c.text}</p>
+                  {c.photos.length > 0 && (
+                    <figure class="contrib-photos">
+                      <div class="photo-row">
+                        {c.photos.map((ph) => (
+                          <Image src={ph.src} alt={ph.alt} widths={[320, 520]} sizes="(min-width: 60rem) 16rem, 44vw" />
+                        ))}
+                      </div>
+                      {c.credit && <figcaption>{c.credit}</figcaption>}
+                    </figure>
+                  )}
                   {c.papers.length > 0 && (
                     <ul class="refs">
                       {c.papers.map((p) => (
@@ -186,6 +200,18 @@ const name = (p: (typeof people)[number]) => (p.data.title ? `${p.data.title} ${
             <ul>{pis.map((p) => <li>{p.data.url ? <a href={p.data.url}>{name(p)}</a> : name(p)}</li>)}</ul>
           </dd>
         </div>
+        {
+          alsoPis.map((p) => (
+            <div>
+              <dt>{p.data.role ?? 'Team'}</dt>
+              <dd>
+                <ul>
+                  <li>{p.data.url ? <a href={p.data.url}>{name(p)}</a> : name(p)}</li>
+                </ul>
+              </dd>
+            </div>
+          ))
+        }
         {
           researchers.length > 0 && (
             <div>
@@ -280,12 +306,6 @@ const name = (p: (typeof people)[number]) => (p.data.title ? `${p.data.title} ${
 </script>
 
 <style>
-  .crumbs {
-    margin-bottom: 1.5rem;
-    font-size: 0.9375rem;
-    font-weight: 500;
-  }
-
   .label {
     display: flex;
     align-items: baseline;
@@ -352,6 +372,30 @@ const name = (p: (typeof people)[number]) => (p.data.title ? `${p.data.title} ${
     margin: 0;
     padding: 0;
     list-style: none;
+  }
+
+  .contrib-photos {
+    margin: 1rem 0 0;
+  }
+
+  .photo-row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.5rem;
+  }
+
+  .photo-row :global(img) {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+    border-radius: calc(var(--radius) - 2px);
+  }
+
+  .contrib-photos figcaption {
+    margin-top: 0.4rem;
+    font-size: 0.8125rem;
+    color: var(--ink-3);
   }
 
   .contribs .refs {

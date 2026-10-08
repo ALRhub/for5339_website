@@ -73,6 +73,16 @@ export async function getNews(): Promise<NewsItem[]> {
   return items.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 }
 
+// The publications a news item lists, in its order; an unknown id fails the build.
+export async function newsPapers(n: NewsItem): Promise<Publication[]> {
+  const pubs = await getPublications();
+  return n.data.papers.map((id) => {
+    const p = pubs.find((q) => q.id === id);
+    if (!p) throw new Error(`News item ${n.id} lists unknown paper "${id}"`);
+    return p;
+  });
+}
+
 export async function getSubprojects(): Promise<Subproject[]> {
   const items = await getCollection('subprojects');
   return items.sort((a, b) => a.data.order - b.data.order);

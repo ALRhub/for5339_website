@@ -1,0 +1,112 @@
+---
+// Bar of all subprojects below the header, as on the Team page, so that visitors can switch
+// between subprojects directly. `current` is the code of the open subproject; none means the overview.
+import { getSubprojects } from '../lib/data';
+
+interface Props {
+  current?: string;
+}
+
+const { current = '' } = Astro.props;
+const subprojects = await getSubprojects();
+---
+
+<nav class="sp-bar" aria-label="Subprojects">
+  <div class="wrap">
+    <ul class="sp-list">
+      <li>
+        <a href="/subprojects/" aria-current={current ? undefined : 'page'}>All subprojects</a>
+      </li>
+      {
+        subprojects.map((s) => (
+          <li>
+            <a href={`/subprojects/${s.data.code.toLowerCase()}/`} aria-current={s.data.code === current ? 'page' : undefined}>
+              <b>{s.data.code}</b> {s.data.verb}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</nav>
+
+<script>
+  // on narrow screens the bar scrolls sideways; bring the open subproject into view
+  document.querySelectorAll<HTMLElement>('.sp-list').forEach((list) => {
+    const on = list.querySelector<HTMLElement>('[aria-current="page"]');
+    if (!on) return;
+    const r = on.getBoundingClientRect();
+    const m = list.getBoundingClientRect();
+    if (r.left < m.left || r.right > m.right) list.scrollLeft += r.left - m.left - (m.width - r.width) / 2;
+  });
+</script>
+
+<style>
+  /* anchors on these pages must clear both the header and this bar */
+  :global(html) {
+    scroll-padding-top: calc(var(--header-h) + 4.5rem);
+  }
+
+  .sp-bar {
+    position: sticky;
+    top: var(--header-h);
+    z-index: 20;
+    background: rgb(255 255 255 / 0.94);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .sp-list {
+    display: flex;
+    gap: 0.4rem;
+    margin: 0;
+    padding: 0.75rem 0;
+    list-style: none;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .sp-list::-webkit-scrollbar {
+    display: none;
+  }
+
+  .sp-list li {
+    flex: none;
+  }
+
+  .sp-list a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    min-height: 2.5rem;
+    padding: 0.4rem 0.95rem;
+    border: 1px solid var(--line-2);
+    border-radius: 999px;
+    background: var(--bg);
+    color: var(--ink-2);
+    font-size: 0.9375rem;
+    white-space: nowrap;
+    text-decoration: none;
+    transition: border-color 0.15s ease, color 0.15s ease, background-color 0.15s ease;
+  }
+
+  .sp-list a b {
+    font-weight: 600;
+    color: var(--link);
+  }
+
+  .sp-list a:hover {
+    border-color: var(--ink);
+    color: var(--ink);
+  }
+
+  .sp-list a[aria-current='page'] {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: #fff;
+  }
+
+  .sp-list a[aria-current='page'] b {
+    color: #fff;
+  }
+</style>

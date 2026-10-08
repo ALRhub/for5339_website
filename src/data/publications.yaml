@@ -39,7 +39,7 @@
   venue: Machine Learning 115
   year: 2026
   type: journal
-  subprojects: [M2]
+  subprojects: [M2, T2]
   doi: 10.1007/s10994-026-07064-4
 
 - id: dahlinger2026context
@@ -48,7 +48,7 @@
   venue: Transactions on Machine Learning Research
   year: 2026
   type: journal
-  subprojects: [M2]
+  subprojects: [M2, T2]
   url: https://openreview.net/forum?id=j5uACS2Doh
 
 - id: wuerth2026algebraic
@@ -66,7 +66,7 @@
   venue: Materials Science Forum 1182, 1–11
   year: 2026
   type: journal
-  subprojects: [T2, M2]
+  subprojects: [T2]
   doi: 10.4028/p-aI6KaL
 
 - id: bott2026planning
@@ -84,7 +84,7 @@
   venue: International Conference on Learning Representations (ICLR)
   year: 2026
   type: conference
-  subprojects: [M2, M4]
+  subprojects: [M2]
   url: https://openreview.net/forum?id=x66u6TEDUw
 
 - id: walker2026ifac
@@ -93,7 +93,7 @@
   venue: IFAC World Congress
   year: 2026
   type: conference
-  subprojects: [M4, M2]
+  subprojects: [M4]
   url: https://arxiv.org/abs/2601.03893
   short: IFAC World Congress
   highlight: 8
@@ -171,7 +171,7 @@
   venue: CONTROLO 2026
   year: 2026
   type: conference
-  subprojects: [M1]
+  subprojects: [M1, T2]
   status: accepted
 
 - id: bott2026gripper
@@ -221,7 +221,7 @@
   venue: Advances in Neural Information Processing Systems (NeurIPS) 38
   year: 2025
   type: conference
-  subprojects: [M2]
+  subprojects: [M2, T2]
   doi: 10.52202/085713-4336
   award: Spotlight
   short: NeurIPS
@@ -233,7 +233,7 @@
   venue: Advances in Neural Information Processing Systems (NeurIPS) 38
   year: 2025
   type: conference
-  subprojects: [M2]
+  subprojects: [M2, T2]
   doi: 10.52202/085713-0803
   short: NeurIPS
   highlight: 5

@@ -21,9 +21,10 @@ const news = (await getNews()).slice(0, 3);
         <p class="label">DFG Research Unit KI-FOR 5339</p>
         <h1>AI for the fast maturation of new manufacturing processes</h1>
         <p class="lead">
-          Thermoplastic composites promise light parts that can be formed automatically in short cycles and recycled. But a
-          new material or part design can make a known process immature again, and costly trial and error follows. We develop AI that learns from every trial and reuses what it has learned, so that new processes mature
-          with fewer trials.
+          Thermoplastic composites promise light parts that can be formed automatically in short cycles and recycled. A new
+          material or part design, however, can make an established process immature again, which leads to costly trial and
+          error. We develop AI methods that learn from every trial and carry this knowledge over to new variants, so that they
+          mature with fewer trials.
         </p>
         <div class="actions">
           <a class="button" href="#approach">How it works</a>
@@ -37,8 +38,8 @@ const news = (await getNews()).slice(0, 3);
         name="transfer"
         ratio="1 / 0.92"
         class="hero-illo"
-        label="Illustration of our aim. A sheet is formed into a first part, then into a new geometry, then into the same geometry in a new material. Each variant starts wrinkled, and each schematic learning curve reaches maturity in fewer trials than the one before."
-        caption="Illustration of our aim. Each new geometry or material starts as an immature process. Knowledge carried over from earlier variants lets each new one mature in fewer trials."
+        label="Illustration of our aim. A sheet is formed into a first part, then into a new geometry and then into the same geometry in a new material. Each variant starts wrinkled, and its schematic learning curve reaches maturity in fewer trials than the one before."
+        caption="Illustration of our aim. Every new geometry or material starts as an immature process, and knowledge carried over from earlier variants lets it mature in fewer trials."
       />
     </div>
   </section>
@@ -47,7 +48,7 @@ const news = (await getNews()).slice(0, 3);
     <div class="wrap">
       <div class="intro">
         <h2 id="challenge-title">Why new processes are hard to get right</h2>
-        <p>Four things make new processes slow to mature. Today, experts close the gap with extensive experiments, guided by experience.</p>
+        <p>Four factors make new processes slow to mature. Today, experts bring them to maturity through extensive experiments guided by their experience.</p>
       </div>
       <Challenge />
     </div>
@@ -58,10 +59,10 @@ const news = (await getNews()).slice(0, 3);
       <div class="intro">
         <h2 id="approach-title">How the subprojects work together</h2>
         <p>
-          The demonstrator in T1 provides the process and its experiments. T2 simulates it, and M1 decides which sensors
-          observe it. M2 learns fast process models, mainly from T2's simulation data. M3 optimises the process settings, and
-          M4 estimates the process state and controls it. F defines measures of maturity and records the process data in a
-          knowledge graph.
+          T1 provides the demonstrator process and its experiments. T2 simulates the process, and M1 decides which sensors
+          observe it. M2 learns fast process models from these data, mainly from T2's simulations. M3 optimises the process
+          settings, and M4 estimates the process state and controls it. Across all stages, F defines measures of maturity and
+          records the process data in a knowledge graph.
         </p>
       </div>
       <Flow />
@@ -72,7 +73,7 @@ const news = (await getNews()).slice(0, 3);
     <div class="wrap">
       <div class="intro">
         <h2 id="contrib-title">What each subproject contributes</h2>
-        <p>Point at a subproject to see its idea in motion, or open it for the details.</p>
+        <p>Point at a subproject to see its idea animated, or open it for the details.</p>
       </div>
       <ul class="tiles">
         {
@@ -106,8 +107,8 @@ const news = (await getNews()).slice(0, 3);
       <div class="intro">
         <h2 id="app-title">The example process</h2>
         <p>
-          The Research Unit studies its methods on non-isothermal stamp forming of thermoplastic tape laminates, an
-          immature process with a high potential for improvement. It runs on a demonstrator in the Karlsruhe Research
+          The Research Unit tests its methods on non-isothermal stamp forming of thermoplastic tape laminates, an immature
+          process with a high potential for improvement. The process runs on a demonstrator in the Karlsruhe Research
           Factory and in the stamp-forming laboratory of Fraunhofer ICT.
         </p>
       </div>
@@ -116,7 +117,7 @@ const news = (await getNews()).slice(0, 3);
         ratio="16 / 5.6"
         ratioSmall="16 / 10.5"
         class="process-illo"
-        label="Illustration of the demonstrator line. A carriage carries a tape laminate in its gripper frame from pick-up through infrared heating to the press, where the punch forms it into the die while the grippers follow the draw-in, and on to camera inspection. Colour shows the laminate temperature, which drops where it touches the tools."
+        label="Illustration of the demonstrator line. A carriage takes a tape laminate in its gripper frame from pick-up through infrared heating to the press and on to camera inspection. In the press, the punch forms the laminate into the die while the grippers follow the draw-in. Colour shows the laminate temperature, which drops where the laminate touches the tools."
         caption="Illustration of the demonstrator line. A carriage moves the laminate in its gripper frame to the infrared oven, the press and optical inspection. In the press, the grippers follow the laminate as it is drawn into the die. Colour shows the laminate temperature."
       />
       <div class="app-grid">

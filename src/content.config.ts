@@ -18,6 +18,8 @@ const news = defineCollection({
     summary: z.string(),
     link: z.object({ href: z.url(), label: z.string() }).optional(),
     subprojects: z.array(subprojectCode).default([]),
+    // Ids from publications.yaml; listed on the item's own page as on the publications page.
+    papers: z.array(z.string()).default([]),
   }),
 });
 
@@ -61,9 +63,17 @@ const subprojects = defineCollection({
           }),
         )
         .default([]),
-      // Activities without work packages (the coordination project C).
+      // Activities without work packages (the coordination project C), optionally with photos and their credit.
       contributions: z
-        .array(z.object({ title: z.string(), text: z.string(), papers: z.array(z.string()).default([]) }))
+        .array(
+          z.object({
+            title: z.string(),
+            text: z.string(),
+            papers: z.array(z.string()).default([]),
+            photos: z.array(z.object({ src: image(), alt: z.string() })).default([]),
+            credit: z.string().optional(),
+          }),
+        )
         .default([]),
     }),
 });
