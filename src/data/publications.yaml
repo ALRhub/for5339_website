@@ -183,6 +183,42 @@
   subprojects: [T1]
   status: accepted
 
+- id: li2026rdfdl
+  title: "RDFdL: Making Verified Hybrid-System Transitions Queryable with SPARQL"
+  authors: [Yuyang Li, Lukas Kubelka, Julia Butte, Tobias Käfer]
+  venue: Poster at the 25th International Semantic Web Conference (ISWC)
+  year: 2026
+  type: workshop
+  subprojects: [F]
+  status: accepted
+
+- id: li2026raser
+  title: "RASER: Recoverability-Aware Selective Escalation Router for Multi-Hop Question Answering"
+  authors: [Yuyang Li, Zihe Yan, Tobias Käfer]
+  venue: ACL-IJCNLP
+  year: 2026
+  type: conference
+  subprojects: [F]
+  status: accepted
+  doi: 10.48550/arXiv.2606.02488
+
+- id: duan2026amakbqa
+  title: "AMA-KBQA: An Adaptable Multi-Agent Framework for Generalizable Knowledge Base Question Answering"
+  authors: [Yannic Duan, Maximilian Klattig, Maurice Bardenhagen, Yuyang Li, Tobias Käfer]
+  venue: International Conference on Semantic Systems (SEMANTiCS)
+  year: 2026
+  type: conference
+  subprojects: [F]
+
+- id: duan2026wikikgqa
+  title: "Answer-Convention Alignment for Agentic Text-to-SPARQL: AMA-KBQA at the WikiKGQA 2026 Challenge"
+  authors: [Yannic Duan, Maximilian Klattig, Maurice Bardenhagen, Yuyang Li, Tobias Käfer]
+  venue: WikiKGQA Challenge at the 25th International Semantic Web Conference (ISWC)
+  year: 2026
+  type: workshop
+  subprojects: [F]
+  status: accepted
+
 - id: kubelka2026vpd
   title: "Virtual Process Dossier: A Process-Aware Data Catalogue"
   authors: [Lukas Kubelka, Alexander Bott, Frank Doehner, Saksham Kiroriwal, Georg Zeeb, J. Butte, Julius Pfrommer, Jürgen Beyerer, Tobias Käfer]

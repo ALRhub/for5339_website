@@ -35,7 +35,7 @@ workPackages:
   - code: "F.3"
     title: "Hybrid semantic-qualitative-numerical question answering"
     text: "RDFdL integrates RDF with differential dynamic logic, verifies transitions with KeYmaera X and returns the verified results as queryable RDF. Graph-based retrieval-augmented generation was evaluated on airport data. A shape-based SPARQL generator placed among the top three in several sub-challenges of the Text2SPARQL challenge at ESWC 2025. In 200 simulated scenarios of a composite-forming workflow, a bounded LLM decision layer improved on a fixed baseline (CASE 2026)."
-    papers: [li2025rag, wardenga2025text2sparql, li2026case]
+    papers: [li2026rdfdl, li2026raser, duan2026amakbqa, duan2026wikikgqa, li2025rag, wardenga2025text2sparql, li2026case]
     figure:
       src: "../../assets/figures/f-3-rdfdl.png"
       alt: "RDFdL overview. Metadata and simulation models are stored as RDF, translated into a differential dynamic logic model, proven with KeYmaera X, and the verified safety properties are returned to the RDF store for SPARQL queries."
