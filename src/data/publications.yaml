@@ -90,7 +90,7 @@
 - id: walker2026ifac
   title: Smooth Sampling-Based Model Predictive Control Using Deterministic Samples
   authors: [Markus Walker, Marcel Reith-Braun, Tai Hoang, Gerhard Neumann, Uwe D. Hanebeck]
-  venue: IFAC World Congress
+  venue: 23rd IFAC World Congress
   year: 2026
   type: conference
   subprojects: [M4]
@@ -148,7 +148,7 @@
 - id: kiroriwal2026jpssbo
   title: "Joint Parameter and State-Space Bayesian Optimization: Using Process Expertise to Accelerate Manufacturing Optimization"
   authors: [Saksham Kiroriwal, Julius Pfrommer, Jürgen Beyerer]
-  venue: CIRP Conference on Manufacturing Systems (CIRP CMS)
+  venue: CIRP Conference on Manufacturing Systems (CIRP CMS), Procedia CIRP
   year: 2026
   type: conference
   subprojects: [M3]
@@ -157,18 +157,18 @@
 - id: li2026case
   title: LLM-Based Pre-Press Decision Support for an Industrial Composite-Forming Workflow
   authors: [Yuyang Li, Alexander Bott, Jürgen Fleischer, Tobias Käfer]
-  venue: IEEE International Conference on Automation Science and Engineering (CASE)
+  venue: IEEE International Conference on Automation Science and Engineering (CASE), 1928–1934
   year: 2026
   type: conference
   subprojects: [F, T1]
-  status: accepted
+  doi: 10.1109/CASE69030.2026.11704251
   short: IEEE CASE
   highlight: 10
 
 - id: doehner2026sensor
   title: Adaptive Sequential Sensor Placement for Robust and Efficient Online Fault Diagnosis
   authors: [Frank Doehner, Zahra Nasrollah, Julius Pfrommer, Tobias Würth, Jürgen Beyerer]
-  venue: CONTROLO 2026
+  venue: APCA International Conference on Automatic Control and Soft Computing (CONTROLO)
   year: 2026
   type: conference
   subprojects: [M1, T2]
@@ -195,7 +195,7 @@
 - id: li2026raser
   title: "RASER: Recoverability-Aware Selective Escalation Router for Multi-Hop Question Answering"
   authors: [Yuyang Li, Zihe Yan, Tobias Käfer]
-  venue: ACL-IJCNLP
+  venue: Conference of the Asia-Pacific Chapter of the ACL and International Joint Conference on Natural Language Processing (AACL-IJCNLP)
   year: 2026
   type: conference
   subprojects: [F]
@@ -209,6 +209,7 @@
   year: 2026
   type: conference
   subprojects: [F]
+  status: accepted
 
 - id: duan2026wikikgqa
   title: "Answer-Convention Alignment for Agentic Text-to-SPARQL: AMA-KBQA at the WikiKGQA 2026 Challenge"
@@ -221,11 +222,11 @@
 
 - id: kubelka2026vpd
   title: "Virtual Process Dossier: A Process-Aware Data Catalogue"
-  authors: [Lukas Kubelka, Alexander Bott, Frank Doehner, Saksham Kiroriwal, Georg Zeeb, J. Butte, Julius Pfrommer, Jürgen Beyerer, Tobias Käfer]
+  authors: [Lukas Kubelka, Alexander Bott, Frank Doehner, Saksham Kiroriwal, Georg Zeeb, Julia Butte, Julius Pfrommer, Jürgen Beyerer, Tobias Käfer]
   venue: arXiv preprint 2607.27840
   year: 2026
   type: preprint
-  subprojects: [F]
+  subprojects: [F, M3]
   status: preprint
   doi: 10.48550/arXiv.2607.27840
 
@@ -318,7 +319,7 @@
 - id: mitsch2025significance
   title: Significance of the Material Parameters within a Three-Dimensional Solid-Shell Element for Thermoforming Simulation
   authors: [Johannes Mitsch, Bastian Schäfer, Luise Kärger]
-  venue: Materials Research Proceedings 54 (ESAFORM 2025)
+  venue: Materials Research Proceedings 54 (ESAFORM 2025), 363–372
   year: 2025
   type: conference
   subprojects: [T2]
@@ -336,7 +337,7 @@
 - id: bott2025ppr
   title: "Towards a Generalised Information Modell: A Bayesian Network Approach for PPR-Representation"
   authors: [Alexander Bott, Jan Baumgärtner, Nicolaus Klein, Alexander Puchta, Jürgen Fleischer]
-  venue: Sustainable Manufacturing Innovations (ICSM 2024), Springer
+  venue: Sustainable Manufacturing Innovations (ICSM 2024), Springer, 167–177
   year: 2025
   type: chapter
   subprojects: [T1]
@@ -345,7 +346,7 @@
 - id: kiroriwal2025pogpn
   title: Bayesian Optimization using Partially Observable Gaussian Process Network
   authors: [Saksham Kiroriwal, Julius Pfrommer, Jürgen Beyerer]
-  venue: NeurIPS Workshop on Machine Learning and Operations Research (MLxOR)
+  venue: "NeurIPS Workshop on ML×OR: Mathematical Foundations and Operational Integration of Machine Learning for Uncertainty-Aware Decision-Making"
   year: 2025
   type: workshop
   subprojects: [M3]
@@ -410,7 +411,7 @@
 - id: li2025rag
   title: Evaluating the Performance of RAG Methods for Conversational AI in the Airport Domain
   authors: [Yuyang Li, Philip J. M. Kerbusch, Raimon H. R. Pruim, Tobias Käfer]
-  venue: Annual Conference of the Nations of the Americas Chapter of the ACL (NAACL), Industry Track, 794–808
+  venue: Conference of the Nations of the Americas Chapter of the ACL (NAACL), Industry Track, 794–808
   year: 2025
   type: conference
   subprojects: [F]
@@ -636,8 +637,8 @@
 - id: rehak2023pcmci
   title: Causal Structure Learning Using PCMCI+ and Path Constraints from Wavelet-Based Soft Interventions
   authors: [Josephine Rehak, Alexander Falkenstein, Jürgen Beyerer]
-  venue: Machine Learning for Cyber-Physical Systems (ML4CPS), Springer
-  year: 2023
+  venue: Machine Learning for Cyber-Physical Systems (ML4CPS 2023), Springer, 1–9
+  year: 2024
   type: conference
   subprojects: [M1]
   doi: 10.1007/978-3-031-47062-2_1
