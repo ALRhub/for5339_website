@@ -183,6 +183,15 @@
   subprojects: [T1]
   status: accepted
 
+- id: decker2026warpage
+  title: Investigation of warpage formation during the stamp forming process of GF/PA6 laminates as a result of temperature and layup configuration
+  authors: [Hannah Decker, Johannes Mitsch, J. Steffens, Luise Kärger, Frank Henning]
+  venue: International Conference & Exhibition on Thermoplastic Composites (ITHEC)
+  year: 2026
+  type: conference
+  subprojects: [T1, T2]
+  status: accepted
+
 - id: li2026rdfdl
   title: "RDFdL: Making Verified Hybrid-System Transitions Queryable with SPARQL"
   authors: [Yuyang Li, Lukas Kubelka, Julia Butte, Tobias Käfer]
