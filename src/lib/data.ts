@@ -175,10 +175,18 @@ export function numberWord(n: number, capitalise = false): string {
 /** Compact venue and year for inline references, e.g. "NeurIPS, 2025". */
 export function venueShort(p: Publication['data']): string {
   const v = p.venue;
-  const acronym = v.match(/\(([^)]+)\)/)?.[1];
+  // an acronym in brackets must contain a letter: "26(2)" is a journal issue, not an acronym
+  const acronym = v.match(/\(([^)]*[A-Za-z][^)]*)\)/)?.[1];
   let name: string;
-  if (/workshop/i.test(v)) name = v.replace(/\s*\(.*$/, '').replace(/,.*$/, '');
-  else if (acronym) name = acronym;
-  else name = v.replace(/,.*$/, '').replace(/\s+[\d.()–-]+$/, '');
-  return name.includes(String(p.year)) ? name : `${name}, ${p.year}`;
+  if (/challenge|poster/i.test(v) && acronym) {
+    name = `${v.replace(/\s+at the .*$/i, '')} at ${acronym}`;          // "Text2SPARQL Challenge at ESWC"
+  } else if (/workshop/i.test(v)) {
+    name = v.replace(/\s*\(.*$/, '').replace(/,.*$/, '').replace(/:.*$/, '');
+  } else if (acronym) {
+    name = acronym;
+  } else {
+    // drop pages and volume or issue numbers, keep commas inside the name
+    name = v.replace(/,\s*[\d–-]+$/, '').replace(/\s+[\d.()–-]+$/, '');
+  }
+  return /\b(19|20)\d\d\b/.test(name) ? name : `${name}, ${p.year}`;
 }
