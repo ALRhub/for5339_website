@@ -343,6 +343,33 @@
   subprojects: [T2]
   doi: 10.5281/zenodo.17977470
 
+- id: wuerth2026bendingbeam
+  title: ROBIN – Diffusion-Based Hierarchical Graph Neural Networks for Simulating Nonlinear Solid Mechanics – BendingBeam Dataset
+  authors: [Tobias Würth, Luise Kärger]
+  venue: Zenodo
+  year: 2026
+  type: dataset
+  subprojects: [T2]
+  doi: 10.5281/zenodo.18296526
+
+- id: hoang2026ignsdata
+  title: Datasets for testing Long-range interactions in Graph Neural Simulators
+  authors: [Tai Hoang]
+  venue: Zenodo
+  year: 2026
+  type: dataset
+  subprojects: [M2]
+  doi: 10.5281/zenodo.18480131
+
+- id: dahlinger2025mangodata
+  title: MaNGO – Adaptable Graph Network Simulators via Meta-Learning (Dataset)
+  authors: [Philipp Dahlinger, Tai Hoang]
+  venue: Zenodo
+  year: 2025
+  type: dataset
+  subprojects: [M2]
+  doi: 10.5281/zenodo.17287535
+
 - id: bott2025ppr
   title: "Towards a Generalised Information Modell: A Bayesian Network Approach for PPR-Representation"
   authors: [Alexander Bott, Jan Baumgärtner, Nicolaus Klein, Alexander Puchta, Jürgen Fleischer]
@@ -416,6 +443,15 @@
   type: thesis
   subprojects: [M1]
   doi: 10.5445/IR/1000178419
+
+- id: freymuth2026diss
+  title: Geometric and Information-Geometric Priors for Data-Driven Decision Making
+  authors: [Niklas Freymuth]
+  venue: Doctoral thesis, Karlsruhe Institute of Technology
+  year: 2026
+  type: thesis
+  subprojects: [M2]
+  doi: 10.5445/IR/1000193728
 
 - id: li2025rag
   title: Evaluating the Performance of RAG Methods for Conversational AI in the Airport Domain
