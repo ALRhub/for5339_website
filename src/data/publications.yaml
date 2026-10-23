@@ -154,6 +154,15 @@
   subprojects: [M3]
   url: https://arxiv.org/abs/2602.17679
 
+- id: youssef2026dscm
+  title: Learning Dynamic Structural Causal Mechanisms for Causal Effect Estimation and Process Optimization in Manufacturing Systems
+  authors: [Shahenda Youssef, Julius Pfrommer, Jürgen Beyerer]
+  venue: CIRP Conference on Manufacturing Systems (CIRP CMS), Procedia CIRP 146, 541–546
+  year: 2026
+  type: conference
+  subprojects: [M1]
+  doi: 10.1016/j.procir.2026.03.189
+
 - id: li2026case
   title: LLM-Based Pre-Press Decision Support for an Industrial Composite-Forming Workflow
   authors: [Yuyang Li, Alexander Bott, Jürgen Fleischer, Tobias Käfer]
