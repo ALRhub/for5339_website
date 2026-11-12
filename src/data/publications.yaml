@@ -213,30 +213,29 @@
 - id: li2026raser
   title: "RASER: Recoverability-Aware Selective Escalation Router for Multi-Hop Question Answering"
   authors: [Yuyang Li, Zihe Yan, Tobias Käfer]
-  venue: Conference of the Asia-Pacific Chapter of the ACL and International Joint Conference on Natural Language Processing (AACL-IJCNLP)
+  venue: International Joint Conference on Natural Language Processing and Asia-Pacific Chapter of the ACL (IJCNLP-AACL), Findings, 4295–4311
   year: 2026
   type: conference
   subprojects: [F]
-  status: accepted
-  doi: 10.48550/arXiv.2606.02488
+  doi: 10.18653/2026.findings-aacl.219
 
 - id: duan2026amakbqa
   title: "AMA-KBQA: An Adaptable Multi-Agent Framework for Generalizable Knowledge Base Question Answering"
   authors: [Yannic Duan, Maximilian Klattig, Maurice Bardenhagen, Yuyang Li, Tobias Käfer]
-  venue: International Conference on Semantic Systems (SEMANTiCS)
+  venue: Companion Volume of the International Conference on Semantic Systems (SEMANTiCS), CEUR-WS 4293
   year: 2026
   type: conference
   subprojects: [F]
-  status: accepted
+  doi: 10.83095/ceurws_04293_036
 
 - id: duan2026wikikgqa
   title: "Answer-Convention Alignment for Agentic Text-to-SPARQL: AMA-KBQA at the WikiKGQA 2026 Challenge"
   authors: [Yannic Duan, Maximilian Klattig, Maurice Bardenhagen, Yuyang Li, Tobias Käfer]
-  venue: WikiKGQA Challenge at the 25th International Semantic Web Conference (ISWC)
+  venue: WikiKGQA Challenge at the 25th International Semantic Web Conference (ISWC), CEUR-WS 4284
   year: 2026
   type: workshop
   subprojects: [F]
-  status: accepted
+  url: https://ceur-ws.org/Vol-4284/paper1.pdf
 
 - id: kubelka2026vpd
   title: "Virtual Process Dossier: A Process-Aware Data Catalogue"
