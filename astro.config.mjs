@@ -9,5 +9,7 @@ export default defineConfig({
   // HTML-aware whitespace handling, so inline elements keep their spaces.
   compressHTML: true,
   build: { format: 'directory' },
+  // /booklet is printed as a QR code on the booklet: never change the path, only its target.
+  redirects: { '/booklet': '/downloads/booklet-placeholder.pdf' },
   integrations: [sitemap()],
 });

@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /booklet
+Disallow: /downloads/
 
 Sitemap: https://mature-ai.de/sitemap-index.xml

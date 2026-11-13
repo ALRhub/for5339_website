@@ -90,6 +90,11 @@ The metadata at the top holds the title, the PIs and the work packages, and the 
 In a work package, `papers` takes ids from `publications.yaml`.
 Take figures only from the team's own papers or reports, and name the source in `credit`.
 
+### ...or replace the booklet?
+The QR code on the printed booklet points to `https://mature-ai.de/booklet`, so this path must never change.
+Put the PDF in [public/downloads](public/downloads) and point the `/booklet` entry of `redirects` in [astro.config.mjs](astro.config.mjs) to it.
+Remove the old PDF in the same commit.
+
 ## 🛠️ Development
 You need Node.js 22.12 or newer and npm.
 
